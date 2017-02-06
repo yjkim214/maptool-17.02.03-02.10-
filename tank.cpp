@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "tank.h"
-#include "tankMap.h"
+#include "tileMap.h"
 
 HRESULT tank::init(void)
 {

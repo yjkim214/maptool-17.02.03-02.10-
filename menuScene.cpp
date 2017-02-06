@@ -53,7 +53,11 @@ void menuScene::update(void)
 		//맵 버튼의 x값을 조정
 		IMAGEMANAGER->findImage("menu_mapbutton")->setX(_changeMapX);
 		//만약 마우스가 맵 버튼 안에 있고 왼쪽버튼을 누르게 된다면 알파값을 조정
-		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)) { _alphaMap = 150; }
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			_alphaMap = 150;
+			SCENEMANAGER->changeScene("맵툴화면");
+		}
 		//버튼안에 마우스가 있고 마우스 왼쪽 클릭을 뗀다면 씬 전환
 		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON)) {}
 	}

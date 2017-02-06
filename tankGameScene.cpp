@@ -7,7 +7,7 @@ HRESULT tankGameScene::init(void)
 	IMAGEMANAGER->addFrameImage("tilemap", "tilemap.bmp", 640, 256, 20, 8);
 
 	//ÅÊÅ©¸Ê Å¬·¡½º »ý¼º
-	_tankMap = new tankMap;
+	_tankMap = new tileMap;
 	_tankMap->init();
 
 	//ÅÊÅ© Å¬·¡½º »ý¼º

@@ -1,12 +1,12 @@
 #pragma once
 #include "gameNode.h"
-#include "tankMap.h"
+#include "tileMap.h"
 #include "tank.h"
 
 class tankGameScene : public gameNode
 {
 private:
-	tankMap* _tankMap;
+	tileMap* _tankMap;
 	tank* _tank;
 
 public:

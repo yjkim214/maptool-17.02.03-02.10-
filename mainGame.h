@@ -5,6 +5,7 @@
 #include "loadingScene.h"
 #include "menuScene.h"
 #include "maptoolScene.h"
+#include"tileMap.h"
 
 class mainGame : public gameNode
 {

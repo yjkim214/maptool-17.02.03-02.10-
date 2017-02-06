@@ -73,6 +73,11 @@ void loadingScene::loadingImage(void)
 	IMAGEMANAGER->addImage("menu_quitbutton", "menu_quitbutton.bmp", -85, 360, 301, 34, true, RGB(255, 0, 255));
 	SOUNDMANAGER->addSound("main_menu", "main_menu.ogg", true, true);
 
+	//맵툴 이미지
+	_loading->loadFrameImage("tileMapBase", "tileMapBase.bmp", 168, 160, 7, 4, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("tileMapBaseBig", "tileMapBaseBig.bmp", 336, 320, 7, 4, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("stairs", "stairs.bmp", 48, 24, 2, 1);
+
 	//백그라운드 이미지
 	_loading->loadImage("백그라운드", "background.bmp", WINSIZEX, WINSIZEY);
 

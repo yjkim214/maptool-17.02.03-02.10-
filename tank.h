@@ -2,7 +2,7 @@
 #include "gameNode.h"
 
 //탱크맵에 접근 가능하도록 클래스 전방선언
-class tankMap;
+class tileMap;
 
 //탱크 4방향
 enum TANKDIRECTION
@@ -16,7 +16,7 @@ enum TANKDIRECTION
 class tank : public gameNode
 {
 private:
-	tankMap* _tankMap;
+	tileMap* _tankMap;
 	
 	TANKDIRECTION _direction;	//탱크 방향
 	image* _image;				//탱크 이미지
@@ -35,7 +35,7 @@ public:
 	
 	
 	//탱크맵 메모리 링크
-	void setTankMapLink(tankMap* tm) { _tankMap = tm; }
+	void setTankMapLink(tileMap* tm) { _tankMap = tm; }
 
 	tank() {}
 	~tank() {}

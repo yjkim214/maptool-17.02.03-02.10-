@@ -158,6 +158,7 @@
     <ClInclude Include="loading.h" />
     <ClInclude Include="loadingScene.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="maptoolScene.h" />
     <ClInclude Include="menuScene.h" />
     <ClInclude Include="minion.h" />
     <ClInclude Include="pixelCollision.h" />
@@ -173,8 +174,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="tank.h" />
     <ClInclude Include="tankGameScene.h" />
-    <ClInclude Include="maptoolScene.h" />
-    <ClInclude Include="tankMap.h" />
+    <ClInclude Include="tileMap.h" />
     <ClInclude Include="tileNode.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="txtData.h" />
@@ -196,6 +196,7 @@
     <ClCompile Include="loading.cpp" />
     <ClCompile Include="loadingScene.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="maptoolScene.cpp" />
     <ClCompile Include="menuScene.cpp" />
     <ClCompile Include="minion.cpp" />
     <ClCompile Include="pixelCollision.cpp" />
@@ -214,8 +215,7 @@
     </ClCompile>
     <ClCompile Include="tank.cpp" />
     <ClCompile Include="tankGameScene.cpp" />
-    <ClCompile Include="maptoolScene.cpp" />
-    <ClCompile Include="tankMap.cpp" />
+    <ClCompile Include="tileMap.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="util.cpp" />

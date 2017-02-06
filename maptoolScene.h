@@ -14,6 +14,9 @@ private:
 
 	CTRL _ctrlSelect;
 
+	RECT mapscreen;
+
+
 public:
 	HRESULT init(void);
 	void release(void);

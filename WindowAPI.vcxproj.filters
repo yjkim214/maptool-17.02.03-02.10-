@@ -63,9 +63,6 @@
     <Filter Include="MainGame\소리재생">
       <UniqueIdentifier>{afb6b8b1-a1ce-453f-9359-64c2b271e539}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\탱크탱크">
-      <UniqueIdentifier>{98286dfe-e379-465d-93e2-c009326ea62d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\입체타일">
       <UniqueIdentifier>{be9f4182-1d81-42b7-93e3-bfea73e25fa4}</UniqueIdentifier>
     </Filter>
@@ -74,6 +71,9 @@
     </Filter>
     <Filter Include="MainGame\메뉴화면">
       <UniqueIdentifier>{172beb80-fb8c-4de5-8bcd-fd5c8eb6c866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\맵툴메인">
+      <UniqueIdentifier>{98286dfe-e379-465d-93e2-c009326ea62d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -162,19 +162,10 @@
       <Filter>MainGame\소리재생</Filter>
     </ClInclude>
     <ClInclude Include="tankGameScene.h">
-      <Filter>MainGame\탱크탱크</Filter>
-    </ClInclude>
-    <ClInclude Include="tileNode.h">
-      <Filter>MainGame\탱크탱크</Filter>
-    </ClInclude>
-    <ClInclude Include="maptoolScene.h">
-      <Filter>MainGame\탱크탱크</Filter>
-    </ClInclude>
-    <ClInclude Include="tankMap.h">
-      <Filter>MainGame\탱크탱크</Filter>
+      <Filter>MainGame\맵툴메인</Filter>
     </ClInclude>
     <ClInclude Include="tank.h">
-      <Filter>MainGame\탱크탱크</Filter>
+      <Filter>MainGame\맵툴메인</Filter>
     </ClInclude>
     <ClInclude Include="isometricScene.h">
       <Filter>MainGame\입체타일</Filter>
@@ -187,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="menuScene.h">
       <Filter>MainGame\메뉴화면</Filter>
+    </ClInclude>
+    <ClInclude Include="maptoolScene.h">
+      <Filter>MainGame\맵툴메인</Filter>
+    </ClInclude>
+    <ClInclude Include="tileMap.h">
+      <Filter>MainGame\맵툴메인</Filter>
+    </ClInclude>
+    <ClInclude Include="tileNode.h">
+      <Filter>MainGame\맵툴메인</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -269,16 +269,10 @@
       <Filter>MainGame\소리재생</Filter>
     </ClCompile>
     <ClCompile Include="tankGameScene.cpp">
-      <Filter>MainGame\탱크탱크</Filter>
-    </ClCompile>
-    <ClCompile Include="maptoolScene.cpp">
-      <Filter>MainGame\탱크탱크</Filter>
-    </ClCompile>
-    <ClCompile Include="tankMap.cpp">
-      <Filter>MainGame\탱크탱크</Filter>
+      <Filter>MainGame\맵툴메인</Filter>
     </ClCompile>
     <ClCompile Include="tank.cpp">
-      <Filter>MainGame\탱크탱크</Filter>
+      <Filter>MainGame\맵툴메인</Filter>
     </ClCompile>
     <ClCompile Include="isometricScene.cpp">
       <Filter>MainGame\입체타일</Filter>
@@ -291,6 +285,12 @@
     </ClCompile>
     <ClCompile Include="menuScene.cpp">
       <Filter>MainGame\메뉴화면</Filter>
+    </ClCompile>
+    <ClCompile Include="maptoolScene.cpp">
+      <Filter>MainGame\맵툴메인</Filter>
+    </ClCompile>
+    <ClCompile Include="tileMap.cpp">
+      <Filter>MainGame\맵툴메인</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
