@@ -27,9 +27,6 @@
     <Filter Include="GameFramework2D\이미지">
       <UniqueIdentifier>{90771cd5-bf87-4d7d-b5ad-bef75810b74a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\슈팅게임">
-      <UniqueIdentifier>{00e35243-0d16-4d57-90dc-5ec269528753}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameFramework2D\총알">
       <UniqueIdentifier>{5dee4aa4-f989-4dbb-b370-b3ce93460586}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,9 @@
     <Filter Include="MainGame\맵툴메인">
       <UniqueIdentifier>{98286dfe-e379-465d-93e2-c009326ea62d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\게임화면">
+      <UniqueIdentifier>{a5c4829d-ee25-4948-9baa-dd454c2d0a11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mainGame.h">
@@ -107,20 +107,8 @@
     <ClInclude Include="bullet.h">
       <Filter>GameFramework2D\총알</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>MainGame\슈팅게임</Filter>
-    </ClInclude>
     <ClInclude Include="util.h">
       <Filter>GameFramework2D\유틸</Filter>
-    </ClInclude>
-    <ClInclude Include="enemyManager.h">
-      <Filter>MainGame\슈팅게임</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy.h">
-      <Filter>MainGame\슈팅게임</Filter>
-    </ClInclude>
-    <ClInclude Include="minion.h">
-      <Filter>MainGame\슈팅게임</Filter>
     </ClInclude>
     <ClInclude Include="progressBar.h">
       <Filter>GameFramework2D\체력바</Filter>
@@ -188,6 +176,12 @@
     <ClInclude Include="tileNode.h">
       <Filter>MainGame\맵툴메인</Filter>
     </ClInclude>
+    <ClInclude Include="gameScene.h">
+      <Filter>MainGame\게임화면</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>MainGame\게임화면</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainGame.cpp">
@@ -214,20 +208,8 @@
     <ClCompile Include="bullet.cpp">
       <Filter>GameFramework2D\총알</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>MainGame\슈팅게임</Filter>
-    </ClCompile>
     <ClCompile Include="util.cpp">
       <Filter>GameFramework2D\유틸</Filter>
-    </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>MainGame\슈팅게임</Filter>
-    </ClCompile>
-    <ClCompile Include="enemyManager.cpp">
-      <Filter>MainGame\슈팅게임</Filter>
-    </ClCompile>
-    <ClCompile Include="minion.cpp">
-      <Filter>MainGame\슈팅게임</Filter>
     </ClCompile>
     <ClCompile Include="progressBar.cpp">
       <Filter>GameFramework2D\체력바</Filter>
@@ -291,6 +273,12 @@
     </ClCompile>
     <ClCompile Include="tileMap.cpp">
       <Filter>MainGame\맵툴메인</Filter>
+    </ClCompile>
+    <ClCompile Include="gameScene.cpp">
+      <Filter>MainGame\게임화면</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>MainGame\게임화면</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -144,9 +144,8 @@
   <ItemGroup>
     <ClInclude Include="bullet.h" />
     <ClInclude Include="commonMacroFunction.h" />
-    <ClInclude Include="enemy.h" />
-    <ClInclude Include="enemyManager.h" />
     <ClInclude Include="gameNode.h" />
+    <ClInclude Include="gameScene.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="iniData.h" />
@@ -160,7 +159,6 @@
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="maptoolScene.h" />
     <ClInclude Include="menuScene.h" />
-    <ClInclude Include="minion.h" />
     <ClInclude Include="pixelCollision.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerData.h" />
@@ -182,9 +180,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
-    <ClCompile Include="enemy.cpp" />
-    <ClCompile Include="enemyManager.cpp" />
     <ClCompile Include="gameNode.cpp" />
+    <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="iniData.cpp" />
@@ -198,7 +195,6 @@
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="maptoolScene.cpp" />
     <ClCompile Include="menuScene.cpp" />
-    <ClCompile Include="minion.cpp" />
     <ClCompile Include="pixelCollision.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerData.cpp" />

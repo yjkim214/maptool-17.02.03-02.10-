@@ -64,23 +64,21 @@ void loadingScene::loadingImage(void)
 	}
 
 	//로딩화면 이미지
-	IMAGEMANAGER->addImage("guiLoadingScene", "guiLoadingScene.bmp", 365, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("guiLoadingScene", "guiLoadingScene.bmp", 365, 30, true, RGB(255, 0, 255));
 
 	//메뉴화면 이미지
-	IMAGEMANAGER->addImage("mainmenu", "mainmenu.bmp", WINSIZEX, WINSIZEY);
-	IMAGEMANAGER->addImage("menu_playbutton", "menu_playbutton.bmp", -85, 240, 301, 34, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("menu_mapbutton", "menu_mapbutton.bmp", -85, 300, 301, 34, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("menu_quitbutton", "menu_quitbutton.bmp", -85, 360, 301, 34, true, RGB(255, 0, 255));
-	SOUNDMANAGER->addSound("main_menu", "main_menu.ogg", true, true);
-
-	//맵툴 이미지
-	_loading->loadFrameImage("tileMapBase", "tileMapBase.bmp", 168, 160, 7, 4, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("tileMapBaseBig", "tileMapBaseBig.bmp", 336, 320, 7, 4, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("stairs", "stairs.bmp", 48, 24, 2, 1);
+	_loading->loadImage("mainmenu", "mainmenu.bmp", WINSIZEX, WINSIZEY);
+	_loading->loadImage("menu_playbutton", "menu_playbutton.bmp", -85, 240, 301, 34, true, RGB(255, 0, 255));
+	_loading->loadImage("menu_mapbutton", "menu_mapbutton.bmp", -85, 300, 301, 34, true, RGB(255, 0, 255));
+	_loading->loadImage("menu_quitbutton", "menu_quitbutton.bmp", -85, 360, 301, 34, true, RGB(255, 0, 255));
+	_loading->loadSound("main_menu", "main_menu.ogg", true, true);
 
 	//백그라운드 이미지
 	_loading->loadImage("백그라운드", "background.bmp", WINSIZEX, WINSIZEY);
 
+	//게임화면
+	_loading->loadFrameImage("player", "player.bmp", 384, 480, 8, 10, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("player_jump", "player_jump.bmp", 120, 480, 5, 10, true, RGB(255, 0, 255));
 }
 //로딩사운드 함수(이곳에 사운드를 전부 넣어라)
 void loadingScene::loadingSound(void)

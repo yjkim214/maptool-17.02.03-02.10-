@@ -1,51 +1,67 @@
 #pragma once
 #include "gameNode.h"
-#include "bullet.h"			//미사일클래스를 사용하기 위해
-#include "progressBar.h"	//체력바 클래스 사용하기 위해
 
-//적매니져 상호참조하기 위해 클래스 전방선언
-class enemyManager;
+#define INIT_ATT		1
+#define INIT_MAXHP		3
+#define PLAYER_SIZEX	48
+#define PLAYER_SIZEY	48
+
+enum PLAYERDIRECTION
+{
+	PLAYERDIRECTION_LEFT,
+	PLAYERDIRECTION_RIGHT,
+	PLAYERDIRECTION_UP,
+	PLAYERDIRECTION_DOWN,
+};
 
 class player : public gameNode
 {
 private:
-	image* _rocket;			//로켓(플레이어) 이미지
-	missile* _missile;		//미사일 클래스
-	missileM1* _missileM1;	//미사일M1 클래스
+	//플레이어 공격력
+	float _att;
+	//플레이어 HP
+	float _maxHp;
+	float _hp;
 
-	enemyManager* _em;		//동적할당 하면 안된다!!!
+	//플레이어가 현재 있는 타일의 인덱스
+	POINT _index;
 
-	progressBar* _hpBar;	//체력바
-	float _maxHp, _currentHp;//최대체력, 현재체력	
+	//플레이어의 방향
+	PLAYERDIRECTION _direct;
+	//플레이어의 위치
+	float _x, _y;
+	//플레이어의 렉트
+	RECT _rc;
 
-	//int _x, _y;			//위치 좌표
-	//RECT _rc;				//플레이어 렉트
+	//이동관련 변수
+	float _speed;
+	bool _isLeft;
+	bool _isMove;
+
+	//애니메이션 관련 변수
+	int _count;
+	int _currentFrameX;
+	image* _playerImg;
+
+	//TEST
+	float _destPosX;
+	float _destPosY;
+
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
 
-	//플레이어 무브
-	//void move();
+	//접근자
+	POINT getIndex() { return _index; }
 
-	//미사일M1 삭제
-	void removeMissileM1(int index);
+	//플레이어 움직임
+	void move();
 
-	//충돌함수(플레이어의 총알클래스의 총알벡터과 적매니져의 미니언벡터)
-	void collision();
-
-	//체력바 피통깍기
-	void hitDamage(float damage);
-
-	//미사일M1 가져오기
-	missileM1* getMissileM1() { return _missileM1; }
-	image* getPlayerImage() { return _rocket; }
-
-	//상호참조시 적매니져포인터를 넘길 셋터함수
-	void setEMLink(enemyManager* em) { _em = em; }
+	//플레이어 애니메이션
+	void animation();
 
 	player() {}
 	~player() {}
 };
-
