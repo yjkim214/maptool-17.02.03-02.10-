@@ -81,6 +81,10 @@ void loadingScene::loadingImage(void)
 	_loading->loadFrameImage("tileMapBaseBig", "tileMapBaseBig.bmp", 336, 320, 7, 4, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("stairs", "stairs.bmp", 48, 24, 2, 1);
 
+	//몬스터 
+	_loading->loadFrameImage("Slime", "Slime.bmp", 192, 96, 4, 2, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("Blueslime", "Blueslime.bmp", 384, 96, 8, 2, true, RGB(255, 0, 255));
+
 	//게임화면
 	_loading->loadFrameImage("player", "player.bmp", 384, 480, 8, 10, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("player_jump", "player_jump.bmp", 120, 480, 5, 10, true, RGB(255, 0, 255));
