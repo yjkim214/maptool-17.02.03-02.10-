@@ -8,7 +8,8 @@ private:
 	tagTile _tiles[TILEX * TILEY];		//타일
 	DWORD _attribute[TILEX * TILEY];	//속성
 
-	RECT mapscreen;
+	float cameraPosX;
+	float cameraPosY;
 
 public:
 	HRESULT init(void);

@@ -88,7 +88,7 @@ void maptoolScene::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
-		SCENEMANAGER->changeScene("맵화면");
+		SCENEMANAGER->changeScene("게임화면");
 	}
 
 }

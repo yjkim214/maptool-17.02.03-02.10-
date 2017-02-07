@@ -17,6 +17,8 @@ public:
 	//¼³Á¤ÀÚ
 	float getX() { return _x; }
 	float getY() { return _y; }
+	void setX(float x) { _x = x; }
+	void setY(float y) { _y = y; }
 	RECT getRect() { return _rc; }
 
 	drawRectManager() {}

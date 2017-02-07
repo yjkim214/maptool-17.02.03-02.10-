@@ -5,7 +5,11 @@ HRESULT tileMap::init(void)
 {
 	//¸Ê ·Îµå
 	this->load();
+
 	setStartPos(1, 0);
+
+	cameraPosX = DRAWRECTMANAGER->getX();
+	cameraPosY = DRAWRECTMANAGER->getY();
 
 	return S_OK;
 }
@@ -16,6 +20,44 @@ void tileMap::release(void)
 
 void tileMap::update(void)
 {
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	{
+		DRAWRECTMANAGER->setX(DRAWRECTMANAGER->getX() - 2);
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	{
+		DRAWRECTMANAGER->setX(DRAWRECTMANAGER->getX() + 2);
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	{
+		DRAWRECTMANAGER->setY(DRAWRECTMANAGER->getY() - 2);
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	{
+		DRAWRECTMANAGER->setY(DRAWRECTMANAGER->getY() + 2);
+	}
+
+	if (cameraPosX != DRAWRECTMANAGER->getX())
+	{
+		float speed = cameraPosX - DRAWRECTMANAGER->getX();
+		for (int i = 0; i < TILEX * TILEY; i++)
+		{
+			_tiles[i].rc.left += speed;
+			_tiles[i].rc.right += speed;
+		}
+		cameraPosX = DRAWRECTMANAGER->getX();
+	}
+
+	if (cameraPosY != DRAWRECTMANAGER->getY())
+	{
+		float speed = cameraPosY - DRAWRECTMANAGER->getY();
+		for (int i = 0; i < TILEX * TILEY; i++)
+		{
+			_tiles[i].rc.top += speed;
+			_tiles[i].rc.bottom += speed;
+		}
+		cameraPosY = DRAWRECTMANAGER->getY();
+	}
 
 }
 
@@ -121,11 +163,13 @@ void tileMap::load(void)
 
 void tileMap::setStartPos(int indexX, int indexY)
 {
+	DRAWRECTMANAGER->setX(TILESIZEGAME * indexX - DRAWRECTMANAGER->getX() + TILESIZEGAME / 2);
+	DRAWRECTMANAGER->setY(TILESIZEGAME * indexY - DRAWRECTMANAGER->getY() + TILESIZEGAME / 2);
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
-		_tiles[i].rc.left -= TILESIZEGAME * indexX - DRAWRECTMANAGER->getX() + TILESIZEGAME / 2;
-		_tiles[i].rc.right -= TILESIZEGAME * indexX - DRAWRECTMANAGER->getX() + TILESIZEGAME / 2;
-		_tiles[i].rc.top -= TILESIZEGAME * indexY - DRAWRECTMANAGER->getY() + TILESIZEGAME / 2;
-		_tiles[i].rc.bottom -= TILESIZEGAME * indexY - DRAWRECTMANAGER->getY() + TILESIZEGAME / 2;
+		_tiles[i].rc.left -= DRAWRECTMANAGER->getX();
+		_tiles[i].rc.right -= DRAWRECTMANAGER->getX();
+		_tiles[i].rc.top -= DRAWRECTMANAGER->getY();
+		_tiles[i].rc.bottom -= DRAWRECTMANAGER->getY();
 	}
 }
