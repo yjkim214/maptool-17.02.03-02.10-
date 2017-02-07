@@ -142,7 +142,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Blueslime.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="cEnemy.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="drawRectManager.h" />
     <ClInclude Include="gameNode.h" />
@@ -168,6 +170,7 @@
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="sceneTest.h" />
     <ClInclude Include="singletonBase.h" />
+    <ClInclude Include="Slime.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="soundTestScene.h" />
     <ClInclude Include="stdafx.h" />
@@ -178,7 +181,9 @@
     <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Blueslime.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="cEnemy.cpp" />
     <ClCompile Include="drawRectManager.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="gameScene.cpp" />
@@ -201,6 +206,7 @@
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="sceneTest.cpp" />
+    <ClCompile Include="Slime.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="soundTestScene.cpp" />
     <ClCompile Include="stdafx.cpp">
