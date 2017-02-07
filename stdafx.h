@@ -41,6 +41,7 @@ using namespace MY_UTIL;
 #include "sceneManager.h"
 #include "timeManager.h"
 #include "soundManager.h"
+#include "drawRectManager.h"
 
 //====================================================================
 //			## 싱글톤을 이곳에 추가한다 ##
@@ -54,6 +55,7 @@ using namespace MY_UTIL;
 #define INIDATA iniData::getSingleton()
 #define TIMEMANAGER timeManager::getSingleton()
 #define SOUNDMANAGER soundManager::getSingleton()
+#define DRAWRECTMANAGER drawRectManager::getSingleton()
 
 //====================================================================
 //			## 디파인문 - 메크로 ## (윈도우창 초기화)
@@ -63,7 +65,7 @@ using namespace MY_UTIL;
 #define WINSTARTY	0
 #define WINSIZEX	800
 #define WINSIZEY	450
-#define WINSTYLE		WS_CAPTION | WS_SYSMENU
+#define WINSTYLE	WS_CAPTION | WS_SYSMENU
 
 //====================================================================
 //			## 메크로함수 ## (클래스 동적할당된 부분 해제)

@@ -149,12 +149,6 @@
     <ClInclude Include="soundTestScene.h">
       <Filter>MainGame\소리재생</Filter>
     </ClInclude>
-    <ClInclude Include="tankGameScene.h">
-      <Filter>MainGame\맵툴메인</Filter>
-    </ClInclude>
-    <ClInclude Include="tank.h">
-      <Filter>MainGame\맵툴메인</Filter>
-    </ClInclude>
     <ClInclude Include="isometricScene.h">
       <Filter>MainGame\입체타일</Filter>
     </ClInclude>
@@ -181,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="player.h">
       <Filter>MainGame\게임화면</Filter>
+    </ClInclude>
+    <ClInclude Include="drawRectManager.h">
+      <Filter>GameFramework2D\매니져</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -250,12 +247,6 @@
     <ClCompile Include="soundTestScene.cpp">
       <Filter>MainGame\소리재생</Filter>
     </ClCompile>
-    <ClCompile Include="tankGameScene.cpp">
-      <Filter>MainGame\맵툴메인</Filter>
-    </ClCompile>
-    <ClCompile Include="tank.cpp">
-      <Filter>MainGame\맵툴메인</Filter>
-    </ClCompile>
     <ClCompile Include="isometricScene.cpp">
       <Filter>MainGame\입체타일</Filter>
     </ClCompile>
@@ -279,6 +270,9 @@
     </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>MainGame\게임화면</Filter>
+    </ClCompile>
+    <ClCompile Include="drawRectManager.cpp">
+      <Filter>GameFramework2D\매니져</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

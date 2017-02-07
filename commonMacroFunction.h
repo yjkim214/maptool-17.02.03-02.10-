@@ -55,3 +55,9 @@ inline void EllipseMakeCenter(HDC hdc, int x, int y, int width, int height)
 	Ellipse(hdc, x - width / 2, y - height / 2, x + width / 2, y + height / 2);
 }
 
+inline bool IntersectRect(const RECT *lprcSrc1, const RECT *lprcSrc2)
+{
+	RECT temp;
+	if (IntersectRect(&temp, lprcSrc1, lprcSrc2)) { return true; }
+	return false;
+}

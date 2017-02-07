@@ -75,6 +75,11 @@ void loadingScene::loadingImage(void)
 
 	//백그라운드 이미지
 	_loading->loadImage("백그라운드", "background.bmp", WINSIZEX, WINSIZEY);
+	
+	//맵툴화면
+	_loading->loadFrameImage("tileMapBase", "tileMapBase.bmp", 168, 160, 7, 4, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("tileMapBaseBig", "tileMapBaseBig.bmp", 336, 320, 7, 4, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("stairs", "stairs.bmp", 48, 24, 2, 1);
 
 	//게임화면
 	_loading->loadFrameImage("player", "player.bmp", 384, 480, 8, 10, true, RGB(255, 0, 255));

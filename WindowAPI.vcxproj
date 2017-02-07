@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="bullet.h" />
     <ClInclude Include="commonMacroFunction.h" />
+    <ClInclude Include="drawRectManager.h" />
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="gameScene.h" />
     <ClInclude Include="image.h" />
@@ -170,8 +171,6 @@
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="soundTestScene.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="tank.h" />
-    <ClInclude Include="tankGameScene.h" />
     <ClInclude Include="tileMap.h" />
     <ClInclude Include="tileNode.h" />
     <ClInclude Include="timeManager.h" />
@@ -180,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="drawRectManager.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="image.cpp" />
@@ -209,8 +209,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="tank.cpp" />
-    <ClCompile Include="tankGameScene.cpp" />
     <ClCompile Include="tileMap.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="txtData.cpp" />

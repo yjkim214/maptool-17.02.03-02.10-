@@ -16,11 +16,11 @@ HRESULT player::init(void)
 	//방향 초기화
 	_direct = PLAYERDIRECTION_LEFT;
 	//위치 초기화
-	_x = 0.0f;
-	_y = 0.0f;
+	_x = WINSIZEX / 2;
+	_y = WINSIZEY / 2;
 
 	//렉트 초기화
-	_rc = RectMake(_x, _y, PLAYER_SIZEX, PLAYER_SIZEY);
+	_rc = RectMakeCenter(_x, _y, PLAYER_SIZEX, PLAYER_SIZEY);
 
 	//플레이어 속도 초기화
 	_speed = 4.8f;
@@ -145,11 +145,11 @@ void player::move()
 			_isMove = false;
 		}
 		//캐릭터 렉트 재설정
-		_rc = RectMake(_x, _y, PLAYER_SIZEX, PLAYER_SIZEY);
+		_rc = RectMakeCenter(_x, _y, PLAYER_SIZEX, PLAYER_SIZEY);
 
 		//캐릭터 위치에 따른 인덱스 설정
-		_index.x = _x / PLAYER_SIZEX;
-		_index.y = _y / PLAYER_SIZEY;
+		//_index.x = _x / PLAYER_SIZEX;
+		//_index.y = _y / PLAYER_SIZEY;
 	}
 }
 

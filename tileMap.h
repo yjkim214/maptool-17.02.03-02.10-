@@ -20,7 +20,6 @@ public:
 	void load(void);
 
 	void setStartPos(int indexX,int indexY);
-	void moveMap();
 
 	//타일 가져오기
 	tagTile* getTiles(void) { return _tiles; }

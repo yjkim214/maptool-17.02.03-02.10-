@@ -37,7 +37,7 @@ void menuScene::update(void)
 		//버튼 안에 마우스가 있고 클릭을 한다면 알파값을 변경
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)) { _alphaPlay = 150; }
 		//버튼 안에 마우스가 있고 마우스를 눌렀다 뗏다면 씬을 변경해준다
-		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON)){}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON)) { SCENEMANAGER->changeScene("게임화면"); }
 	}
 
 	//플레이 버튼 안에 마우스가 없다면

@@ -14,7 +14,7 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->addScene("로딩화면", new loadingScene);
 	SCENEMANAGER->addScene("메뉴화면", new menuScene);
 	SCENEMANAGER->addScene("맵툴화면", new maptoolScene);
-	SCENEMANAGER->addScene("맵화면", new tileMap);
+	SCENEMANAGER->addScene("게임화면", new gameScene);
 	/*현재씬 설정*/
 	SCENEMANAGER->changeScene("인트로화면");
 

@@ -54,8 +54,14 @@ public:
 	void render(void);
 
 	//접근자
+	float getAtt() { return _att; }
+	float getHp() { return _hp; }
 	POINT getIndex() { return _index; }
+	PLAYERDIRECTION getDirect() { return _direct; }
+	bool isMove() { return _isMove; }
 
+	//설정자
+	void setHp(int hp) { _hp = hp; }
 	//플레이어 움직임
 	void move();
 
