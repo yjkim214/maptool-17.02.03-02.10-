@@ -81,6 +81,13 @@ void loadingScene::loadingImage(void)
 	_loading->loadFrameImage("tileMapBaseBig", "tileMapBaseBig.bmp", 336, 320, 7, 4, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("stairs", "stairs.bmp", 48, 24, 2, 1);
 
+	_loading->loadImage("save", "save.bmp", 71, 44, true, RGB(255, 0, 255));
+	_loading->loadImage("load", "load.bmp", 71, 44, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("slot1", "slot1.bmp", 76, 88, 1, 2, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("slot2", "slot2.bmp", 76, 88, 1, 2, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("slot3", "slot3.bmp", 76, 88, 1, 2, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("eraser", "eraser.bmp", 86, 88, 1, 2, true, RGB(255, 0, 255));
+
 	//¸ó½ºÅÍ 
 	_loading->loadFrameImage("Slime", "Slime.bmp", 192, 96, 4, 2, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("Blueslime", "Blueslime.bmp", 384, 96, 8, 2, true, RGB(255, 0, 255));

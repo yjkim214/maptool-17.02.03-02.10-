@@ -9,13 +9,22 @@ private:
 	tagSampleTile _sampleTiles[SAMPLETILEX * SAMPLETILEY];	//오른쪽화면 타일(총 160개)
 	tagCurrentTile _currentTile;	//현재타일
 
-	//버튼 5개(세이브, 로드, 지형, 오브젝트, 지우개)
+									//버튼 5개(세이브, 로드, 지형, 오브젝트, 지우개)
 	RECT _rcSave, _rcLoad, _rcTerrain, _rcObject, _rcEraser;
+
+	RECT _slot1, _slot2, _slot3;
 
 	CTRL _ctrlSelect;
 
 	RECT mapscreen;
 
+	int playerX;
+	int playerY;
+	int goalX;
+	int goalY;
+
+
+	int slot;
 
 public:
 	HRESULT init(void);
@@ -25,7 +34,7 @@ public:
 
 	//맵툴세팅
 	void maptoolSetup(void); //초기화에 넣어두면 된다
-	//맵세팅
+							 //맵세팅
 	void setMap(void);
 	//세이브
 	void save(void);

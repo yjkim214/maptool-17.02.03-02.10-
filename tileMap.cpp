@@ -4,9 +4,12 @@
 HRESULT tileMap::init(void)
 {
 	//맵 로드
+
+	slot = 1;
+
 	this->load();
 
-	setStartPos(13, 13);
+	setStartPos();
 
 	return S_OK;
 }
@@ -26,6 +29,38 @@ void tileMap::update(void)
 		_tiles[i].rc.top = _initRect[i].top - DRAWRECTMANAGER->getY();
 		_tiles[i].rc.bottom = _initRect[i].bottom - DRAWRECTMANAGER->getY();
 	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		slot = 1;
+		load();
+		DRAWRECTMANAGER->init();
+
+		setStartPos();
+		
+
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F2))
+	{
+		slot = 2;
+		load();
+		DRAWRECTMANAGER->init();
+		setStartPos();
+
+		
+
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_F3))
+	{
+		slot = 3;
+		load();
+		DRAWRECTMANAGER->init();
+
+		setStartPos();
+
+		
+	}
+
 }
 
 void tileMap::render(void)
@@ -55,7 +90,7 @@ void tileMap::render(void)
 		}
 	}
 
-	if (KEYMANAGER->isToggleKey(VK_F2))
+	if (KEYMANAGER->isToggleKey(VK_F4))
 	{
 		//이미지타일 렉트 렌더
 		RECT col;
@@ -82,11 +117,12 @@ void tileMap::objRender(void)
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
 		RECT col;
-		if (IntersectRect(&col, &DRAWRECTMANAGER->getRect(), &_tiles[i].rc))
+		RECT object = RectMake(_tiles[i].rc.left, _tiles[i].rc.top - 32, 48, 80);
+		if (IntersectRect(&col, &DRAWRECTMANAGER->getRect(), &object))
 		{
 			if (_tiles[i].rc.right > DRAWRECTMANAGER->getRect().right)
 			{
-				if (_tiles[i].obj == OBJECT_NONE) continue;
+				if (!(_tiles[i].obj == OBJECT_BLOCK || _tiles[i].obj == OBJECT_GOLDBLOCK || _tiles[i].obj == OBJECT_BOX)) continue;
 				image* temp = IMAGEMANAGER->findImage("tileMapBaseBig");
 				IMAGEMANAGER->render("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
 					DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
@@ -94,7 +130,7 @@ void tileMap::objRender(void)
 
 			else
 			{
-				if (_tiles[i].obj == OBJECT_NONE) continue;
+				if (!(_tiles[i].obj == OBJECT_BLOCK || _tiles[i].obj == OBJECT_GOLDBLOCK || _tiles[i].obj == OBJECT_BOX)) continue;
 				IMAGEMANAGER->frameRender("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX, _tiles[i].objFrameY);
 			}
 		}
@@ -111,8 +147,21 @@ void tileMap::load(void)
 	HANDLE file;
 	DWORD read;
 
-	file = CreateFile("save.map", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
+	if (slot == 1)
+	{
+		file = CreateFile("save1.map", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
+	}
+	else if (slot == 2)
+	{
+		file = CreateFile("save2.map", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
+	}
+	else if (slot == 3)
+	{
+		file = CreateFile("save3.map", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
+	}
 
 	CloseHandle(file);
 
@@ -122,27 +171,43 @@ void tileMap::load(void)
 	{
 		if (_tiles[i].obj == OBJECT_BLOCK) _attribute[i] |= ATTR_UNMOVAL;
 		if (_tiles[i].obj == OBJECT_GOLDBLOCK) _attribute[i] |= ATTR_UNMOVAL;
+		if (_tiles[i].obj == OBJECT_PLAYER) _attribute[i] |= ATTR_PLAYER;
+		if (_tiles[i].obj == OBJECT_ENEMY1) _attribute[i] |= ATTR_ENEMY1;
+		if (_tiles[i].obj == OBJECT_ENEMY2) _attribute[i] |= ATTR_ENEMY2;
+		if (_tiles[i].obj == OBJECT_ENEMY3) _attribute[i] |= ATTR_ENEMY3;
+		if (_tiles[i].obj == OBJECT_BOX) _attribute[i] |= ATTR_BOX;
+		if (_tiles[i].obj == OBJECT_GOAL) _attribute[i] |= ATTR_GOAL;
 	}
 
 	//맵사이즈 수정
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
 		_tiles[i].rc = RectMake((i % TILEX) * TILESIZEGAME, (i / TILEX) * TILESIZEGAME, TILESIZEGAME, TILESIZEGAME);
-		//타일 초기 위치 고정 카메라의 위치와 값을 수정할 때 쓰임
 		_initRect[i] = _tiles[i].rc;
 	}
 }
 
-void tileMap::setStartPos(int indexX, int indexY)
+void tileMap::setStartPos()
 {
+	int indexX;
+	int indexY;
+	for (int i = 0; i < TILEX*TILEY; i++)
+	{
+		if (_tiles[i].obj == OBJECT_PLAYER)
+		{
+			indexX = i%TILEX;
+			indexY = i / TILEX;
+			break;
+		}
+	}
+
 	DRAWRECTMANAGER->setX(TILESIZEGAME * indexX - DRAWRECTMANAGER->getX() + TILESIZEGAME / 2);
 	DRAWRECTMANAGER->setY(TILESIZEGAME * indexY - DRAWRECTMANAGER->getY() + TILESIZEGAME / 2);
-
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
-		_tiles[i].rc.left = _initRect[i].left - DRAWRECTMANAGER->getX();
-		_tiles[i].rc.right = _initRect[i].right - DRAWRECTMANAGER->getX();
-		_tiles[i].rc.top = _initRect[i].top - DRAWRECTMANAGER->getY();
-		_tiles[i].rc.bottom = _initRect[i].bottom - DRAWRECTMANAGER->getY();
+		_tiles[i].rc.left -= DRAWRECTMANAGER->getX();
+		_tiles[i].rc.right -= DRAWRECTMANAGER->getX();
+		_tiles[i].rc.top -= DRAWRECTMANAGER->getY();
+		_tiles[i].rc.bottom -= DRAWRECTMANAGER->getY();
 	}
 }

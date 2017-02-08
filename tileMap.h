@@ -10,6 +10,11 @@ private:
 
 	RECT _initRect[TILEX * TILEY];		//타일 고정 위치
 
+	int slot;
+
+	float cameraPosX;
+	float cameraPosY;
+
 public:
 	HRESULT init(void);
 	void release(void);
@@ -18,9 +23,12 @@ public:
 	void objRender(void);
 
 	//타일맵 로드
+
 	void load(void);
 
-	void setStartPos(int indexX,int indexY);
+
+
+	void setStartPos();
 
 	//타일 가져오기
 	tagTile* getTiles(void) { return _tiles; }
@@ -39,16 +47,26 @@ public:
 		_attribute[indexY*TILEX + indexX] |= 0;
 	}
 
+	void releaseObject(int indexX, int indexY)
+	{
+		_tiles[indexY*TILEX + indexX].obj = OBJECT_NONE;
+		_attribute[indexY*TILEX + indexX] |= 0;
+	}
+
 	void setPlayerAttribute(int indexX, int indexY)
 	{
 		_tiles[indexY*TILEX + indexX].obj = OBJECT_PLAYER;
-		_attribute[indexY*TILEX + indexX] |= ATTR_UNMOVAL;
+
+
+		_attribute[indexY*TILEX + indexX] |= ATTR_PLAYER;
 	}
 
-	void setEnemyAttribute(int indexX, int indexY,int enemyType)
+	void setEnemyAttribute(int indexX, int indexY, int enemyType)
 	{
-		_tiles[indexY*TILEX + indexX].obj = (OBJECT)(enemyType+3);
-		_attribute[indexY*TILEX + indexX] |= ATTR_UNMOVAL;
+		_tiles[indexY*TILEX + indexX].obj = (OBJECT)(enemyType + 3);
+
+
+		_attribute[indexY*TILEX + indexX] |= ATTR_ENEMY1 << (enemyType - 1);
 	}
 
 	tileMap() {}

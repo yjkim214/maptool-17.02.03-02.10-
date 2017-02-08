@@ -12,7 +12,14 @@ HRESULT maptoolScene::init(void)
 	//지형그리기 버튼으로 초기화
 	_ctrlSelect = CTRL_TERRAINDRAW;
 
+	slot = 1;
+
 	mapscreen = RectMake(0, 0, SCREENSIZEX, WINSIZEY);
+
+	playerX = -1;
+	playerY = -1;
+	goalX = -1;
+	goalY = -1;
 
 	return S_OK;
 }
@@ -36,18 +43,34 @@ void maptoolScene::update(void)
 			_ctrlSelect = CTRL_LOAD;
 			this->load();
 		}
-		if (PtInRect(&_rcTerrain, _ptMouse))
+		/*if (PtInRect(&_rcTerrain, _ptMouse))
 		{
-			_ctrlSelect = CTRL_TERRAINDRAW;
+		_ctrlSelect = CTRL_TERRAINDRAW;
 		}
 		if (PtInRect(&_rcObject, _ptMouse))
 		{
-			_ctrlSelect = CTRL_OBJDRAW;
-		}
+		_ctrlSelect = CTRL_OBJDRAW;
+		}*/
 		if (PtInRect(&_rcEraser, _ptMouse))
 		{
 			_ctrlSelect = CTRL_ERASER;
 		}
+
+		if (PtInRect(&_slot1, _ptMouse))
+		{
+			slot = 1;
+		}
+
+		if (PtInRect(&_slot2, _ptMouse))
+		{
+			slot = 2;
+		}
+
+		if (PtInRect(&_slot3, _ptMouse))
+		{
+			slot = 3;
+		}
+
 	}
 
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
@@ -103,7 +126,7 @@ void maptoolScene::render(void)
 		//게임타일 렉트 렌더
 		/*for (int i = 0; i < TILEX * TILEY; i++)
 		{
-			RectangleMake(getMemDC(), _tiles[i].rc);
+		RectangleMake(getMemDC(), _tiles[i].rc);
 		}*/
 		//이미지타일 렉트 렌더
 		for (int i = 0; i < SAMPLETILEX * SAMPLETILEY; i++)
@@ -128,9 +151,9 @@ void maptoolScene::render(void)
 			{
 				IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
 			}
-			
+
 		}
-		
+
 	}
 	//전체화면 왼쪽에 오브젝트를 그린다
 	for (int i = 0; i < TILEX * TILEY; i++)
@@ -150,14 +173,14 @@ void maptoolScene::render(void)
 				if (_tiles[i].obj == OBJECT_NONE) continue;
 				IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX, _tiles[i].objFrameY);
 			}
-			
+
 		}
-		
+
 	}
 
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
-		
+
 		//이미지타일 렉트 렌더
 		for (int i = 0; i < TILEX * TILEY; i++)
 		{
@@ -170,8 +193,8 @@ void maptoolScene::render(void)
 
 		//이미지타일 렉트 렌더
 		RECT col;
-		HBRUSH o_brush=(HBRUSH)SelectObject(getMemDC(),GetStockObject(NULL_BRUSH));
-		HPEN pen=CreatePen(PS_SOLID,1,RGB(255,255,255));
+		HBRUSH o_brush = (HBRUSH)SelectObject(getMemDC(), GetStockObject(NULL_BRUSH));
+		HPEN pen = CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
 		HPEN o_pen = (HPEN)SelectObject(getMemDC(), pen);
 		for (int i = 0; i < TILEX * TILEY; i++)
 		{
@@ -180,69 +203,93 @@ void maptoolScene::render(void)
 				RectangleMake(getMemDC(), _tiles[i].rc);
 			}
 		}
-		SelectObject(getMemDC(),o_pen);
+		SelectObject(getMemDC(), o_pen);
 		SelectObject(getMemDC(), o_brush);
 		DeleteObject(pen);
 
-		
+
 	}
 
 
 
-	//버튼렉트 렌더
-	RectangleMake(getMemDC(), _rcSave);
-	RectangleMake(getMemDC(), _rcLoad);
-	RectangleMake(getMemDC(), _rcTerrain);
-	RectangleMake(getMemDC(), _rcObject);
-	RectangleMake(getMemDC(), _rcEraser);
+	////버튼렉트 렌더
+	//RectangleMake(getMemDC(), _rcSave);
+	//RectangleMake(getMemDC(), _rcLoad);
+	///*RectangleMake(getMemDC(), _rcTerrain);
+	//RectangleMake(getMemDC(), _rcObject);*/
+	//RectangleMake(getMemDC(), _rcEraser);
 
-	//버튼렉트 글씨
-	SetBkMode(getMemDC(), TRANSPARENT);
-	TextOut(getMemDC(), _rcSave.left + 10, _rcSave.top + 10, "SAVE", strlen("SAVE"));
-	TextOut(getMemDC(), _rcLoad.left + 10, _rcLoad.top + 10, "LOAD", strlen("LOAD"));
-	TextOut(getMemDC(), _rcTerrain.left + 10, _rcTerrain.top + 10, "TERRAIN", strlen("TERRAIN"));
-	TextOut(getMemDC(), _rcObject.left + 10, _rcObject.top + 10, "OBJECT", strlen("OBJECT"));
-	TextOut(getMemDC(), _rcEraser.left + 10, _rcEraser.top + 10, "ERASER", strlen("ERASER"));
+	//RectangleMake(getMemDC(), _slot1);
+	//RectangleMake(getMemDC(), _slot2);
+	//RectangleMake(getMemDC(), _slot3);
 
-	switch (_ctrlSelect)
-	{
-	case CTRL_SAVE:
+	////버튼렉트 글씨
+	//SetBkMode(getMemDC(), TRANSPARENT);
+	//TextOut(getMemDC(), _rcSave.left + 10, _rcSave.top + 10, "SAVE", strlen("SAVE"));
+	//TextOut(getMemDC(), _rcLoad.left + 10, _rcLoad.top + 10, "LOAD", strlen("LOAD"));
+	///*TextOut(getMemDC(), _rcTerrain.left + 10, _rcTerrain.top + 10, "TERRAIN", strlen("TERRAIN"));
+	//TextOut(getMemDC(), _rcObject.left + 10, _rcObject.top + 10, "OBJECT", strlen("OBJECT"));*/
+	//TextOut(getMemDC(), _rcEraser.left + 10, _rcEraser.top + 10, "ERASER", strlen("ERASER"));
 
-		break;
-	case CTRL_LOAD:
-		break;
-	case CTRL_TERRAINDRAW:
-		TextOut(getMemDC(), SAMPLESTARTX, 350, "TERRAIN", strlen("TERRAIN"));
-		break;
-	case CTRL_OBJDRAW:
-		TextOut(getMemDC(), SAMPLESTARTX, 350, "OBJECT", strlen("OBJECT"));
-		break;
-	case CTRL_ERASER:
-		TextOut(getMemDC(), SAMPLESTARTX, 350, "ERASER", strlen("ERASER"));
-		break;
-	case CTRL_MAP1:
-		break;
-	case CTRL_MAP2:
-		break;
-	case CTRL_MAP3:
-		break;
-	case CTRL_END:
-		break;
-	default:
-		break;
-	}
+	//TextOut(getMemDC(), _slot1.left + 10, _slot1.top + 5, "SLOT1", strlen("SLOT1"));
+	//TextOut(getMemDC(), _slot2.left + 10, _slot2.top + 5, "SLOT2", strlen("SLOT2"));
+	//TextOut(getMemDC(), _slot3.left + 10, _slot3.top + 5, "SLOT3", strlen("SLOT3"));
 
+	//switch (_ctrlSelect)
+	//{
+	//case CTRL_SAVE:
+
+	//	break;
+	//case CTRL_LOAD:
+	//	break;
+	//case CTRL_TERRAINDRAW:
+	//	TextOut(getMemDC(), SAMPLESTARTX, 350, "TERRAIN", strlen("TERRAIN"));
+	//	break;
+	//case CTRL_OBJDRAW:
+	//	TextOut(getMemDC(), SAMPLESTARTX, 350, "OBJECT", strlen("OBJECT"));
+	//	break;
+	//case CTRL_ERASER:
+	//	TextOut(getMemDC(), SAMPLESTARTX, 350, "ERASER", strlen("ERASER"));
+	//	break;
+	//case CTRL_MAP1:
+	//	break;
+	//case CTRL_MAP2:
+	//	break;
+	//case CTRL_MAP3:
+	//	break;
+	//case CTRL_END:
+	//	break;
+	//default:
+	//	break;
+	//}
+
+	//char buf[20];
+	//sprintf(buf, "SLOT %d", slot);
+	//TextOut(getMemDC(), SAMPLESTARTX, 400, buf, strlen(buf));
+
+	IMAGEMANAGER->render("save", getMemDC(), _rcSave.left, _rcSave.top);
+	IMAGEMANAGER->render("load", getMemDC(), _rcLoad.left, _rcLoad.top);
+
+	IMAGEMANAGER->frameRender("slot1", getMemDC(), _slot1.left, _slot1.top, 0, (slot == 1));
+	IMAGEMANAGER->frameRender("slot2", getMemDC(), _slot2.left, _slot2.top, 0, (slot == 2));
+	IMAGEMANAGER->frameRender("slot3", getMemDC(), _slot3.left, _slot3.top, 0, (slot == 3));
+	IMAGEMANAGER->frameRender("eraser", getMemDC(), _rcEraser.left, _rcEraser.top, 0, (_ctrlSelect == CTRL_ERASER));
 
 }
 
 void maptoolScene::maptoolSetup(void)
 {
 	//렉트위치 초기화
-	_rcSave = RectMake(SAMPLESTARTX, 200, 100, 50);
-	_rcLoad = RectMake(SAMPLESTARTX + 120, 200, 100, 50);
-	_rcTerrain = RectMake(SAMPLESTARTX, 200 + 50, 100, 50);
-	_rcObject = RectMake(SAMPLESTARTX + 120, 200 + 50, 100, 50);
-	_rcEraser = RectMake(SAMPLESTARTX, 200 + 100, 100, 50);
+	_rcSave = RectMake(SAMPLESTARTX, 200, IMAGEMANAGER->findImage("save")->getWidth(), IMAGEMANAGER->findImage("save")->getHeight());
+	_rcLoad = RectMake(SAMPLESTARTX + 120, 200, IMAGEMANAGER->findImage("load")->getWidth(), IMAGEMANAGER->findImage("load")->getHeight());
+
+	_rcEraser = RectMake(SAMPLESTARTX, 200 + 50, IMAGEMANAGER->findImage("eraser")->getFrameWidth(), IMAGEMANAGER->findImage("eraser")->getFrameHeight());
+
+	_slot1 = RectMake(SAMPLESTARTX, 200 + 120, IMAGEMANAGER->findImage("slot1")->getFrameWidth(), IMAGEMANAGER->findImage("slot1")->getFrameHeight());
+
+	_slot2 = RectMake(SAMPLESTARTX + 80, 200 + 120, IMAGEMANAGER->findImage("slot2")->getFrameWidth(), IMAGEMANAGER->findImage("slot2")->getFrameHeight());
+
+	_slot3 = RectMake(SAMPLESTARTX + 160, 200 + 120, IMAGEMANAGER->findImage("slot3")->getFrameWidth(), IMAGEMANAGER->findImage("slot3")->getFrameHeight());
 
 	//왼쪽 게임화면 렉트 초기화
 	for (int i = 0; i < TILEY; i++)
@@ -258,8 +305,8 @@ void maptoolScene::maptoolSetup(void)
 	{
 		for (int j = 0; j < SAMPLETILEX; j++)
 		{
-			_sampleTiles[i * SAMPLETILEX + j].rc = RectMake(SAMPLESTARTX + j * TILESIZE, i * (TILESIZE+ 16), TILESIZE, TILESIZE+16);
-		
+			_sampleTiles[i * SAMPLETILEX + j].rc = RectMake(SAMPLESTARTX + j * TILESIZE, i * (TILESIZE + 16), TILESIZE, TILESIZE + 16);
+
 			//지형세팅
 			_sampleTiles[i * SAMPLETILEX + j].terrainFrameX = j;
 			_sampleTiles[i * SAMPLETILEX + j].terrainFrameY = i;
@@ -276,6 +323,10 @@ void maptoolScene::maptoolSetup(void)
 		_tiles[i].terrain = terrainSelect(_tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
 		_tiles[i].obj = OBJECT_NONE;
 	}
+
+	_currentTile.x = _sampleTiles[SAMPLETILEX * 2 + 4].terrainFrameX;
+	_currentTile.y = _sampleTiles[SAMPLETILEX * 2 + 4].terrainFrameY;
+
 }
 
 void maptoolScene::setMap(void)
@@ -284,8 +335,30 @@ void maptoolScene::setMap(void)
 	{
 		if (PtInRect(&_sampleTiles[i].rc, _ptMouse))
 		{
-			_currentTile.x = _sampleTiles[i].terrainFrameX;
-			_currentTile.y = _sampleTiles[i].terrainFrameY;
+
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage("tileMapBase")->getMemDC(), _ptMouse.x - SAMPLESTARTX, _ptMouse.y);
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			if (!(r == 255 && g == 0 && b == 255))
+			{
+				if (i / SAMPLETILEX == 2)
+				{
+					_ctrlSelect = CTRL_TERRAINDRAW;
+				}
+				else
+				{
+					_ctrlSelect = CTRL_OBJDRAW;
+				}
+				_currentTile.x = _sampleTiles[i].terrainFrameX;
+				_currentTile.y = _sampleTiles[i].terrainFrameY;
+
+			}
+			else
+			{
+
+			}
 			break;
 		}
 	}
@@ -308,10 +381,51 @@ void maptoolScene::setMap(void)
 				{
 					if (_tiles[i].terrain != TR_NONE)
 					{
-						_tiles[i].objFrameX = _currentTile.x;
-						_tiles[i].objFrameY = _currentTile.y;
-						_tiles[i].obj = objectSelect(_currentTile.x, _currentTile.y);
+						if ((objectSelect(_currentTile.x, _currentTile.y) == OBJECT_PLAYER))
+						{
+							if (playerX != -1 && playerY != -1)
+							{
+								_tiles[playerY*TILEX + playerX].objFrameX = 0;
+								_tiles[playerY*TILEX + playerX].objFrameY = 0;
+								_tiles[playerY*TILEX + playerX].obj = OBJECT_NONE;
+							}
+
+							_tiles[i].objFrameX = _currentTile.x;
+							_tiles[i].objFrameY = _currentTile.y;
+							_tiles[i].obj = objectSelect(_currentTile.x, _currentTile.y);
+							playerX = i%TILEX;
+							playerY = i / TILEX;
+
+						}
+
+						else if ((objectSelect(_currentTile.x, _currentTile.y) == OBJECT_GOAL))
+						{
+							if (goalX != -1 && goalY != -1)
+							{
+								_tiles[goalY*TILEX + goalX].objFrameX = 0;
+								_tiles[goalY*TILEX + goalX].objFrameY = 0;
+								_tiles[goalY*TILEX + goalX].obj = OBJECT_NONE;
+							}
+
+							_tiles[i].objFrameX = _currentTile.x;
+							_tiles[i].objFrameY = _currentTile.y;
+							_tiles[i].obj = objectSelect(_currentTile.x, _currentTile.y);
+							goalX = i%TILEX;
+							goalY = i / TILEX;
+						}
+
+						else
+						{
+							_tiles[i].objFrameX = _currentTile.x;
+							_tiles[i].objFrameY = _currentTile.y;
+							_tiles[i].obj = objectSelect(_currentTile.x, _currentTile.y);
+						}
+
+
 					}
+
+
+
 				}
 				//현재버튼이 지우개냐?
 				if (_ctrlSelect == CTRL_ERASER)
@@ -330,9 +444,30 @@ void maptoolScene::save(void)
 	HANDLE file;
 	DWORD write;
 
-	file = CreateFile("save.map", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL, NULL);
-	WriteFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
+	/*file = CreateFile("save.map", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+	FILE_ATTRIBUTE_NORMAL, NULL);
+	WriteFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &write, NULL);*/
+
+
+	if (slot == 1)
+	{
+		file = CreateFile("save1.map", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+			FILE_ATTRIBUTE_NORMAL, NULL);
+		WriteFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
+	}
+	else if (slot == 2)
+	{
+		file = CreateFile("save2.map", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+			FILE_ATTRIBUTE_NORMAL, NULL);
+		WriteFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
+	}
+	else if (slot == 3)
+	{
+		file = CreateFile("save3.map", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+			FILE_ATTRIBUTE_NORMAL, NULL);
+		WriteFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
+	}
+
 
 	CloseHandle(file);
 }
@@ -342,9 +477,29 @@ void maptoolScene::load(void)
 	HANDLE file;
 	DWORD read;
 
-	file = CreateFile("save.map", GENERIC_READ, 0, NULL, OPEN_EXISTING,
-		FILE_ATTRIBUTE_NORMAL, NULL);
+	/*file = CreateFile("save.map", GENERIC_READ, 0, NULL, OPEN_EXISTING,
+	FILE_ATTRIBUTE_NORMAL, NULL);
 	ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
+	*/
+	if (slot == 1)
+	{
+		file = CreateFile("save1.map", GENERIC_READ, 0, NULL, OPEN_EXISTING,
+			FILE_ATTRIBUTE_NORMAL, NULL);
+		ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
+	}
+	else if (slot == 2)
+	{
+		file = CreateFile("save2.map", GENERIC_READ, 0, NULL, OPEN_EXISTING,
+			FILE_ATTRIBUTE_NORMAL, NULL);
+		ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
+	}
+	else if (slot == 3)
+	{
+		file = CreateFile("save3.map", GENERIC_READ, 0, NULL, OPEN_EXISTING,
+			FILE_ATTRIBUTE_NORMAL, NULL);
+		ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
+	}
+
 
 	CloseHandle(file);
 }
@@ -368,6 +523,10 @@ OBJECT maptoolScene::objectSelect(int frameX, int frameY)
 	if (frameX == 5 && frameY == 1)
 	{
 		return OBJECT_GOAL;
+	}
+	if (frameX == 6 && frameY == 1)
+	{
+		return OBJECT_BOX;
 	}
 	if (frameX == 0 && frameY == 3)
 	{
