@@ -1,11 +1,15 @@
 #pragma once
 #include "gameNode.h"
 
+class tileMap;
+
+#define MON_SIZE 48
+
 enum ENEMY_MOVEDIRECTION
 {
 	MOVEDIRECTION_LEFT,
-	MOVEDIRECTION_TOP,
 	MOVEDIRECTION_RIGHT,
+	MOVEDIRECTION_TOP,
 	MOVEDIRECTION_BOTTOM,
 };
 
@@ -20,6 +24,11 @@ protected:
 	float _y;
 	RECT _rc;
 
+	//타일 위의 인덱스
+	POINT _index;
+	float _initx;
+	float _inity;
+
 	//이동 속도
 	float _movespeed;
 
@@ -30,8 +39,10 @@ protected:
 	//데미지
 	int _dmg;
 
+
 	//이동 관련 카운트
 	int _movecount;
+	int _directioncount;
 	//애니메이션 관련 카운트
 	int _animcount;
 
@@ -43,33 +54,44 @@ protected:
 	//에너미 이미지
 	image* _image;
 
+	//잘하면되
+	//TEST
+	float _destX;
+	float _destY;
+
+	//타일맵 상호참조
+	tileMap* _tileMap;
+
 public:
+	//
 	virtual HRESULT init(void);
 	virtual void release(void);
 	virtual void update(void);
 	virtual void render(void);
 
-
+	//
 	virtual void move();
 	virtual void draw();
 	virtual void animation();
 
-	virtual void setSpeed(float speed) {}
-	virtual float getSpeed() { return 0.0f; }
+	//
+	void setSpeed(float speed) {}
+	float getSpeed() { return 0.0f; }
 
-	virtual void setHp(int HP) {}
-	virtual int getHp() { return 0; }
-	virtual void setDmg(int Dmg) {}
-	virtual int getDmg() { return 0; }
+	void setHp(int HP) {}
+	int getHp() { return 0; }
+	void setDmg(int Dmg) {}
+	int getDmg() { return 0; }
 
-	virtual float getX() { return 0.0f; }
-	virtual float getY() { return 0.0f; }
+	float getX() { return 0.0f; }
+	float getY() { return 0.0f; }
 
-	virtual RECT getRC() { return _rc; }
+	RECT getRC() { return _rc; }
+
+	void setLinkTileMap(tileMap* tileMap) { _tileMap = tileMap; }
 
 	cEnemy() : _direct(MOVEDIRECTION_LEFT), _movespeed(4.8f), _movecount(0), _animcount(0),
 		_isLeft(false), _isMove(false)
 	{}
 	~cEnemy() {}
 };
-
