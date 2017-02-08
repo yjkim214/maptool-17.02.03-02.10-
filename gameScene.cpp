@@ -11,6 +11,7 @@ HRESULT gameScene::init(void)
 
 	_player = new player;
 	_player->init();
+	_player->setLinkTileMap(_tileMap);
 	
 	return S_OK;
 }
@@ -34,4 +35,5 @@ void gameScene::render(void)
 {
 	_tileMap->render();
 	_player->render();
+	_tileMap->objRender();
 }

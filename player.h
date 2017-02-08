@@ -1,6 +1,8 @@
 #pragma once
 #include "gameNode.h"
 
+class tileMap;
+
 #define INIT_ATT		1
 #define INIT_MAXHP		3
 #define PLAYER_SIZEX	48
@@ -47,6 +49,8 @@ private:
 	float _destPosX;
 	float _destPosY;
 
+	tileMap* _tileMap;
+
 public:
 	HRESULT init(void);
 	void release(void);
@@ -67,6 +71,9 @@ public:
 
 	//플레이어 애니메이션
 	void animation();
+
+	//타일맵 상호참조
+	void setLinkTileMap(tileMap* tileMap) { _tileMap = tileMap; }
 
 	player() {}
 	~player() {}

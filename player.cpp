@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "player.h"
+#include "tileMap.h"
 
 HRESULT player::init(void)
 {
@@ -10,17 +11,19 @@ HRESULT player::init(void)
 	_maxHp = INIT_MAXHP;
 	_hp = INIT_MAXHP;
 
-	//인덱스 초기화
-	_index = { 0, 0 };
-
 	//방향 초기화
 	_direct = PLAYERDIRECTION_LEFT;
-	//위치 초기화
-	_x = WINSIZEX / 2;
-	_y = WINSIZEY / 2;
 
+	//위치 초기화
+	_x = DRAWRECTMANAGER->getX();
+	_y = DRAWRECTMANAGER->getY();
+	
 	//렉트 초기화
-	_rc = RectMakeCenter(_x, _y, PLAYER_SIZEX, PLAYER_SIZEY);
+	_rc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2, PLAYER_SIZEX, PLAYER_SIZEY);
+
+	//인덱스 초기화
+	_index.x = (_x + WINSIZEX / 2 - TILESIZEGAME / 2) / PLAYER_SIZEX;
+	_index.y = (_y + WINSIZEY / 2 - TILESIZEGAME / 2) / PLAYER_SIZEY;
 
 	//플레이어 속도 초기화
 	_speed = 4.8f;
@@ -38,6 +41,8 @@ HRESULT player::init(void)
 	//TEST
 	_destPosX = _x;
 	_destPosY = _y;
+
+	_tileMap = NULL;
 
 	return S_OK;
 }
@@ -73,44 +78,61 @@ void player::move()
 		{
 			//플레이어의 방향은 왼쪽
 			_direct = PLAYERDIRECTION_LEFT;
-			//플레이어를 움직이는 상태로
-			_isMove = true;
-
 			//왼쪽인지 아닌지 판별
 			_isLeft = true;
-			//TEST
-			_destPosX = _x - PLAYER_SIZEX;
+
+			if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] != ATTR_UNMOVAL)
+			{
+				//플레이어를 움직이는 상태로
+				_isMove = true;
+
+				//TEST
+				_destPosX = _x - PLAYER_SIZEX;
+			}
 		}
 
-		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+		else if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 		{
 			_direct = PLAYERDIRECTION_RIGHT;
-			//플레이어를 움직이는 상태로
-			_isMove = true;
-
+			//고개를 돌릴지 말지를 판별
 			_isLeft = false;
-			//TEST
-			_destPosX = _x + PLAYER_SIZEX;
+
+			if (_index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] != ATTR_UNMOVAL)
+			{
+				//플레이어를 움직이는 상태로
+				_isMove = true;
+
+				//TEST
+				_destPosX = _x + PLAYER_SIZEX;
+			}
 		}
 
-		if (KEYMANAGER->isOnceKeyDown(VK_UP))
+		else if (KEYMANAGER->isOnceKeyDown(VK_UP))
 		{
 			_direct = PLAYERDIRECTION_UP;
-			//플레이어를 움직이는 상태로
-			_isMove = true;
 
-			//TEST
-			_destPosY = _y - PLAYER_SIZEY;
+			if (_index.y != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] != ATTR_UNMOVAL)
+			{
+				//플레이어를 움직이는 상태로
+				_isMove = true;
+
+				//TEST
+				_destPosY = _y - PLAYER_SIZEY;
+			}
 		}
 
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		else if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 		{
 			_direct = PLAYERDIRECTION_DOWN;
-			//플레이어를 움직이는 상태로
-			_isMove = true;
 
-			//TEST
-			_destPosY = _y + PLAYER_SIZEY;
+			if (_index.y != TILEY - 1 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] != ATTR_UNMOVAL)
+			{
+				//플레이어를 움직이는 상태로
+				_isMove = true;
+
+				//TEST
+				_destPosY = _y + PLAYER_SIZEY;
+			}
 		}
 	}
 
@@ -136,7 +158,7 @@ void player::move()
 
 		//움직이는 상태일 때
 		//목적지의 인덱스와 플레이어의 거리가 작아졌을 때
-		if (getDistance(_x, _y, _destPosX, _destPosY) < _speed)
+		if (getDistance(_x, _y, _destPosX, _destPosY) < 1.0f)
 		{
 			//다음 인덱스의 위치로 플레이어를 고정
 			_x = _destPosX;
@@ -144,12 +166,12 @@ void player::move()
 			//움직이지 않는 상태로 만든다
 			_isMove = false;
 		}
-		//캐릭터 렉트 재설정
-		_rc = RectMakeCenter(_x, _y, PLAYER_SIZEX, PLAYER_SIZEY);
+		//카메라 위치 재설정
+		DRAWRECTMANAGER->setPos(_x, _y);
 
 		//캐릭터 위치에 따른 인덱스 설정
-		//_index.x = _x / PLAYER_SIZEX;
-		//_index.y = _y / PLAYER_SIZEY;
+		_index.x = (_x + WINSIZEX / 2 - TILESIZEGAME / 2) / PLAYER_SIZEX;
+		_index.y = (_y + WINSIZEY / 2 - TILESIZEGAME / 2) / PLAYER_SIZEY;
 	}
 }
 

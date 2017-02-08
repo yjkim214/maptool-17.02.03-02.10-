@@ -6,7 +6,7 @@ HRESULT drawRectManager::init(void)
 	_x = WINSIZEX / 2;
 	_y = WINSIZEY / 2;
 
-	_rc = RectMakeCenter(_x, _y, WINSIZEX, WINSIZEY);
+	_rc = RectMakeCenter(WINSIZEX / 2, WINSIZEY / 2, WINSIZEX, WINSIZEY);
 
 	return S_OK;
 }
@@ -27,6 +27,4 @@ void drawRectManager::setPos(float x, float y)
 {
 	_x = x;
 	_y = y;
-
-	_rc = RectMakeCenter(_x, _y, WINSIZEX, WINSIZEY);
 }

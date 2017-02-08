@@ -8,14 +8,14 @@ private:
 	tagTile _tiles[TILEX * TILEY];		//타일
 	DWORD _attribute[TILEX * TILEY];	//속성
 
-	float cameraPosX;
-	float cameraPosY;
+	RECT _initRect[TILEX * TILEY];		//타일 고정 위치
 
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
+	void objRender(void);
 
 	//타일맵 로드
 	void load(void);
@@ -54,4 +54,3 @@ public:
 	tileMap() {}
 	~tileMap() {}
 };
-
