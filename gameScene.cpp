@@ -2,6 +2,7 @@
 #include "gameScene.h"
 #include "tileMap.h"
 #include "player.h"
+#include "enemyManager.h"
 
 HRESULT gameScene::init(void)
 {
@@ -13,6 +14,11 @@ HRESULT gameScene::init(void)
 	_player->init();
 	_player->setLinkTileMap(_tileMap);
 	
+	_enemymanager = new enemyManager;
+	_enemymanager->setLinkTileMap(_tileMap);
+	_enemymanager->setLinkPlayer(_player);
+	_enemymanager->init();
+
 	return S_OK;
 }
 

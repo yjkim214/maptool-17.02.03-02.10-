@@ -188,6 +188,12 @@
     <ClInclude Include="Blueslime.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="habar.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainGame.cpp">
@@ -290,6 +296,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Blueslime.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="habar.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
