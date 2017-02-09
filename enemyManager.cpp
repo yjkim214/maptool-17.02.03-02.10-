@@ -55,8 +55,11 @@ void enemyManager::setEnemy(void)
 		if (_tileMap->getTiles()[i].obj == OBJECT_ENEMY1)
 		{
 			addenemy("½½¶óÀÓ", { i % TILEX, i / TILEX });
+			
+		
 		}
 	}
+	
 }
 
 void enemyManager::remobeEnemy(int index)
@@ -71,7 +74,7 @@ void enemyManager::addenemy(string KEY, POINT pos)
 		temp->init({ pos.x, pos.y });
 		temp->setLinkTileMap(_tileMap);
 		temp->setLinkPlayer(_player);
-		temp->setHp(2);
+		temp->setHp(5);
 		_vEnemy.push_back(temp);
 	}
 }

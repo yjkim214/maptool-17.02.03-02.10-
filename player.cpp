@@ -26,7 +26,7 @@ HRESULT player::init(void)
 	_index.y = (_y + WINSIZEY / 2 - TILESIZEGAME / 2) / PLAYER_SIZEY;
 
 	//플레이어 속도 초기화
-	_speed = 4.8f;
+	_speed = 5.0f;
 
 	//왼쪽이냐?
 	_isLeft = false;
@@ -158,7 +158,7 @@ void player::move()
 
 		//움직이는 상태일 때
 		//목적지의 인덱스와 플레이어의 거리가 작아졌을 때
-		if (getDistance(_x, _y, _destPosX, _destPosY) < 1.0f)
+		if (getDistance(_x, _y, _destPosX, _destPosY) < _speed)
 		{
 			//다음 인덱스의 위치로 플레이어를 고정
 			_x = _destPosX;

@@ -39,7 +39,7 @@ HRESULT Slime::init(POINT index)
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
-	_maxHp = 2;
+	_maxHp = 9;
 	_hp = _maxHp;
 
 	for (int i = 0; i < _maxHp; i++)
@@ -105,7 +105,7 @@ void Slime::update(void)
 	for (int i = 0; i < _hpbarlist.size(); i++)
 	{
 		_hpbarlist[i]->update();
-		_hpbarlist[i]->setX(_x - 12 * i);
+		_hpbarlist[i]->setX(_x - (12 * (float)(((float)_hpbarlist.size()/2)-i)));
 		_hpbarlist[i]->setY(_y - 24);
 
 	}
@@ -281,7 +281,7 @@ void Slime::move()
 
 void Slime::draw()
 {
-	_image->frameRender(getMemDC(), _rc.left, _rc.top, _image->getFrameX(), _image->getFrameY());
+	_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentframe, _image->getFrameY());
 }
 
 void Slime::animation()
@@ -289,14 +289,15 @@ void Slime::animation()
 	_animcount++;
 	if (_animcount % 8 == 0)
 	{
-		if (_image->getFrameX() == _image->getMaxFrameX())
+		if (_currentframe == _image->getMaxFrameX())
 		{
-			_image->setFrameX(0);
+			_currentframe = 0;
 		}
 
 		else
 		{
-			_image->setFrameX(_image->getFrameX() + 1);
+			_currentframe++;
+			_image->setFrameX(_currentframe);
 		}
 
 		_animcount = 0;
