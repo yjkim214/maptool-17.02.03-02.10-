@@ -65,7 +65,7 @@ void player::update(void)
 void player::render(void)
 {
 	//플레이어 렉트를 그려줌
-	RectangleMake(getMemDC(), _rc);
+	//RectangleMake(getMemDC(), _rc);
 	//플레이어 이미지를 그려줌
 	_playerImg->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX + 4 * static_cast<int>(_isLeft), 0);
 }
@@ -168,17 +168,17 @@ void player::move()
 				_heartbeat->removeMarker();
 			}
 
-			else if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+			else if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 			{
 				_heartbeat->removeMarker();
 			}
 
-			else if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+			else if (KEYMANAGER->isOnceKeyDown(VK_UP))
 			{
 				_heartbeat->removeMarker();
 			}
 
-			else if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+			else if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 			{
 				_heartbeat->removeMarker();
 			}
