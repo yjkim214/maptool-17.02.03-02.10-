@@ -1,7 +1,9 @@
 #pragma once
 #include "gameNode.h"
 #include "habar.h"
+
 class tileMap;
+class player;
 
 #define MON_SIZE 48
 
@@ -45,6 +47,7 @@ protected:
 	//애니메이션 관련 카운트
 	int _animcount;
 	int _currentframe;
+
 	//왼쪽인지 아닌지
 	bool _isLeft;
 	//이동할지 안할지
@@ -52,6 +55,8 @@ protected:
 
 	//에너미 이미지
 	image* _image;
+	image* _attack;
+
 
 	//잘하면되
 	//TEST
@@ -60,6 +65,7 @@ protected:
 
 	//타일맵 상호참조
 	tileMap* _tileMap;
+	player* _player;
 
 public:
 	//
@@ -80,6 +86,9 @@ public:
 
 	void setHp(int hp) { _hp = hp; }
 	int getHp() { return _hp; }
+
+	int getMaxHp() { return _maxHp; }
+
 	void setDmg(int Dmg) {}
 	int getDmg() { return 0; }
 
@@ -89,6 +98,9 @@ public:
 	RECT getRC() { return _rc; }
 
 	void setLinkTileMap(tileMap* tileMap) { _tileMap = tileMap; }
+	void setLinkPlayer(player* player) { _player = player; }
+
+
 
 	cEnemy() : _direct(MOVEDIRECTION_LEFT), _movespeed(4.8f), _movecount(0), _animcount(0),
 		_isLeft(false), _isMove(false)

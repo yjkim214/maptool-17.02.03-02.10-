@@ -17,10 +17,6 @@ HRESULT gameScene::init(void)
 	_heartbeat = new heartbeat;
 	_heartbeat->init();
 
-	_enemymanager = new enemyManager;
-	_enemymanager->setLinkTileMap(_tileMap);
-	_enemymanager->setLinkPlayer(_player);
-	_enemymanager->init();
 
 	_player->setLinkTileMap(_tileMap);
 	_player->setLinkHeartbeat(_heartbeat);
@@ -29,6 +25,13 @@ HRESULT gameScene::init(void)
 	{
 		_heartImg.push_back(IMAGEMANAGER->findImage("heart"));
 	}
+	_enemymanager = new enemyManager;
+	_enemymanager->init();
+
+	_enemymanager->setLinkTileMap(_tileMap);
+	_enemymanager->setLinkPlayer(_player);
+
+	_enemymanager->setEnemy();
 
 	SOUNDMANAGER->stop("main_menu");
 	SOUNDMANAGER->play("zone1_1");

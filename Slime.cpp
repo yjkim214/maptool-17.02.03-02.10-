@@ -10,9 +10,6 @@ HRESULT Slime::init(void)
 
 HRESULT Slime::init(POINT index)
 {
-
-
-
 	_image = IMAGEMANAGER->findImage("Slime");
 
 	_index = index;
@@ -39,15 +36,13 @@ HRESULT Slime::init(POINT index)
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
-	_maxHp = 9;
+	_maxHp = 2;
 	_hp = _maxHp;
 
 	for (int i = 0; i < _maxHp; i++)
 	{
 		addhpbar(_x - 12 * i, _y);
-
 	}
-
 
 	return S_OK;
 }
@@ -58,8 +53,8 @@ void Slime::release(void)
 	{
 		_hpbarlist[i]->release();
 		SAFE_DELETE(_hpbarlist[i]);
-
 	}
+
 	_hpbarlist.clear();
 }
 
@@ -78,8 +73,6 @@ void Slime::update(void)
 	{
 		/*cout << "_index : " << _index.x << endl;
 		cout << "_index : " << _index.y << endl;*/
-
-
 		for (int i = 0; i < _hpbarlist.size(); i++)
 		{
 			cout << " hp bar x : " << _hpbarlist[i]->getX() << endl;
@@ -91,31 +84,28 @@ void Slime::update(void)
 	}
 
 	//테스트용 
-
 	if (KEYMANAGER->isOnceKeyDown(VK_F2))
 	{
 		_hp--;
 	}
 
 	// hp 바를 위에 표시해준다 
-
 	for (int i = 0; i < _hpbarlist.size(); i++)
 	{
 		_hpbarlist[i]->update();
-		_hpbarlist[i]->setX(_x - (12 * (float)(((float)_hpbarlist.size()/2)-i)));
+		_hpbarlist[i]->setX(_x - (12 * (float)(((float)_hpbarlist.size() / 2) - i)));
 		_hpbarlist[i]->setY(_y - 24);
-
 	}
 }
 
 void Slime::render(void)
 {
 	draw();
+
 	for (int i = 0; i < _hpbarlist.size(); i++)
 	{
 		_hpbarlist[i]->render();
 	}
-
 }
 
 void Slime::move()
@@ -142,8 +132,6 @@ void Slime::move()
 						_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
 						_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 
-						cout << "충돌했다 " << endl;
-
 
 					}
 					else {
@@ -166,7 +154,8 @@ void Slime::move()
 						_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
 						_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 
-						cout << "충돌했다 " << endl;
+					
+
 					}
 
 					else
@@ -191,9 +180,10 @@ void Slime::move()
 						_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
 						_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 
-						cout << "충돌했다 " << endl;
-					}
+	
 
+
+					}
 					else {
 						_destY = _destY - MON_SIZE;
 						_isMove = true;
@@ -215,14 +205,14 @@ void Slime::move()
 						_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
 						_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 
-						cout << "충돌했다 " << endl;
-
-
+	
 					}
 
-					else {
+					else
+					{
 						_destY = _destY + MON_SIZE;
 						_isMove = true;
+
 						_tileMap->releaseEnemyAttribute(_index.x, _index.y);
 						_tileMap->setEnemyAttribute(_index.x, _index.y + 1, 1);
 					}
@@ -259,7 +249,6 @@ void Slime::move()
 			_inity = _destY;
 			//움직이지 않는 상태로 만든다
 			_isMove = false;
-
 		}
 
 
@@ -267,6 +256,7 @@ void Slime::move()
 
 	_x = _initx - DRAWRECTMANAGER->getX();
 	_y = _inity - DRAWRECTMANAGER->getY();
+
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
 	_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
@@ -293,7 +283,6 @@ void Slime::animation()
 			_currentframe++;
 			_image->setFrameX(_currentframe);
 		}
-
 		_animcount = 0;
 	}
 }
@@ -303,6 +292,5 @@ void Slime::addhpbar(float x, float y)
 	habar* newhpbar = new habar;
 	newhpbar->init("Mon_hart_front", "Mon_hart_back", x, y - 24, 12, 12);
 	_hpbarlist.push_back(newhpbar);
-
 	//it("Mon_hart_front", "Mon_hart_back", x, y - 24, 12, 12);
 }

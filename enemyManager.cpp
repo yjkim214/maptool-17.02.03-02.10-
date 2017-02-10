@@ -5,7 +5,7 @@
 HRESULT enemyManager::init(void)
 {
 	count = 0;
-	setEnemy();
+
 	return S_OK;
 }
 
@@ -57,22 +57,21 @@ void enemyManager::setEnemy(void)
 			addenemy("슬라임", { i % TILEX, i / TILEX });
 		}
 	}
-	
 }
 
 void enemyManager::remobeEnemy(int index)
 {
 }
 
-void enemyManager::addenemy(string KEY, POINT pos)
+void enemyManager::addenemy(string KEY, POINT index)
 {
 	if (KEY == "슬라임")
 	{
 		Slime* temp = new Slime;
-		temp->init({ pos.x, pos.y });
+		temp->init({ index.x, index.y });
+		temp->setHp(temp->getMaxHp());
 		temp->setLinkTileMap(_tileMap);
 		temp->setLinkPlayer(_player);
-		temp->setHp(5);
 		_vEnemy.push_back(temp);
 	}
 }
