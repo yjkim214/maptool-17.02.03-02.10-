@@ -36,6 +36,7 @@ void mainGame::update(void)
 
 	//¾À¸Å´ÏÁ® ¾÷µ¥ÀÌÆ®
 	SCENEMANAGER->update();
+	EFFECTMANAGER->update();
 }
 //=============================================================
 //	## render(void) ## ·»´õ
@@ -48,7 +49,7 @@ void mainGame::render(void)
 	
 	//¾À¸Å´ÏÁ® ·»´õ
 	SCENEMANAGER->render();
-
+	EFFECTMANAGER->render(getMemDC());
 	//Å¸ÀÓ¸Å´ÏÁ® ·»´õ
 	//TIMEMANAGER->render(getMemDC());
 

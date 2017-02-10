@@ -42,6 +42,7 @@ using namespace MY_UTIL;
 #include "timeManager.h"
 #include "soundManager.h"
 #include "drawRectManager.h"
+#include "effectManager.h"
 
 //====================================================================
 //			## 싱글톤을 이곳에 추가한다 ##
@@ -56,6 +57,7 @@ using namespace MY_UTIL;
 #define TIMEMANAGER timeManager::getSingleton()
 #define SOUNDMANAGER soundManager::getSingleton()
 #define DRAWRECTMANAGER drawRectManager::getSingleton()
+#define EFFECTMANAGER effectManager::getSingleton()
 
 //====================================================================
 //			## 디파인문 - 메크로 ## (윈도우창 초기화)

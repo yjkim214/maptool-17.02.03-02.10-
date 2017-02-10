@@ -203,6 +203,9 @@
     <ClInclude Include="heartbeat.h">
       <Filter>MainGame\게임화면\플레이어</Filter>
     </ClInclude>
+    <ClInclude Include="effectManager.h">
+      <Filter>GameFramework2D\매니져</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainGame.cpp">
@@ -315,6 +318,9 @@
     </ClCompile>
     <ClCompile Include="heartbeat.cpp">
       <Filter>MainGame\게임화면\플레이어</Filter>
+    </ClCompile>
+    <ClCompile Include="effectManager.cpp">
+      <Filter>GameFramework2D\매니져</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
