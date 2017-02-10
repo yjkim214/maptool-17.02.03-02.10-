@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "player.h"
 #include "tileMap.h"
+#include "heartbeat.h"
 
 HRESULT player::init(void)
 {
@@ -43,6 +44,7 @@ HRESULT player::init(void)
 	_destPosY = _y;
 
 	_tileMap = NULL;
+	_heartbeat = NULL;
 
 	return S_OK;
 }
@@ -73,65 +75,112 @@ void player::move()
 	//움직이지 않고 있는 상태라면
 	if (!_isMove)
 	{
-		//왼쪽 키를 눌렀을 때
-		if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+		if (_heartbeat->getIsBeat())
 		{
-			//플레이어의 방향은 왼쪽
-			_direct = PLAYERDIRECTION_LEFT;
-			//왼쪽인지 아닌지 판별
-			_isLeft = true;
-
-			if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] != ATTR_UNMOVAL)
+			//왼쪽 키를 눌렀을 때
+			if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 			{
-				//플레이어를 움직이는 상태로
-				_isMove = true;
+				//플레이어의 방향은 왼쪽
+				_direct = PLAYERDIRECTION_LEFT;
+				//왼쪽인지 아닌지 판별
+				_isLeft = true;
 
-				//TEST
-				_destPosX = _x - PLAYER_SIZEX;
+				if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] != ATTR_UNMOVAL)
+				{
+					//플레이어를 움직이는 상태로
+					_isMove = true;
+
+					//TEST
+					_destPosX = _x - PLAYER_SIZEX;
+
+					_tileMap->releaseObject(_index.x, _index.y);
+					_tileMap->setPlayerAttribute(_index.x - 1, _index.y);
+				}
+
+				//처음의 마커를 지워줌
+				_heartbeat->removeMarker();
+			}
+
+			else if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+			{
+				_direct = PLAYERDIRECTION_RIGHT;
+				//고개를 돌릴지 말지를 판별
+				_isLeft = false;
+
+				if (_index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] != ATTR_UNMOVAL)
+				{
+					//플레이어를 움직이는 상태로
+					_isMove = true;
+
+					//TEST
+					_destPosX = _x + PLAYER_SIZEX;
+					_tileMap->releaseObject(_index.x, _index.y);
+					_tileMap->setPlayerAttribute(_index.x + 1, _index.y);
+				}
+
+				//처음의 마커를 지워줌
+				_heartbeat->removeMarker();
+			}
+
+			else if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				_direct = PLAYERDIRECTION_UP;
+
+				if (_index.y != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] != ATTR_UNMOVAL)
+				{
+					//플레이어를 움직이는 상태로
+					_isMove = true;
+
+					//TEST
+					_destPosY = _y - PLAYER_SIZEY;
+					_tileMap->releaseObject(_index.x, _index.y);
+					_tileMap->setPlayerAttribute(_index.x, _index.y - 1);
+				}
+
+				//처음의 마커를 지워줌
+				_heartbeat->removeMarker();
+			}
+
+			else if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+			{
+				_direct = PLAYERDIRECTION_DOWN;
+
+				if (_index.y != TILEY - 1 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] != ATTR_UNMOVAL)
+				{
+					//플레이어를 움직이는 상태로
+					_isMove = true;
+
+					//TEST
+					_destPosY = _y + PLAYER_SIZEY;
+					_tileMap->releaseObject(_index.x, _index.y);
+					_tileMap->setPlayerAttribute(_index.x, _index.y + 1);
+				}
+
+				//처음의 마커를 지워줌
+				_heartbeat->removeMarker();
 			}
 		}
 
-		else if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+		else
 		{
-			_direct = PLAYERDIRECTION_RIGHT;
-			//고개를 돌릴지 말지를 판별
-			_isLeft = false;
-
-			if (_index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] != ATTR_UNMOVAL)
+			if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 			{
-				//플레이어를 움직이는 상태로
-				_isMove = true;
-
-				//TEST
-				_destPosX = _x + PLAYER_SIZEX;
+				_heartbeat->removeMarker();
 			}
-		}
 
-		else if (KEYMANAGER->isOnceKeyDown(VK_UP))
-		{
-			_direct = PLAYERDIRECTION_UP;
-
-			if (_index.y != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] != ATTR_UNMOVAL)
+			else if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 			{
-				//플레이어를 움직이는 상태로
-				_isMove = true;
-
-				//TEST
-				_destPosY = _y - PLAYER_SIZEY;
+				_heartbeat->removeMarker();
 			}
-		}
 
-		else if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-		{
-			_direct = PLAYERDIRECTION_DOWN;
-
-			if (_index.y != TILEY - 1 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] != ATTR_UNMOVAL)
+			else if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 			{
-				//플레이어를 움직이는 상태로
-				_isMove = true;
+				_heartbeat->removeMarker();
+			}
 
-				//TEST
-				_destPosY = _y + PLAYER_SIZEY;
+			else if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+			{
+				_heartbeat->removeMarker();
 			}
 		}
 	}

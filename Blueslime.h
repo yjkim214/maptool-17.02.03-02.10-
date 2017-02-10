@@ -3,7 +3,6 @@
 class Blueslime : public cEnemy
 {
 public:
-
 	virtual HRESULT init(void);
 	virtual HRESULT init(POINT pos);
 	virtual void release(void);

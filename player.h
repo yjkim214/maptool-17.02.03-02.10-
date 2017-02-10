@@ -2,6 +2,7 @@
 #include "gameNode.h"
 
 class tileMap;
+class heartbeat;
 
 #define INIT_ATT		1
 #define INIT_MAXHP		3
@@ -50,6 +51,7 @@ private:
 	float _destPosY;
 
 	tileMap* _tileMap;
+	heartbeat* _heartbeat;
 
 public:
 	HRESULT init(void);
@@ -74,6 +76,7 @@ public:
 
 	//타일맵 상호참조
 	void setLinkTileMap(tileMap* tileMap) { _tileMap = tileMap; }
+	void setLinkHeartbeat(heartbeat* heartbeat) { _heartbeat = heartbeat; }
 
 	player() {}
 	~player() {}

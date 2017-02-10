@@ -49,12 +49,12 @@ vector<string> txtData::txtLoad(char * fileName)
 {
 	HANDLE file;
 	DWORD read;
-	char str[128];
+	char str[4096];
 	ZeroMemory(str, sizeof(str));
 
 	file = CreateFile(fileName, GENERIC_READ, 0, NULL, OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL, NULL);
-	ReadFile(file, str, 128, &read, NULL);
+	ReadFile(file, str, 4096, &read, NULL);
 
 	CloseHandle(file);
 

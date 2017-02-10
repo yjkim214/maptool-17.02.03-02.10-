@@ -20,7 +20,6 @@ protected:
 	//이동 방향
 	ENEMY_MOVEDIRECTION _direct;
 
-
 	//위치 및 렉트
 	float _x;
 	float _y;
@@ -40,7 +39,6 @@ protected:
 
 	//데미지
 	int _dmg;
-
 
 	//이동 관련 카운트
 	int _movecount;

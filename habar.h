@@ -13,7 +13,6 @@ private:
 	image* _hpbarFront;
 	image* _hpbarBack;
 
-
 public:
 	HRESULT init(char* frontkey, char* backkey, float x, float y, float width, float height);
 	void release(void);

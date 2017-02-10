@@ -55,8 +55,6 @@ void enemyManager::setEnemy(void)
 		if (_tileMap->getTiles()[i].obj == OBJECT_ENEMY1)
 		{
 			addenemy("ΩΩ∂Û¿”", { i % TILEX, i / TILEX });
-			
-		
 		}
 	}
 	

@@ -12,9 +12,6 @@ private:
 
 	int slot;
 
-	float cameraPosX;
-	float cameraPosY;
-
 public:
 	HRESULT init(void);
 	void release(void);
@@ -23,10 +20,7 @@ public:
 	void objRender(void);
 
 	//타일맵 로드
-
 	void load(void);
-
-
 
 	void setStartPos();
 
@@ -35,38 +29,34 @@ public:
 	//속성 가져오기
 	DWORD* getAttribute(void) { return _attribute; }
 
-	void releasePlayerAttribute(int indexX, int indexY)
+	void releaseObject(int indexX, int indexY)
 	{
 		_tiles[indexY*TILEX + indexX].obj = OBJECT_NONE;
-		_attribute[indexY*TILEX + indexX] |= 0;
+		_attribute[indexY*TILEX + indexX] &= 0;
 	}
 
 	void releaseEnemyAttribute(int indexX, int indexY)
 	{
 		_tiles[indexY*TILEX + indexX].obj = OBJECT_NONE;
-		_attribute[indexY*TILEX + indexX] |= 0;
-	}
-
-	void releaseObject(int indexX, int indexY)
-	{
-		_tiles[indexY*TILEX + indexX].obj = OBJECT_NONE;
-		_attribute[indexY*TILEX + indexX] |= 0;
+		_attribute[indexY*TILEX + indexX] &= 0;
 	}
 
 	void setPlayerAttribute(int indexX, int indexY)
 	{
 		_tiles[indexY*TILEX + indexX].obj = OBJECT_PLAYER;
-
-
 		_attribute[indexY*TILEX + indexX] |= ATTR_PLAYER;
 	}
 
 	void setEnemyAttribute(int indexX, int indexY, int enemyType)
 	{
-		_tiles[indexY*TILEX + indexX].obj = (OBJECT)(enemyType + 3);
-
-
+		_tiles[indexY*TILEX + indexX].obj = (OBJECT)(enemyType + 2);
 		_attribute[indexY*TILEX + indexX] |= ATTR_ENEMY1 << (enemyType - 1);
+	}
+
+	void setEnemyAttribute(int indexX, int indexY)
+	{
+		_tiles[indexY*TILEX + indexX].obj = OBJECT_BOSS;
+		_attribute[indexY*TILEX + indexX] |= ATTR_BOSS;
 	}
 
 	tileMap() {}

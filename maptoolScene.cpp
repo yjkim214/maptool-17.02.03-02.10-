@@ -3,8 +3,7 @@
 
 HRESULT maptoolScene::init(void)
 {
-	//타일맵 이미지 초기화
-	IMAGEMANAGER->addFrameImage("tilemap", "tilemap.bmp", 640, 256, SAMPLETILEX, SAMPLETILEY);
+
 
 	//맵툴셋팅
 	this->maptoolSetup();
@@ -15,6 +14,7 @@ HRESULT maptoolScene::init(void)
 	slot = 1;
 
 	mapscreen = RectMake(0, 0, SCREENSIZEX, WINSIZEY);
+
 
 	playerX = -1;
 	playerY = -1;
@@ -119,7 +119,7 @@ void maptoolScene::update(void)
 void maptoolScene::render(void)
 {
 	//타일맵 이미지 렌더
-	IMAGEMANAGER->render("tileMapBase", getMemDC(), SAMPLESTARTX, 0);
+
 
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
@@ -164,14 +164,32 @@ void maptoolScene::render(void)
 			if (_tiles[i].rc.right > mapscreen.right)
 			{
 				if (_tiles[i].obj == OBJECT_NONE) continue;
-				image* temp = IMAGEMANAGER->findImage("tileMapBase");
-				IMAGEMANAGER->render("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
-					mapscreen.right - _tiles[i].rc.left, temp->getFrameHeight());
+				else if (_tiles[i].obj == OBJECT_BOSS)
+				{
+					image* temp = IMAGEMANAGER->findImage("dradragon_green_biggon_green");
+					IMAGEMANAGER->render("dragon_green_big", getMemDC(), _tiles[i].rc.left - 20, _tiles[i].rc.top - 15);
+				}
+				else
+				{
+					image* temp = IMAGEMANAGER->findImage("tileMapBase");
+					IMAGEMANAGER->render("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
+						mapscreen.right - _tiles[i].rc.left, temp->getFrameHeight());
+				}
+
 			}
 			else
 			{
 				if (_tiles[i].obj == OBJECT_NONE) continue;
-				IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX, _tiles[i].objFrameY);
+				else if (_tiles[i].obj == OBJECT_BOSS)
+				{
+					image* temp = IMAGEMANAGER->findImage("dragon_green_big");
+					IMAGEMANAGER->render("dragon_green_big", getMemDC(), _tiles[i].rc.left - 15, _tiles[i].rc.top - 30);
+				}
+				else
+				{
+					IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX, _tiles[i].objFrameY);
+				}
+
 			}
 
 		}
@@ -212,84 +230,65 @@ void maptoolScene::render(void)
 
 
 
-	////버튼렉트 렌더
-	//RectangleMake(getMemDC(), _rcSave);
-	//RectangleMake(getMemDC(), _rcLoad);
-	///*RectangleMake(getMemDC(), _rcTerrain);
-	//RectangleMake(getMemDC(), _rcObject);*/
-	//RectangleMake(getMemDC(), _rcEraser);
+	IMAGEMANAGER->render("maptoolCase", getMemDC(), TILESIZE * 20, 0);
 
-	//RectangleMake(getMemDC(), _slot1);
-	//RectangleMake(getMemDC(), _slot2);
-	//RectangleMake(getMemDC(), _slot3);
 
-	////버튼렉트 글씨
-	//SetBkMode(getMemDC(), TRANSPARENT);
-	//TextOut(getMemDC(), _rcSave.left + 10, _rcSave.top + 10, "SAVE", strlen("SAVE"));
-	//TextOut(getMemDC(), _rcLoad.left + 10, _rcLoad.top + 10, "LOAD", strlen("LOAD"));
-	///*TextOut(getMemDC(), _rcTerrain.left + 10, _rcTerrain.top + 10, "TERRAIN", strlen("TERRAIN"));
-	//TextOut(getMemDC(), _rcObject.left + 10, _rcObject.top + 10, "OBJECT", strlen("OBJECT"));*/
-	//TextOut(getMemDC(), _rcEraser.left + 10, _rcEraser.top + 10, "ERASER", strlen("ERASER"));
+	IMAGEMANAGER->render("maptoolframe", getMemDC(), SAMPLESTARTX - 6, SAMPLESTARTY - 4);
 
-	//TextOut(getMemDC(), _slot1.left + 10, _slot1.top + 5, "SLOT1", strlen("SLOT1"));
-	//TextOut(getMemDC(), _slot2.left + 10, _slot2.top + 5, "SLOT2", strlen("SLOT2"));
-	//TextOut(getMemDC(), _slot3.left + 10, _slot3.top + 5, "SLOT3", strlen("SLOT3"));
+	IMAGEMANAGER->render("tileMapBase", getMemDC(), SAMPLESTARTX, SAMPLESTARTY);
 
-	//switch (_ctrlSelect)
-	//{
-	//case CTRL_SAVE:
-
-	//	break;
-	//case CTRL_LOAD:
-	//	break;
-	//case CTRL_TERRAINDRAW:
-	//	TextOut(getMemDC(), SAMPLESTARTX, 350, "TERRAIN", strlen("TERRAIN"));
-	//	break;
-	//case CTRL_OBJDRAW:
-	//	TextOut(getMemDC(), SAMPLESTARTX, 350, "OBJECT", strlen("OBJECT"));
-	//	break;
-	//case CTRL_ERASER:
-	//	TextOut(getMemDC(), SAMPLESTARTX, 350, "ERASER", strlen("ERASER"));
-	//	break;
-	//case CTRL_MAP1:
-	//	break;
-	//case CTRL_MAP2:
-	//	break;
-	//case CTRL_MAP3:
-	//	break;
-	//case CTRL_END:
-	//	break;
-	//default:
-	//	break;
-	//}
-
-	//char buf[20];
-	//sprintf(buf, "SLOT %d", slot);
-	//TextOut(getMemDC(), SAMPLESTARTX, 400, buf, strlen(buf));
 
 	IMAGEMANAGER->render("save", getMemDC(), _rcSave.left, _rcSave.top);
 	IMAGEMANAGER->render("load", getMemDC(), _rcLoad.left, _rcLoad.top);
+
 
 	IMAGEMANAGER->frameRender("slot1", getMemDC(), _slot1.left, _slot1.top, 0, (slot == 1));
 	IMAGEMANAGER->frameRender("slot2", getMemDC(), _slot2.left, _slot2.top, 0, (slot == 2));
 	IMAGEMANAGER->frameRender("slot3", getMemDC(), _slot3.left, _slot3.top, 0, (slot == 3));
 	IMAGEMANAGER->frameRender("eraser", getMemDC(), _rcEraser.left, _rcEraser.top, 0, (_ctrlSelect == CTRL_ERASER));
 
+
+	IMAGEMANAGER->render("select", getMemDC(), SAMPLESTARTX, 200);
+	if (_currentTile.y == 2)
+	{
+		IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 212, _currentTile.x, _currentTile.y);
+	}
+	else if (_currentTile.y == 3)
+	{
+		if (_currentTile.x == 6 && _currentTile.y == 3)
+		{
+			IMAGEMANAGER->render("dragon_green", getMemDC(), SAMPLESTARTX + 85, 207);
+		}
+		else
+		{
+			IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+		}
+
+	}
+	else if (_currentTile.x == 5 && _currentTile.y == 1)
+	{
+		IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+	}
+	else
+	{
+		IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 205, _currentTile.x, _currentTile.y);
+	}
+
 }
 
 void maptoolScene::maptoolSetup(void)
 {
 	//렉트위치 초기화
-	_rcSave = RectMake(SAMPLESTARTX, 200, IMAGEMANAGER->findImage("save")->getWidth(), IMAGEMANAGER->findImage("save")->getHeight());
-	_rcLoad = RectMake(SAMPLESTARTX + 120, 200, IMAGEMANAGER->findImage("load")->getWidth(), IMAGEMANAGER->findImage("load")->getHeight());
+	_rcSave = RectMake(SAMPLESTARTX, 270, IMAGEMANAGER->findImage("save")->getWidth(), IMAGEMANAGER->findImage("save")->getHeight());
+	_rcLoad = RectMake(SAMPLESTARTX + 120, 270, IMAGEMANAGER->findImage("load")->getWidth(), IMAGEMANAGER->findImage("load")->getHeight());
 
-	_rcEraser = RectMake(SAMPLESTARTX, 200 + 50, IMAGEMANAGER->findImage("eraser")->getFrameWidth(), IMAGEMANAGER->findImage("eraser")->getFrameHeight());
+	_rcEraser = RectMake(SAMPLESTARTX, 270 + 50, IMAGEMANAGER->findImage("eraser")->getFrameWidth(), IMAGEMANAGER->findImage("eraser")->getFrameHeight());
 
-	_slot1 = RectMake(SAMPLESTARTX, 200 + 120, IMAGEMANAGER->findImage("slot1")->getFrameWidth(), IMAGEMANAGER->findImage("slot1")->getFrameHeight());
+	_slot1 = RectMake(SAMPLESTARTX, 270 + 120, IMAGEMANAGER->findImage("slot1")->getFrameWidth(), IMAGEMANAGER->findImage("slot1")->getFrameHeight());
 
-	_slot2 = RectMake(SAMPLESTARTX + 80, 200 + 120, IMAGEMANAGER->findImage("slot2")->getFrameWidth(), IMAGEMANAGER->findImage("slot2")->getFrameHeight());
+	_slot2 = RectMake(SAMPLESTARTX + 80, 270 + 120, IMAGEMANAGER->findImage("slot2")->getFrameWidth(), IMAGEMANAGER->findImage("slot2")->getFrameHeight());
 
-	_slot3 = RectMake(SAMPLESTARTX + 160, 200 + 120, IMAGEMANAGER->findImage("slot3")->getFrameWidth(), IMAGEMANAGER->findImage("slot3")->getFrameHeight());
+	_slot3 = RectMake(SAMPLESTARTX + 160, 270 + 120, IMAGEMANAGER->findImage("slot3")->getFrameWidth(), IMAGEMANAGER->findImage("slot3")->getFrameHeight());
 
 	//왼쪽 게임화면 렉트 초기화
 	for (int i = 0; i < TILEY; i++)
@@ -305,7 +304,7 @@ void maptoolScene::maptoolSetup(void)
 	{
 		for (int j = 0; j < SAMPLETILEX; j++)
 		{
-			_sampleTiles[i * SAMPLETILEX + j].rc = RectMake(SAMPLESTARTX + j * TILESIZE, i * (TILESIZE + 16), TILESIZE, TILESIZE + 16);
+			_sampleTiles[i * SAMPLETILEX + j].rc = RectMake(SAMPLESTARTX + j * TILESIZE, (i * (TILESIZE + 16)) + SAMPLESTARTY, TILESIZE, TILESIZE + 16);
 
 			//지형세팅
 			_sampleTiles[i * SAMPLETILEX + j].terrainFrameX = j;
@@ -335,8 +334,9 @@ void maptoolScene::setMap(void)
 	{
 		if (PtInRect(&_sampleTiles[i].rc, _ptMouse))
 		{
-
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("tileMapBase")->getMemDC(), _ptMouse.x - SAMPLESTARTX, _ptMouse.y);
+			int indexX = i % SAMPLETILEX;
+			int indexY = i / SAMPLETILEX;
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage("tileMapBase")->getMemDC(), _ptMouse.x - SAMPLESTARTX, _ptMouse.y - SAMPLESTARTY);
 			int r = GetRValue(color);
 			int g = GetGValue(color);
 			int b = GetBValue(color);
@@ -351,9 +351,20 @@ void maptoolScene::setMap(void)
 				{
 					_ctrlSelect = CTRL_OBJDRAW;
 				}
-				_currentTile.x = _sampleTiles[i].terrainFrameX;
-				_currentTile.y = _sampleTiles[i].terrainFrameY;
 
+				if (indexX >= 5 && indexX <= 7 && indexY >= 2 && indexY <= 3)
+				{
+					if (indexX == 6 && indexY == 3)
+					{
+						_currentTile.x = indexX;
+						_currentTile.y = indexY;
+					}
+				}
+				else
+				{
+					_currentTile.x = _sampleTiles[i].terrainFrameX;
+					_currentTile.y = _sampleTiles[i].terrainFrameY;
+				}
 			}
 			else
 			{
@@ -502,6 +513,23 @@ void maptoolScene::load(void)
 
 
 	CloseHandle(file);
+
+	for (int i = 0; i < TILEX * TILEY; i++)
+	{
+		if (_tiles[i].obj == OBJECT_PLAYER)
+		{
+			playerX = i%TILEX;
+			playerY = i / TILEX;
+		}
+
+		if (_tiles[i].obj == OBJECT_GOAL)
+		{
+			goalX = i%TILEX;
+			goalY = i / TILEX;
+		}
+
+	}
+
 }
 
 TERRAIN maptoolScene::terrainSelect(int frameX, int frameY)
@@ -543,6 +571,10 @@ OBJECT maptoolScene::objectSelect(int frameX, int frameY)
 	if (frameX == 3 && frameY == 3)
 	{
 		return OBJECT_PLAYER;
+	}
+	if (frameX == 6 && frameY == 3)
+	{
+		return OBJECT_BOSS;
 	}
 	return OBJECT_BLOCK;
 }

@@ -1,6 +1,27 @@
-﻿  enemyManager.cpp
-c:\users\sga\documents\github\maptool-17.02.03-02.10-\enemymanager.cpp(14): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\sga\documents\github\maptool-17.02.03-02.10-\enemymanager.cpp(23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\sga\documents\github\maptool-17.02.03-02.10-\enemymanager.cpp(28): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\sga\documents\github\maptool-17.02.03-02.10-\enemymanager.cpp(45): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  WindowAPI.vcxproj -> C:\Users\SGA\Documents\GitHub\maptool-17.02.03-02.10-\Debug\WindowAPI.exe
+﻿  winMain.cpp
+  Slime.cpp
+c:\users\dydwo\desktop\maptool\player.h(70): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(25): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(26): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(40): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(57): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(83): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(102): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(114): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(140): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(142): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(143): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(164): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(166): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(167): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(189): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(191): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(192): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(213): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(215): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(216): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(270): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(272): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\slime.cpp(273): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+  WindowAPI.vcxproj -> C:\Users\dydwo\Desktop\maptool\Debug\WindowAPI.exe

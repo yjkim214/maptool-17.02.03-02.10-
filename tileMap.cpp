@@ -37,7 +37,7 @@ void tileMap::update(void)
 		DRAWRECTMANAGER->init();
 
 		setStartPos();
-		
+
 
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F2))
@@ -47,7 +47,7 @@ void tileMap::update(void)
 		DRAWRECTMANAGER->init();
 		setStartPos();
 
-		
+
 
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F3))
@@ -58,7 +58,7 @@ void tileMap::update(void)
 
 		setStartPos();
 
-		
+
 	}
 
 }
@@ -175,6 +175,8 @@ void tileMap::load(void)
 		if (_tiles[i].obj == OBJECT_ENEMY1) _attribute[i] |= ATTR_ENEMY1;
 		if (_tiles[i].obj == OBJECT_ENEMY2) _attribute[i] |= ATTR_ENEMY2;
 		if (_tiles[i].obj == OBJECT_ENEMY3) _attribute[i] |= ATTR_ENEMY3;
+		if (_tiles[i].terrain == TR_NONE) _attribute[i] |= ATTR_NONE;
+		if (_tiles[i].obj == OBJECT_BOSS) _attribute[i] |= ATTR_BOSS;
 		if (_tiles[i].obj == OBJECT_BOX) _attribute[i] |= ATTR_BOX;
 		if (_tiles[i].obj == OBJECT_GOAL) _attribute[i] |= ATTR_GOAL;
 	}
@@ -198,6 +200,11 @@ void tileMap::setStartPos()
 			indexX = i%TILEX;
 			indexY = i / TILEX;
 			break;
+		}
+		else
+		{
+			indexX = 0;
+			indexY = 0;
 		}
 	}
 

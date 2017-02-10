@@ -65,10 +65,8 @@ void Slime::release(void)
 
 void Slime::update(void)
 {
-
 	move();
 	animation();
-
 
 	//  현재 hp량 을 표시해준다 . 
 	for (int i = 0; i < _maxHp - _hp; i++)
@@ -90,7 +88,6 @@ void Slime::update(void)
 			cout << " player Y : " << _y << endl;
 			cout << " player hp : " << _hp << endl;
 		}
-
 	}
 
 	//테스트용 
@@ -170,8 +167,6 @@ void Slime::move()
 						_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 
 						cout << "충돌했다 " << endl;
-
-
 					}
 
 					else
@@ -197,9 +192,8 @@ void Slime::move()
 						_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 
 						cout << "충돌했다 " << endl;
-
-
 					}
+
 					else {
 						_destY = _destY - MON_SIZE;
 						_isMove = true;

@@ -75,6 +75,12 @@
     <Filter Include="MainGame\게임화면">
       <UniqueIdentifier>{a5c4829d-ee25-4948-9baa-dd454c2d0a11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\게임화면\플레이어">
+      <UniqueIdentifier>{1ae89f03-66de-4cdd-ae42-bf5c7b17c298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\게임화면\에너미">
+      <UniqueIdentifier>{3d801dbc-160a-4015-97af-fd50a946d9e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mainGame.h">
@@ -173,26 +179,29 @@
     <ClInclude Include="gameScene.h">
       <Filter>MainGame\게임화면</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>MainGame\게임화면</Filter>
-    </ClInclude>
     <ClInclude Include="drawRectManager.h">
       <Filter>GameFramework2D\매니져</Filter>
     </ClInclude>
-    <ClInclude Include="cEnemy.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Slime.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Blueslime.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>MainGame\게임화면\에너미</Filter>
     </ClInclude>
     <ClInclude Include="habar.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>MainGame\게임화면\에너미</Filter>
     </ClInclude>
     <ClInclude Include="enemyManager.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>MainGame\게임화면\에너미</Filter>
+    </ClInclude>
+    <ClInclude Include="cEnemy.h">
+      <Filter>MainGame\게임화면\에너미</Filter>
+    </ClInclude>
+    <ClInclude Include="Blueslime.h">
+      <Filter>MainGame\게임화면\에너미</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>MainGame\게임화면\플레이어</Filter>
+    </ClInclude>
+    <ClInclude Include="heartbeat.h">
+      <Filter>MainGame\게임화면\플레이어</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -283,26 +292,29 @@
     <ClCompile Include="gameScene.cpp">
       <Filter>MainGame\게임화면</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>MainGame\게임화면</Filter>
-    </ClCompile>
     <ClCompile Include="drawRectManager.cpp">
       <Filter>GameFramework2D\매니져</Filter>
     </ClCompile>
-    <ClCompile Include="cEnemy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Slime.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Blueslime.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>MainGame\게임화면\에너미</Filter>
     </ClCompile>
     <ClCompile Include="habar.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>MainGame\게임화면\에너미</Filter>
     </ClCompile>
     <ClCompile Include="enemyManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>MainGame\게임화면\에너미</Filter>
+    </ClCompile>
+    <ClCompile Include="cEnemy.cpp">
+      <Filter>MainGame\게임화면\에너미</Filter>
+    </ClCompile>
+    <ClCompile Include="Blueslime.cpp">
+      <Filter>MainGame\게임화면\에너미</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>MainGame\게임화면\플레이어</Filter>
+    </ClCompile>
+    <ClCompile Include="heartbeat.cpp">
+      <Filter>MainGame\게임화면\플레이어</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

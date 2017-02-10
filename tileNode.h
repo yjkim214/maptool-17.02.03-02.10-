@@ -10,10 +10,10 @@
 
 
 //이미지타일 (화면 오른쪽상단)
-#define SAMPLETILEX 7
+#define SAMPLETILEX 8
 #define SAMPLETILEY 4
 #define SAMPLESTARTX (SCREENSIZEX+TILESIZE*2)
-
+#define SAMPLESTARTY 20
 //이미지타일(인게임)
 #define TILESIZEGAME 48
 
@@ -23,13 +23,16 @@
 //0001 | 0000 => 0001
 //0001 & 0000 => 0000
 #define ATTR_UNMOVAL 0x00000001
-#define ATTR_POISON	0x00000002
+#define ATTR_NONE	0x00000002
 #define ATTR_PLAYER	0x00000004
 #define ATTR_ENEMY1	0x00000008
 #define ATTR_ENEMY2	0x00000010
 #define ATTR_ENEMY3	0x00000020
-#define ATTR_GOAL	0x00000040
-#define ATTR_BOX	0x00000080
+#define ATTR_BOSS	0x00000040
+#define ATTR_GOAL	0x00000080
+#define ATTR_BOX	0x00000100
+
+
 
 
 //맵툴에서 사용할 이넘문
@@ -43,7 +46,7 @@ enum CTRL
 //지형
 enum TERRAIN
 {
-	TR_NONE,TR_GROUND 
+	TR_NONE, TR_GROUND
 };
 
 //오브젝트
@@ -64,7 +67,7 @@ enum OBJECT
 //위치좌표
 enum POS
 {
-	POS_PLAYER,POS_MONSTER1,POS_MONSTER2,POS_MONSTER3
+	POS_PLAYER, POS_MONSTER1, POS_MONSTER2, POS_MONSTER3
 };
 
 /*타일구조체*/
@@ -73,6 +76,8 @@ struct tagTile
 	TERRAIN terrain;
 	OBJECT obj;
 	RECT rc;
+
+
 
 	int terrainFrameX;
 	int terrainFrameY;
