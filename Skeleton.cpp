@@ -68,6 +68,10 @@ void Skeleton::update(void)
 	for (int i = 0; i < _maxHp - _hp; i++)
 	{
 		_hpbarlist[i]->setcurrent(false);
+		if (i >= _hpbarlist.size())
+		{
+			continue;
+		}
 	}
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
@@ -96,6 +100,13 @@ void Skeleton::update(void)
 		_hpbarlist[i]->update();
 		_hpbarlist[i]->setX(_x - (12 * (float)(((float)_hpbarlist.size() / 2) - i)));
 		_hpbarlist[i]->setY(_y - 24);
+	}
+	if (_hp <= 0)
+	{
+		for (int i = 0; i < _hpbarlist.size(); i++)
+		{
+			_hpbarlist.clear();
+		}
 	}
 }
 
@@ -242,8 +253,6 @@ void Skeleton::move()
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
-	_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
-	_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 }
 
 void Skeleton::draw()

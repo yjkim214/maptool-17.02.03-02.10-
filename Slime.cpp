@@ -3,6 +3,7 @@
 #include "tilemap.h"
 #include "player.h"
 
+
 HRESULT Slime::init(void)
 {
 	return S_OK;
@@ -62,6 +63,10 @@ void Slime::update(void)
 	//  현재 hp량 을 표시해준다 . 
 	for (int i = 0; i < _maxHp - _hp; i++)
 	{
+		if (i >= _hpbarlist.size())
+		{
+			continue;
+		}
 		_hpbarlist[i]->setcurrent(false);
 	}
 
@@ -72,6 +77,14 @@ void Slime::update(void)
 		_hpbarlist[i]->setX(_x - (12 * (float)(((float)_hpbarlist.size() / 2) - i)));
 		_hpbarlist[i]->setY(_y - 24);
 	}
+	
+	if (_hp <= 0)
+	{
+		for (int i = 0; i < _hpbarlist.size(); i++)
+		{
+			_hpbarlist.clear();
+		}
+}
 }
 
 void Slime::render(void)
@@ -214,9 +227,6 @@ void Slime::move()
 	_y = _inity - DRAWRECTMANAGER->getY();
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
-
-	_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
-	_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 }
 
 void Slime::draw()

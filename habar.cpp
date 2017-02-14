@@ -32,6 +32,7 @@ HRESULT habar::init(char * frontkey, char * backkey, float x, float y, float wid
 
 void habar::release(void)
 {
+	
 }
 
 void habar::update(void)

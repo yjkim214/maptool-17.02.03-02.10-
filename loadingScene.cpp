@@ -94,7 +94,9 @@ void loadingScene::loadingImage(void)
 
 	//몬스터 
 	_loading->loadFrameImage("Slime", "Slime.bmp", 192, 96, 4, 2, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("Blueslime", "Blueslime.bmp", 384, 96, 8, 2, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("Blueslime", "Blueslime.bmp", 384, 48, 8, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("Skeleton", "Skeleton.bmp", 384, 48, 8, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("Dragon", "dragon.bmp", 1344, 192, 7, 2, true, RGB(255, 0, 255));
 	//몬스터 임펙트
 	_loading->loadFrameImage("enemy_swipe", "enemy_swipe.bmp", 135, 24, 5, 1, true, RGB(255, 0, 255));
 

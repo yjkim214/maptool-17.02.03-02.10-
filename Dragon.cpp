@@ -36,7 +36,7 @@ HRESULT Dragon::init(POINT index)
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
-	_maxHp = 2;
+	_maxHp = 9;
 	_hp = _maxHp;
 
 	for (int i = 0; i < _maxHp; i++)
@@ -44,6 +44,7 @@ HRESULT Dragon::init(POINT index)
 		addhpbar(_x - 12 * i, _y);
 	}
 
+	initAstar();
 
 	return S_OK;
 }
@@ -74,6 +75,10 @@ void Dragon::update(void)
 	//  현재 hp량 을 표시해준다 . 
 	for (int i = 0; i < _maxHp - _hp; i++)
 	{
+		if (i >= _hpbarlist.size())
+		{
+			continue;
+		}
 		_hpbarlist[i]->setcurrent(false);
 	}
 
@@ -96,13 +101,23 @@ void Dragon::update(void)
 	{
 		_hp--;
 	}
-
+	if (KEYMANAGER->isOnceKeyDown(VK_F6))
+	{
+		searchRoute();
+	}
 	// hp 바를 위에 표시해준다 
 	for (int i = 0; i < _hpbarlist.size(); i++)
 	{
 		_hpbarlist[i]->update();
 		_hpbarlist[i]->setX(_x - (12 * (float)(((float)_hpbarlist.size() / 2) - i)));
 		_hpbarlist[i]->setY(_y - 24);
+	}
+	if (_hp <= 0)
+	{
+		for (int i = 0; i < _hpbarlist.size(); i++)
+		{
+			_hpbarlist.clear();
+		}
 	}
 }
 
@@ -120,10 +135,39 @@ void Dragon::move()
 {
 	if (_isMove == false)
 	{
+		
 		_movecount++;
-		if (_movecount % 100 == 0)
+			if (_movecount % 100 == 96)
 		{
-			int rand = RND->getInt(4);
+			while (true)
+			{
+				searchRouteV2();
+				if (findRoute == true)
+				{
+					break;
+				}
+				if (_routeState == NO_ROUTE)
+				{
+					break;
+				}
+			}
+			while (true)
+			{
+				findBestV2();
+
+				if (_routeState == BEST)
+				{
+					break;
+				}
+				if (_routeState == NO_ROUTE)
+				{
+					break;
+				}
+			}
+		}
+		else if (_movecount % 100 == 0)
+		{
+			int rand = settingMove();
 			_direct = static_cast<ENEMY_MOVEDIRECTION>(rand);
 
 			switch (_direct)
@@ -239,6 +283,7 @@ void Dragon::move()
 			_inity = _destY;
 			//움직이지 않는 상태로 만든다
 			_isMove = false;
+			initAstar();
 		}
 
 
@@ -249,8 +294,7 @@ void Dragon::move()
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
-	_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
-	_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
+	
 }
 
 void Dragon::draw()
@@ -312,4 +356,889 @@ void Dragon::addhpbar(float x, float y)
 
 void Dragon::attack()
 {
+}
+
+void Dragon::initAstar()
+{
+	for (int i = 0; i < TILEX*TILEY; i++)
+	{
+		astar[i].F = 0;
+		astar[i].G = 0;
+		astar[i].H = 0;
+		astar[i].state = NONE;
+	}
+
+	findRoute = false;
+	_routeState = STANDARD;
+	_openList.clear();
+	_closeList.clear();
+	_finalList.clear();
+}
+
+void Dragon::searchRoute()
+{
+	int selectIndex = -1;
+	if (findRoute)
+	{
+		return;
+	}
+
+	if (_openList.empty() && _closeList.empty())
+	{
+		_openList.push_back(_index.y * TILEX + _index.x);
+	}
+
+	else if (_openList.empty() && !_closeList.empty())
+	{
+		_routeState = NO_ROUTE;
+		return;
+	}
+
+
+	selectIndex = findMinimum();
+
+
+	if (selectIndex >= 0)
+	{
+		if (selectIndex > TILEX)
+		{
+			if (selectIndex - TILEX == _player->getIndex().x + _player->getIndex().y*TILEX)
+			{
+				findRoute = true;
+				astar[selectIndex].state = CLOSE;
+				_closeList.push_back(selectIndex);
+
+				return;
+			}
+			else
+			{
+				if (_tileMap->getAttribute()[selectIndex - TILEX] == 0)
+				{
+
+					if (astar[selectIndex - TILEX].state == NONE)
+					{
+						astar[selectIndex - TILEX].G += astar[selectIndex].G;
+						astar[selectIndex - TILEX].H = (abs((selectIndex%TILEX) - _player->getIndex().x) + abs(((selectIndex - TILEX) / TILEX) - _player->getIndex().y)) * 10;
+						astar[selectIndex - TILEX].F = astar[selectIndex - TILEX].G + astar[selectIndex - TILEX].H;
+						_openList.push_back(selectIndex - TILEX);
+						astar[selectIndex - TILEX].state = OPEN;
+					}
+					else if (astar[selectIndex - TILEX].state == OPEN)
+					{
+						int tempG = astar[selectIndex - TILEX].G += astar[selectIndex].G;
+						if (tempG < astar[selectIndex - TILEX].G)
+						{
+							astar[selectIndex - TILEX].G = tempG;
+						}
+						astar[selectIndex - TILEX].F = astar[selectIndex - TILEX].G + astar[selectIndex - TILEX].H;
+					}
+				}
+			}
+
+		}
+
+		if (selectIndex < TILEX*(TILEY - 1))
+		{
+			if (selectIndex + TILEX == _player->getIndex().x + _player->getIndex().y*TILEX)
+			{
+				findRoute = true;
+				astar[selectIndex].state = CLOSE;
+				_closeList.push_back(selectIndex);
+				return;
+			}
+			else
+			{
+				if (_tileMap->getAttribute()[selectIndex + TILEX] == 0)
+				{
+
+					if (astar[selectIndex + TILEX].state == NONE)
+					{
+						astar[selectIndex + TILEX].G += astar[selectIndex].G;
+						astar[selectIndex + TILEX].H = (abs((selectIndex%TILEX) - _player->getIndex().x) + abs(((selectIndex + TILEX) / TILEX) - _player->getIndex().y)) * 10;
+						astar[selectIndex + TILEX].F = astar[selectIndex + TILEX].G + astar[selectIndex + TILEX].H;
+						_openList.push_back(selectIndex + TILEX);
+						astar[selectIndex + TILEX].state = OPEN;
+					}
+					else if (astar[selectIndex + TILEX].state == OPEN)
+					{
+						int tempG = astar[selectIndex + TILEX].G += astar[selectIndex].G;
+						if (tempG < astar[selectIndex + TILEX].G)
+						{
+							astar[selectIndex + TILEX].G = tempG;
+						}
+						astar[selectIndex + TILEX].F = astar[selectIndex + TILEX].G + astar[selectIndex + TILEX].H;
+					}
+				}
+			}
+
+		}
+
+		if (selectIndex%TILEX < TILEX - 1)
+		{
+			if (selectIndex + 1 == _player->getIndex().x + _player->getIndex().y*TILEX)
+			{
+				findRoute = true;
+				astar[selectIndex].state = CLOSE;
+				_closeList.push_back(selectIndex);
+				return;
+			}
+			else
+			{
+				if (_tileMap->getAttribute()[selectIndex + 1] == 0)
+				{
+
+					if (astar[selectIndex + 1].state == NONE)
+					{
+						astar[selectIndex + 1].G += astar[selectIndex].G;
+						astar[selectIndex + 1].H = (abs(((selectIndex%TILEX) + 1) - _player->getIndex().x) + abs((selectIndex / TILEX) - _player->getIndex().y)) * 10;
+						astar[selectIndex + 1].F = astar[selectIndex + 1].G + astar[selectIndex + 1].H;
+						_openList.push_back(selectIndex + 1);
+						astar[selectIndex + 1].state = OPEN;
+					}
+					else if (astar[selectIndex + 1].state == OPEN)
+					{
+						int tempG = astar[selectIndex + 1].G += astar[selectIndex].G;
+						if (tempG < astar[selectIndex + 1].G)
+						{
+							astar[selectIndex + 1].G = tempG;
+						}
+						astar[selectIndex + 1].F = astar[selectIndex + 1].G + astar[selectIndex + 1].H;
+					}
+				}
+			}
+
+		}
+
+
+		if (selectIndex%TILEX > 0)
+		{
+			if (selectIndex - 1 == _player->getIndex().x + _player->getIndex().y*TILEX)
+			{
+				findRoute = true;
+				astar[selectIndex].state = CLOSE;
+				_closeList.push_back(selectIndex);
+				return;
+			}
+			else
+			{
+				if (_tileMap->getAttribute()[selectIndex - 1] == 0)
+				{
+
+					if (astar[selectIndex - 1].state == NONE)
+					{
+						astar[selectIndex - 1].G += astar[selectIndex].G;
+						astar[selectIndex - 1].H = (abs(((selectIndex%TILEX) - 1) - _player->getIndex().x) + abs((selectIndex / TILEX) - _player->getIndex().y)) * 10;
+						astar[selectIndex - 1].F = astar[selectIndex - 1].G + astar[selectIndex - 1].H;
+						_openList.push_back(selectIndex - 1);
+						astar[selectIndex - 1].state = OPEN;
+					}
+					else if (astar[selectIndex - 1].state == OPEN)
+					{
+						int tempG = astar[selectIndex - 1].G += astar[selectIndex].G;
+						if (tempG < astar[selectIndex - 1].G)
+						{
+							astar[selectIndex - 1].G = tempG;
+						}
+						astar[selectIndex - 1].F = astar[selectIndex - 1].G + astar[selectIndex - 1].H;
+					}
+				}
+			}
+
+		}
+
+		astar[selectIndex].state = CLOSE;
+		_closeList.push_back(selectIndex);
+
+	}
+	else
+	{
+		return;
+	}
+
+}
+
+void Dragon::searchRouteV2()
+{
+	int selectIndex = -1;
+	if (findRoute)
+	{
+		return;
+	}
+
+	if (_openList.empty() && _closeList.empty())
+	{
+		_openList.push_back(_index.y * TILEX + _index.x);
+	}
+
+	else if (_openList.empty() && !_closeList.empty())
+	{
+		_routeState = NO_ROUTE;
+		return;
+	}
+
+
+	selectIndex = findMinimum();
+
+	if (selectIndex >= 0)
+	{
+		for (int i = -TILEX; i < TILEX + 1; i += TILEX)
+		{
+			if (selectIndex + i<0 || selectIndex + i >TILEX*TILEY)
+			{
+				continue;
+			}
+			for (int j = -1; j < 2; j++)
+			{
+				if (selectIndex + i + j == _player->getIndex().x + _player->getIndex().y*TILEX)
+				{
+					astar[selectIndex].state = CLOSE;
+					_routeState = FIND;
+					_closeList.push_back(selectIndex);
+					findRoute = true;
+					return;
+				}
+
+				if (j == 1 && selectIndex%TILEX == TILEX - 1)
+				{
+					continue;
+				}
+
+				if (j == -1 && selectIndex%TILEX == 0)
+				{
+					continue;
+				}
+				if (astar[selectIndex + i + j].state == CLOSE || _tileMap->getAttribute()[selectIndex + i + j] != 0)
+				{
+					continue;
+				}
+				if (i == 0 && j == 0)
+				{
+					continue;
+				}
+
+
+
+				int tempG;
+
+				if (i == 0 || j == 0)
+				{
+					tempG = astar[selectIndex].G + 10;
+					if (astar[selectIndex + i + j].state == OPEN)
+					{
+						if (astar[selectIndex + i + j].G > tempG)
+						{
+							astar[selectIndex + i + j].G = tempG;
+							astar[selectIndex + i + j].F = astar[selectIndex + i + j].G + astar[selectIndex + i + j].H;
+						}
+					}
+					else
+					{
+
+						astar[selectIndex + i + j].G = tempG;
+						astar[selectIndex + i + j].H = (abs(((selectIndex + i + j) % TILEX) - (_player->getIndex().x)) + abs(((selectIndex + i + j) / TILEX) - (_player->getIndex().y))) * 10;
+						astar[selectIndex + i + j].F = astar[selectIndex + i + j].G + astar[selectIndex + i + j].H;
+						astar[selectIndex + i + j].state = OPEN;
+						_openList.push_back(selectIndex + i + j);
+					}
+				}
+				else
+				{
+					if (_tileMap->getAttribute()[selectIndex + i] != 0 && _tileMap->getAttribute()[selectIndex + j] != 0)
+					{
+						continue;
+					}
+					tempG = astar[selectIndex].G + 14;
+					if (astar[selectIndex + i + j].state == OPEN)
+					{
+						if (astar[selectIndex + i + j].G > tempG)
+						{
+							astar[selectIndex + i + j].G = tempG;
+							astar[selectIndex + i + j].F = astar[selectIndex + i + j].G + astar[selectIndex + i + j].H;
+						}
+					}
+					else
+					{
+						astar[selectIndex + i + j].G = tempG;
+						astar[selectIndex + i + j].H = (abs(((selectIndex + i + j) % TILEX) - (_player->getIndex().x)) + abs(((selectIndex + i + j) / TILEX) - (_player->getIndex().y))) * 10;
+						astar[selectIndex + i + j].F = astar[selectIndex + i + j].G + astar[selectIndex + i + j].H;
+						astar[selectIndex + i + j].state = OPEN;
+						_openList.push_back(selectIndex + i + j);
+					}
+				}
+
+			}
+		}
+		astar[selectIndex].state = CLOSE;
+		_closeList.push_back(selectIndex);
+	}
+}
+
+void Dragon::findBest()
+{
+	int selectIndex;
+	int bestIndex = -1;
+	int tempG = -1;
+	int tempH = -1;
+	if (!findRoute)
+	{
+		return;
+	}
+	if (_routeState == NO_ROUTE)
+	{
+		return;
+	}
+
+	if (_finalList.empty())
+	{
+		selectIndex = _player->getIndex().x + _player->getIndex().y*TILEX;
+		astar[selectIndex].state = T_BEST;
+	}
+	else
+	{
+		selectIndex = _finalList[_finalList.size() - 1];
+	}
+
+	if (selectIndex > TILEX)
+	{
+		if (selectIndex - TILEX == _index.x + _index.y*TILEX)
+		{
+			_routeState = BEST;
+
+			return;
+		}
+		else if (astar[selectIndex - TILEX].state == CLOSE)
+		{
+			if (tempG == -1 && tempH == -1)
+			{
+				tempG = astar[selectIndex - TILEX].G;
+				tempH = astar[selectIndex - TILEX].H;
+				bestIndex = selectIndex - TILEX;
+			}
+			else if (tempG > astar[selectIndex - TILEX].G&&tempH > astar[selectIndex - TILEX].H)
+			{
+				tempG = astar[selectIndex - TILEX].G;
+				tempH = astar[selectIndex - TILEX].H;
+				bestIndex = selectIndex - TILEX;
+			}
+		}
+
+	}
+
+	if (selectIndex < TILEX*(TILEY - 1))
+	{
+		if (selectIndex + TILEX == _index.x + _index.y*TILEX)
+		{
+			_routeState = BEST;
+
+			return;
+		}
+		else if (astar[selectIndex + TILEX].state == CLOSE)
+		{
+			if (tempG == -1 && tempH == -1)
+			{
+				tempG = astar[selectIndex + TILEX].G;
+				tempH = astar[selectIndex + TILEX].H;
+				bestIndex = selectIndex + TILEX;
+			}
+			else if (tempG > astar[selectIndex + TILEX].G&&tempH > astar[selectIndex + TILEX].H)
+			{
+				tempG = astar[selectIndex + TILEX].G;
+				tempH = astar[selectIndex + TILEX].H;
+				bestIndex = selectIndex + TILEX;
+			}
+		}
+
+	}
+
+	if (selectIndex%TILEX < TILEX)
+	{
+		if (selectIndex + 1 == _index.x + _index.y*TILEX)
+		{
+			_routeState = BEST;
+
+			return;
+		}
+		else if (astar[selectIndex + 1].state == CLOSE)
+		{
+			if (tempG == -1 && tempH == -1)
+			{
+				tempG = astar[selectIndex + 1].G;
+				tempH = astar[selectIndex + 1].H;
+				bestIndex = selectIndex + 1;
+			}
+			else if (tempG > astar[selectIndex + 1].G&&tempH > astar[selectIndex + 1].H)
+			{
+				tempG = astar[selectIndex + 1].G;
+				tempH = astar[selectIndex + 1].H;
+				bestIndex = selectIndex + 1;
+			}
+		}
+
+	}
+	if (selectIndex%TILEX > 0)
+	{
+		if (selectIndex - 1 == _index.x + _index.y*TILEX)
+		{
+			_routeState = BEST;
+
+			return;
+		}
+		else if (astar[selectIndex - 1].state == CLOSE)
+		{
+			if (tempG == -1 && tempH == -1)
+			{
+				tempG = astar[selectIndex - 1].G;
+				tempH = astar[selectIndex - 1].H;
+				bestIndex = selectIndex - 1;
+			}
+			else if (tempG > astar[selectIndex - 1].G&&tempH > astar[selectIndex - 1].H)
+			{
+				tempG = astar[selectIndex - 1].G;
+				tempH = astar[selectIndex - 1].H;
+				bestIndex = selectIndex - 1;
+			}
+		}
+
+	}
+
+	if (bestIndex == -1)
+	{
+		_routeState = NO_ROUTE;
+	}
+	else
+	{
+		astar[bestIndex].state = T_BEST;
+		_finalList.push_back(bestIndex);
+	}
+}
+
+void Dragon::findBestV2()
+{
+	int selectIndex;
+	int bestIndex = -1;
+	int tempG = -1;
+	int subIndex = -1;
+
+	if (!findRoute)
+	{
+		return;
+	}
+	if (_routeState == NO_ROUTE)
+	{
+		return;
+	}
+
+	if (_finalList.empty())
+	{
+		selectIndex = _player->getIndex().x + _player->getIndex().y*TILEX;
+		astar[selectIndex].state = T_BEST;
+	}
+	else
+	{
+		selectIndex = _finalList[_finalList.size() - 1];
+	}
+
+	if (selectIndex > -1)
+	{
+		int times = -1;
+		for (int i = -TILEX; i < TILEX + 1; i += TILEX)
+		{
+			for (int j = -1; j < 2; j++)
+			{
+				times++;
+
+				if (selectIndex + i + j == _index.x + _index.y*TILEX)
+				{
+					subIndex = times;
+					_routeState = BEST;
+					i = 100;
+					j = 100;
+					continue;
+				}
+
+				if (selectIndex + i<0 || selectIndex + i >TILEX*TILEY)
+				{
+					continue;
+				}
+
+				if (j == 1 && selectIndex%TILEX == TILEX - 1)
+				{
+					continue;
+				}
+
+				if (j == -1 && selectIndex%TILEX == 0)
+				{
+					continue;
+				}
+				if (astar[selectIndex + i + j].state != CLOSE)
+				{
+					continue;
+				}
+				if (i == 0 && j == 0)
+				{
+					continue;
+				}
+
+				if (i == 0 || j == 0)
+				{
+					if (tempG == -1)
+					{
+						tempG = astar[selectIndex + i + j].G;
+						bestIndex = selectIndex + i + j;
+						subIndex = times;
+					}
+					else if (tempG>astar[selectIndex + i + j].G)
+					{
+						tempG = astar[selectIndex + i + j].G;
+						bestIndex = selectIndex + i + j;
+						subIndex = times;
+					}
+				}
+				else
+				{
+					if (_tileMap->getAttribute()[selectIndex + i] != 0 && _tileMap->getAttribute()[selectIndex + j] != 0)
+					{
+						continue;
+					}
+
+					if (tempG == -1)
+					{
+						tempG = astar[selectIndex + i + j].G;
+						bestIndex = selectIndex + i + j;
+						subIndex = times;
+					}
+					else if (tempG>astar[selectIndex + i + j].G)
+					{
+						tempG = astar[selectIndex + i + j].G;
+						bestIndex = selectIndex + i + j;
+						subIndex = times;
+					}
+				}
+
+			}
+		}
+
+		if (subIndex > -1)
+		{
+			if (_routeState == BEST)
+			{
+				if (subIndex % 2 == 1)  //십자일경우
+				{
+					_finalList.push_back(selectIndex);
+				}
+				else					//대각일 경우
+				{
+					switch (subIndex)
+					{
+					case 0:					//좌측상단
+						if (_tileMap->getAttribute()[selectIndex - TILEX] != 0)
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex - 1);
+
+							astar[selectIndex - 1].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+						else if (_tileMap->getAttribute()[selectIndex - 1] != 0)
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex - TILEX);
+
+							astar[selectIndex - TILEX].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+						else
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex - 1);
+							astar[selectIndex - 1].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+						break;
+					case 2:
+						if (_tileMap->getAttribute()[selectIndex - TILEX] != 0)
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex + 1);
+							astar[selectIndex + 1].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+						else if (_tileMap->getAttribute()[selectIndex + 1] != 0)
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex - TILEX);
+
+							astar[selectIndex - TILEX].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+						else
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex + 1);
+
+							astar[selectIndex + 1].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+
+
+						break;
+					case 6:
+						if (_tileMap->getAttribute()[selectIndex + TILEX] != 0)
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex - 1);
+
+							astar[selectIndex - 1].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+						else if (_tileMap->getAttribute()[selectIndex - 1] != 0)
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex + TILEX);
+
+							astar[selectIndex + TILEX].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+						else
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex - 1);
+
+							astar[selectIndex - 1].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+
+
+						break;
+					case 8:
+
+						if (_tileMap->getAttribute()[selectIndex + TILEX] != 0)
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex + 1);
+
+							astar[selectIndex + 1].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+						else if (_tileMap->getAttribute()[selectIndex + 1] != 0)
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex + TILEX);
+							astar[selectIndex + TILEX].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+						else
+						{
+							_finalList.push_back(selectIndex);
+							_finalList.push_back(selectIndex + 1);
+							astar[selectIndex + 1].state = T_BEST;
+							astar[selectIndex].state = T_BEST;
+						}
+
+						break;
+
+					}
+				}
+			}
+			else
+			{
+				if (subIndex % 2 == 1)  //십자일경우
+				{
+					_finalList.push_back(bestIndex);
+					astar[bestIndex].state = T_BEST;
+				}
+				else					//대각일 경우
+				{
+					switch (subIndex)
+					{
+					case 0:					//좌측상단
+						if (_tileMap->getAttribute()[selectIndex - TILEX] != 0)
+						{
+							_finalList.push_back(selectIndex - 1);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex - 1].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+						else if (_tileMap->getAttribute()[selectIndex - 1] != 0)
+						{
+							_finalList.push_back(selectIndex - TILEX);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex - TILEX].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+						else
+						{
+							_finalList.push_back(selectIndex - 1);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex - 1].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+						break;
+					case 2:
+						if (_tileMap->getAttribute()[selectIndex - TILEX] != 0)
+						{
+							_finalList.push_back(selectIndex + 1);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex + 1].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+						else if (_tileMap->getAttribute()[selectIndex + 1] != 0)
+						{
+							_finalList.push_back(selectIndex - TILEX);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex - TILEX].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+						else
+						{
+							_finalList.push_back(selectIndex + 1);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex + 1].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+
+
+						break;
+					case 6:
+						if (_tileMap->getAttribute()[selectIndex + TILEX] != 0)
+						{
+							_finalList.push_back(selectIndex - 1);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex - 1].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+						else if (_tileMap->getAttribute()[selectIndex - 1] != 0)
+						{
+							_finalList.push_back(selectIndex + TILEX);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex + TILEX].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+						else
+						{
+							_finalList.push_back(selectIndex - 1);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex - 1].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+
+
+						break;
+					case 8:
+
+						if (_tileMap->getAttribute()[selectIndex + TILEX] != 0)
+						{
+							_finalList.push_back(selectIndex + 1);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex + 1].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+						else if (_tileMap->getAttribute()[selectIndex + 1] != 0)
+						{
+							_finalList.push_back(selectIndex + TILEX);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex + TILEX].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+						else
+						{
+							_finalList.push_back(selectIndex + 1);
+							_finalList.push_back(bestIndex);
+							astar[selectIndex + 1].state = T_BEST;
+							astar[bestIndex].state = T_BEST;
+						}
+
+						break;
+
+					}
+				}
+			}
+
+
+
+		}
+
+	}
+}
+
+void Dragon::deleteOpen(int key)
+{
+	for (int i = 0; i < _openList.size(); i++)
+	{
+		if (_openList[i] == key)
+		{
+			_openList.erase(_openList.begin() + i);
+		}
+	}
+}
+
+int Dragon::settingMove()
+{
+	if (_routeState == BEST)
+	{
+		if (_finalList.empty())
+		{
+			_finalList.push_back(_player->getIndex().x + _player->getIndex().y*TILEX);
+		}
+		int last = _finalList.size() - 1;
+		if (_finalList[last] == _index.x + (_index.y - 1)*TILEX)
+		{
+			return MOVEDIRECTION_TOP;
+		}
+		else if (_finalList[last] == _index.x + (_index.y + 1)*TILEX)
+		{
+			return MOVEDIRECTION_BOTTOM;
+		}
+		else if (_finalList[last] == _index.x - 1 + (_index.y)*TILEX)
+		{
+			return MOVEDIRECTION_LEFT;
+		}
+		else if (_finalList[last] == _index.x + 1 + (_index.y)*TILEX)
+		{
+			return MOVEDIRECTION_RIGHT;
+		}
+	}
+	else
+	{
+		return RND->getInt(4);
+	}
+}
+
+int Dragon::findAttribute(int input)
+{
+	if (input == 2)
+	{
+		for (int i = 0; i < TILEX*TILEY; i++)
+		{
+
+			if (_tileMap->getAttribute()[i] == ATTR_PLAYER)
+			{
+				return i;
+			}
+		}
+	}
+}
+
+int Dragon::findMinimum()
+{
+	if (_openList.empty())
+	{
+		return -1;
+	}
+	int listIndex = 0;
+	int number = astar[_openList[listIndex]].F;
+	int tileIndex = _openList[listIndex];
+
+	for (int i = 1; i < _openList.size(); i++)
+	{
+		if (number >= astar[_openList[i]].F)
+		{
+			listIndex = i;
+			number = astar[_openList[i]].F;
+			tileIndex = _openList[listIndex];
+		}
+	}
+	_openList.erase(_openList.begin() + listIndex);
+
+	return tileIndex;
 }
