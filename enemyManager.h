@@ -1,6 +1,9 @@
 #pragma once
 #include "gameNode.h"
 #include "Slime.h"
+#include "Blueslime.h"
+#include "Skeleton.h"
+#include "Dragon.h"
 
 class tileMap;
 class player;

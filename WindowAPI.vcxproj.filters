@@ -212,6 +212,12 @@
     <ClInclude Include="weapon.h">
       <Filter>MainGame\게임화면\플레이어</Filter>
     </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dragon.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainGame.cpp">
@@ -333,6 +339,12 @@
     </ClCompile>
     <ClCompile Include="weapon.cpp">
       <Filter>MainGame\게임화면\플레이어</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Dragon.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
