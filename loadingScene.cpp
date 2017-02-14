@@ -78,13 +78,15 @@ void loadingScene::loadingImage(void)
 	//맵툴화면
 	_loading->loadFrameImage("tileMapBase", "tileMapBase.bmp", 192, 160, 8, 4, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("tileMapBaseBig", "tileMapBaseBig.bmp", 336, 320, 7, 4, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("stairs", "stairs.bmp", 48, 24, 2, 1);
+	_loading->loadFrameImage("stairs", "stairs.bmp", 96, 48, 2, 1);
+	_loading->loadFrameImage("colorTile", "colorTile.bmp", 96, 48, 2, 1);
 
 	_loading->loadImage("dragon_green", "dragon_green.bmp", 27, 26, true, RGB(255, 0, 255));
-	_loading->loadImage("dragon_green_big", "dragon_green_big.bmp", 54, 52, true, RGB(1, 0, 0));
+	_loading->loadImage("dragon_green_big", "dragon_green_big.bmp", 54, 51, true, RGB(1, 0, 0));
 	_loading->loadImage("maptoolCase", "maptoolCase.bmp", 380, 450, true, RGB(255, 0, 255));
 	_loading->loadImage("save", "save.bmp", 71, 44, true, RGB(255, 0, 255));
 	_loading->loadImage("load", "load.bmp", 71, 44, true, RGB(255, 0, 255));
+	_loading->loadImage("menu", "menu.bmp", 71, 44, true, RGB(255, 0, 255));
 	_loading->loadImage("select", "select.bmp", 128, 49, true, RGB(255, 0, 255));
 	_loading->loadImage("maptoolframe", "maptoolframe.bmp", 202, 170, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("slot1", "slot1.bmp", 76, 88, 1, 2, true, RGB(255, 0, 255));
@@ -97,6 +99,7 @@ void loadingScene::loadingImage(void)
 	_loading->loadFrameImage("Blueslime", "Blueslime.bmp", 384, 48, 8, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("Skeleton", "Skeleton.bmp", 384, 48, 8, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("Dragon", "dragon.bmp", 1344, 192, 7, 2, true, RGB(255, 0, 255));
+
 	//몬스터 임펙트
 	_loading->loadFrameImage("enemy_swipe", "enemy_swipe.bmp", 135, 24, 5, 1, true, RGB(255, 0, 255));
 
@@ -129,10 +132,10 @@ void loadingScene::loadingImage(void)
 	_loading->loadFrameImage("swipe_dagger_up", "swipe_dagger_up.bmp", 144, 48, 3, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("swipe_dagger_down", "swipe_dagger_down.bmp", 144, 48, 3, 1, true, RGB(255, 0, 255));
 
-	_loading->loadFrameImage("swipe_longsword_left", "swipe_longsword_left.bmp", 384, 48, 3, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("swipe_longsword_right", "swipe_longsword_right.bmp", 384, 48, 3, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("swipe_longsword_up", "swipe_longsword_up.bmp", 192, 96, 3, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("swipe_longsword_down", "swipe_longsword_down.bmp", 192, 96, 3, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("swipe_longsword_left", "swipe_longsword_left.bmp", 384, 48, 4, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("swipe_longsword_right", "swipe_longsword_right.bmp", 384, 48, 4, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("swipe_longsword_up", "swipe_longsword_up.bmp", 192, 96, 4, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("swipe_longsword_down", "swipe_longsword_down.bmp", 192, 96, 4, 1, true, RGB(255, 0, 255));
 
 	_loading->loadFrameImage("swipe_broadsword_left", "swipe_broadsword_left.bmp", 144, 144, 3, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("swipe_broadsword_right", "swipe_broadsword_right.bmp", 144, 144, 3, 1, true, RGB(255, 0, 255));
@@ -144,6 +147,9 @@ void loadingScene::loadingSound(void)
 {
 	//메뉴 사운드 로딩
 	_loading->loadSound("main_menu", "main_menu.ogg", TRUE, TRUE);
+
+	_loading->loadSound("tileMapBGM", "lobby.ogg", TRUE, TRUE);
+	_loading->loadSound("tickSound", "TEMP_tick.ogg");
 
 	//게임씬 사운드 로딩
 	_loading->loadSound("zone1_1", "zone1_1.ogg", TRUE, FALSE);

@@ -21,6 +21,9 @@ HRESULT maptoolScene::init(void)
 	goalX = -1;
 	goalY = -1;
 
+
+	SOUNDMANAGER->play("tileMapBGM", 0.7f);
+
 	return S_OK;
 }
 
@@ -33,6 +36,7 @@ void maptoolScene::update(void)
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON)) this->setMap();
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
+		SOUNDMANAGER->play("tickSound");
 		if (PtInRect(&_rcSave, _ptMouse))
 		{
 			_ctrlSelect = CTRL_SAVE;
@@ -69,6 +73,12 @@ void maptoolScene::update(void)
 		if (PtInRect(&_slot3, _ptMouse))
 		{
 			slot = 3;
+		}
+
+		if (PtInRect(&_rcMenu, _ptMouse))
+		{
+			SOUNDMANAGER->stop("tileMapBGM");
+			SCENEMANAGER->changeScene("메뉴화면");
 		}
 
 	}
@@ -111,6 +121,7 @@ void maptoolScene::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
+		SOUNDMANAGER->stop("tileMapBGM");
 		SCENEMANAGER->changeScene("게임화면");
 	}
 
@@ -240,6 +251,7 @@ void maptoolScene::render(void)
 
 	IMAGEMANAGER->render("save", getMemDC(), _rcSave.left, _rcSave.top);
 	IMAGEMANAGER->render("load", getMemDC(), _rcLoad.left, _rcLoad.top);
+	IMAGEMANAGER->render("menu", getMemDC(), _rcMenu.left, _rcMenu.top);
 
 
 	IMAGEMANAGER->frameRender("slot1", getMemDC(), _slot1.left, _slot1.top, 0, (slot == 1));
@@ -268,6 +280,12 @@ void maptoolScene::render(void)
 	else if (_currentTile.x == 5 && _currentTile.y == 1)
 	{
 		IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+
+	}
+	else if (_currentTile.x == 6 && _currentTile.y == 1)
+	{
+		IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+
 	}
 	else
 	{
@@ -283,6 +301,8 @@ void maptoolScene::maptoolSetup(void)
 	_rcLoad = RectMake(SAMPLESTARTX + 120, 270, IMAGEMANAGER->findImage("load")->getWidth(), IMAGEMANAGER->findImage("load")->getHeight());
 
 	_rcEraser = RectMake(SAMPLESTARTX, 270 + 50, IMAGEMANAGER->findImage("eraser")->getFrameWidth(), IMAGEMANAGER->findImage("eraser")->getFrameHeight());
+
+	_rcMenu = RectMake(SAMPLESTARTX + 120, 270 + 50, IMAGEMANAGER->findImage("eraser")->getFrameWidth(), IMAGEMANAGER->findImage("eraser")->getFrameHeight());
 
 	_slot1 = RectMake(SAMPLESTARTX, 270 + 120, IMAGEMANAGER->findImage("slot1")->getFrameWidth(), IMAGEMANAGER->findImage("slot1")->getFrameHeight());
 

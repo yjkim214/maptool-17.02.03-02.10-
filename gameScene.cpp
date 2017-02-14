@@ -20,6 +20,8 @@ HRESULT gameScene::init(void)
 	_enemymanager = new enemyManager;
 	_enemymanager->init();
 
+	_tileMap->setEnemyLint(_enemymanager);
+
 	_enemymanager->setLinkTileMap(_tileMap);
 	_enemymanager->setLinkPlayer(_player);
 
@@ -31,6 +33,8 @@ HRESULT gameScene::init(void)
 
 	SOUNDMANAGER->stop("main_menu");
 	SOUNDMANAGER->play("zone1_1");
+
+	_alpha = 0;
 
 	return S_OK;
 }
@@ -75,6 +79,12 @@ void gameScene::update(void)
 	_player->update();
 	_heartbeat->update();
 	_enemymanager->update();
+
+	if (_player->getIsDead())
+	{
+		if (_alpha < 255) { _alpha += 255; }
+		else { SCENEMANAGER->changeScene("메인메뉴"); }
+	}
 }
 
 void gameScene::render(void)
@@ -87,4 +97,10 @@ void gameScene::render(void)
 
 	IMAGEMANAGER->findImage("hud_weapon")->render(getMemDC(), 0, 0);
 	IMAGEMANAGER->findImage("hud_armor")->render(getMemDC(), 65, 0);
+	_player->equipRender();
+
+	if (_player->getIsDead())
+	{
+		IMAGEMANAGER->findImage("blackscreen")->alphaRender(getMemDC(), _alpha);
+	}
 }

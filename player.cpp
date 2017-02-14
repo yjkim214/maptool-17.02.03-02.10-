@@ -56,9 +56,12 @@ HRESULT player::init(void)
 	initWeapon->setIndex(_index);
 	initWeapon->setPos();
 	initWeapon->setIsEquip(true);
-	_vWeaponLiat.push_back(initWeapon);
-
+	_vWeaponList.push_back(initWeapon);
 	_equipWeapon = initWeapon;
+
+	//현재 슬롯 초기화
+	_isClear = false;
+	_currentSlot = 1;
 
 	return S_OK;
 }
@@ -75,9 +78,9 @@ void player::update(void)
 	//애니메이션
 	this->animation();
 
-	for (int i = 0; i < _vWeaponLiat.size(); i++)
+	for (int i = 0; i < _vWeaponList.size(); i++)
 	{
-		_vWeaponLiat[i]->update();
+		_vWeaponList[i]->update();
 	}
 
 	for (int i = 0; i < _vArmorList.size(); i++)
@@ -102,13 +105,30 @@ void player::render(void)
 		IMAGEMANAGER->findImage("heart")->render(getMemDC(), WINSIZEX - i * 48 - 48, 0);
 	}
 
-	for (int i = 0; i < _vWeaponLiat.size(); i++)
+	for (int i = 0; i < _vWeaponList.size(); i++)
 	{
-		_vWeaponLiat[i]->render();
+		if (_vWeaponList[i]->getisEquip()) { continue; }
+		_vWeaponList[i]->render();
 	}
 
 	for (int i = 0; i < _vArmorList.size(); i++)
 	{
+		if (_vArmorList[i]->getIsEquip()) { continue; }
+		_vArmorList[i]->render();
+	}
+}
+
+void player::equipRender(void)
+{
+	for (int i = 0; i < _vWeaponList.size(); i++)
+	{
+		if (!_vWeaponList[i]->getisEquip()) { continue; }
+		_vWeaponList[i]->render();
+	}
+
+	for (int i = 0; i < _vArmorList.size(); i++)
+	{
+		if (!_vArmorList[i]->getIsEquip()) { continue; }
 		_vArmorList[i]->render();
 	}
 }
@@ -341,14 +361,14 @@ void player::move()
 					_tileMap->releaseObject(_index.x, _index.y);
 					_tileMap->setPlayerAttribute(_index.x - 1, _index.y);
 
-					for (int i = 0; i < _vWeaponLiat.size(); i++)
+					for (int i = 0; i < _vWeaponList.size(); i++)
 					{
-						if (_index.x - 1 == _vWeaponLiat[i]->getIndex().x && _index.y == _vWeaponLiat[i]->getIndex().y)
+						if (_index.x - 1 == _vWeaponList[i]->getIndex().x && _index.y == _vWeaponList[i]->getIndex().y)
 						{
 							_equipWeapon->setIsEquip(false);
 							_equipWeapon->setIndex({ _index.x - 1, _index.y });
 							_equipWeapon->setPos();
-							_equipWeapon = _vWeaponLiat[i];
+							_equipWeapon = _vWeaponList[i];
 							_equipWeapon->setIsEquip(true);
 						}
 					}
@@ -368,12 +388,12 @@ void player::move()
 					_index.x = _index.x - 1;
 				}
 
-				else if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] & ATTR_BOX != 0)
+				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_BOX)) != 0))
 				{
 					int randNum = RND->getInt(2);
 					if (randNum == 0)
 					{
-						armor* newArmor;
+						armor* newArmor = new armor;
 						newArmor->init(static_cast<ARMOR_KIND>(RND->getInt(10)));
 						newArmor->setIndex({ _index.x - 1, _index.y });
 						newArmor->setPos();
@@ -382,19 +402,25 @@ void player::move()
 
 					else if (randNum == 1)
 					{
-						weapon* newWeapon;
+						weapon* newWeapon = new weapon;
 						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(3)));
 						newWeapon->setIndex({ _index.x - 1, _index.y });
 						newWeapon->setPos();
-						_vWeaponLiat.push_back(newWeapon);
+						_vWeaponList.push_back(newWeapon);
 					}
 
 					_tileMap->releaseObject(_index.x - 1, _index.y);
 				}
 
-				else if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] & ATTR_GOAL != 0)
+				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_GOAL_OPEN)) != 0))
 				{
+					if (_currentSlot < 3)
+					{
+						_currentSlot++;
+					}
 
+					_tileMap->changeSlot(_currentSlot);
+					setIndex();
 				}
 
 				//처음의 마커를 지워줌
@@ -600,14 +626,14 @@ void player::move()
 					_tileMap->releaseObject(_index.x, _index.y);
 					_tileMap->setPlayerAttribute(_index.x + 1, _index.y);
 
-					for (int i = 0; i < _vWeaponLiat.size(); i++)
+					for (int i = 0; i < _vWeaponList.size(); i++)
 					{
-						if (_index.x + 1 == _vWeaponLiat[i]->getIndex().x && _index.y == _vWeaponLiat[i]->getIndex().y)
+						if (_index.x + 1 == _vWeaponList[i]->getIndex().x && _index.y == _vWeaponList[i]->getIndex().y)
 						{
 							_equipWeapon->setIsEquip(false);
 							_equipWeapon->setIndex({ _index.x + 1, _index.y });
 							_equipWeapon->setPos();
-							_equipWeapon = _vWeaponLiat[i];
+							_equipWeapon = _vWeaponList[i];
 							_equipWeapon->setIsEquip(true);
 						}
 					}
@@ -627,12 +653,12 @@ void player::move()
 					_index.x = _index.x + 1;
 				}
 
-				else if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] & ATTR_BOX != 0)
+				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_BOX)) != 0))
 				{
 					int randNum = RND->getInt(2);
 					if (randNum == 0)
 					{
-						armor* newArmor;
+						armor* newArmor = new armor;
 						newArmor->init(static_cast<ARMOR_KIND>(RND->getInt(10)));
 						newArmor->setIndex({ _index.x + 1, _index.y });
 						newArmor->setPos();
@@ -641,19 +667,25 @@ void player::move()
 
 					else if (randNum == 1)
 					{
-						weapon* newWeapon;
+						weapon* newWeapon = new weapon;
 						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(3)));
 						newWeapon->setIndex({ _index.x + 1, _index.y });
 						newWeapon->setPos();
-						_vWeaponLiat.push_back(newWeapon);
+						_vWeaponList.push_back(newWeapon);
 					}
 
 					_tileMap->releaseObject(_index.x + 1, _index.y);
 				}
 
-				else if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] & ATTR_GOAL != 0)
+				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_GOAL_OPEN)) != 0))
 				{
+					if (_currentSlot < 3)
+					{
+						_currentSlot++;
+					}
 
+					_tileMap->changeSlot(_currentSlot);
+					setIndex();
 				}
 
 				//처음의 마커를 지워줌
@@ -857,21 +889,21 @@ void player::move()
 					_tileMap->releaseObject(_index.x, _index.y);
 					_tileMap->setPlayerAttribute(_index.x, _index.y - 1);
 
-					for (int i = 0; i < _vWeaponLiat.size(); i++)
+					for (int i = 0; i < _vWeaponList.size(); i++)
 					{
-						if (_index.x == _vWeaponLiat[i]->getIndex().x && _index.y - 1 == _vWeaponLiat[i]->getIndex().y)
+						if ((_index.x == _vWeaponList[i]->getIndex().x) && (_index.y - 1 == _vWeaponList[i]->getIndex().y))
 						{
 							_equipWeapon->setIsEquip(false);
 							_equipWeapon->setIndex({ _index.x, _index.y - 1 });
 							_equipWeapon->setPos();
-							_equipWeapon = _vWeaponLiat[i];
+							_equipWeapon = _vWeaponList[i];
 							_equipWeapon->setIsEquip(true);
 						}
 					}
 
 					for (int i = 0; i < _vArmorList.size(); i++)
 					{
-						if (_index.x == _vArmorList[i]->getIndex().x && _index.y - 1 == _vArmorList[i]->getIndex().y)
+						if ((_index.x == _vArmorList[i]->getIndex().x) && (_index.y - 1 == _vArmorList[i]->getIndex().y))
 						{
 							_equipArmor->setIsEquip(false);
 							_equipArmor->setIndex({ _index.x, _index.y - 1 });
@@ -884,12 +916,12 @@ void player::move()
 					_index.y = _index.y - 1;
 				}
 
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] & ATTR_BOX != 0)
+				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_BOX)) != 0))
 				{
 					int randNum = RND->getInt(2);
 					if (randNum == 0)
 					{
-						armor* newArmor;
+						armor* newArmor = new armor;
 						newArmor->init(static_cast<ARMOR_KIND>(RND->getInt(10)));
 						newArmor->setIndex({ _index.x, _index.y - 1 });
 						newArmor->setPos();
@@ -898,19 +930,25 @@ void player::move()
 
 					else if (randNum == 1)
 					{
-						weapon* newWeapon;
+						weapon* newWeapon = new weapon;
 						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(3)));
 						newWeapon->setIndex({ _index.x, _index.y - 1 });
 						newWeapon->setPos();
-						_vWeaponLiat.push_back(newWeapon);
+						_vWeaponList.push_back(newWeapon);
 					}
 
 					_tileMap->releaseObject(_index.x, _index.y - 1);
 				}
 
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] & ATTR_GOAL != 0)
+				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_GOAL_OPEN)) != 0))
 				{
+					if (_currentSlot < 3)
+					{
+						_currentSlot++;
+					}
 
+					_tileMap->changeSlot(_currentSlot);
+					setIndex();
 				}
 
 				//처음의 마커를 지워줌
@@ -1114,14 +1152,14 @@ void player::move()
 					_tileMap->releaseObject(_index.x, _index.y);
 					_tileMap->setPlayerAttribute(_index.x, _index.y + 1);
 
-					for (int i = 0; i < _vWeaponLiat.size(); i++)
+					for (int i = 0; i < _vWeaponList.size(); i++)
 					{
-						if (_index.x == _vWeaponLiat[i]->getIndex().x && _index.y + 1 == _vWeaponLiat[i]->getIndex().y)
+						if (_index.x == _vWeaponList[i]->getIndex().x && _index.y + 1 == _vWeaponList[i]->getIndex().y)
 						{
 							_equipWeapon->setIsEquip(false);
 							_equipWeapon->setIndex({ _index.x, _index.y + 1 });
 							_equipWeapon->setPos();
-							_equipWeapon = _vWeaponLiat[i];
+							_equipWeapon = _vWeaponList[i];
 							_equipWeapon->setIsEquip(true);
 						}
 					}
@@ -1141,12 +1179,12 @@ void player::move()
 					_index.y = _index.y + 1;
 				}
 
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] & ATTR_BOX != 0)
+				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_BOX)) != 0))
 				{
 					int randNum = RND->getInt(2);
 					if (randNum == 0)
 					{
-						armor* newArmor;
+						armor* newArmor = new armor;
 						newArmor->init(static_cast<ARMOR_KIND>(RND->getInt(10)));
 						newArmor->setIndex({ _index.x, _index.y + 1 });
 						newArmor->setPos();
@@ -1155,19 +1193,25 @@ void player::move()
 
 					else if (randNum == 1)
 					{
-						weapon* newWeapon;
+						weapon* newWeapon = new weapon;
 						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(3)));
 						newWeapon->setIndex({ _index.x, _index.y + 1 });
 						newWeapon->setPos();
-						_vWeaponLiat.push_back(newWeapon);
+						_vWeaponList.push_back(newWeapon);
 					}
 
 					_tileMap->releaseObject(_index.x, _index.y + 1);
 				}
 
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] & ATTR_GOAL != 0)
+				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_GOAL_OPEN)) != 0))
 				{
+					if (_currentSlot < 3)
+					{
+						_currentSlot++;
+					}
 
+					_tileMap->changeSlot(_currentSlot);
+					setIndex();
 				}
 
 				//처음의 마커를 지워줌

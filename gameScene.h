@@ -14,6 +14,7 @@ private:
 	heartbeat* _heartbeat;
 	enemyManager* _enemymanager;
 
+	int _alpha;
 public:
 	HRESULT init(void);
 	void release(void);

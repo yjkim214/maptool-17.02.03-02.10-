@@ -81,6 +81,9 @@
     <Filter Include="MainGame\게임화면\에너미">
       <UniqueIdentifier>{3d801dbc-160a-4015-97af-fd50a946d9e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\게임종료">
+      <UniqueIdentifier>{db5e4e33-379f-490d-b992-ecbbb4891ba4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mainGame.h">
@@ -218,6 +221,9 @@
     <ClInclude Include="Dragon.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="endScene.h">
+      <Filter>MainGame\게임종료</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainGame.cpp">
@@ -345,6 +351,9 @@
     </ClCompile>
     <ClCompile Include="Dragon.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="endScene.cpp">
+      <Filter>MainGame\게임종료</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

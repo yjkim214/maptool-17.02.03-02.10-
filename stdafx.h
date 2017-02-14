@@ -62,7 +62,7 @@ using namespace MY_UTIL;
 //====================================================================
 //			## 디파인문 - 메크로 ## (윈도우창 초기화)
 //====================================================================
-#define WINNAME (LPTSTR)(TEXT("피의 수요일과 함께하는 개발3팀"))
+#define WINNAME (LPTSTR)(TEXT("Crypt of the Necro Dancer"))
 #define WINSTARTX	0
 #define WINSTARTY	0
 #define WINSIZEX	800

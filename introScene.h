@@ -6,6 +6,7 @@ private:
 	//인트로 배경화면 알파값
 	int _alpha;
 
+	bool _isStart;
 public:
 	HRESULT init(void);
 	void release(void);

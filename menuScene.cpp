@@ -56,6 +56,7 @@ void menuScene::update(void)
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
 			_alphaMap = 150;
+			SOUNDMANAGER->stop("main_menu");
 			SCENEMANAGER->changeScene("맵툴화면");
 		}
 		//버튼안에 마우스가 있고 마우스 왼쪽 클릭을 뗀다면 씬 전환

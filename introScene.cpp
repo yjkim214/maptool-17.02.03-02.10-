@@ -7,6 +7,8 @@ HRESULT introScene::init(void)
 	IMAGEMANAGER->addImage("blackscreen", "blackscreen.bmp", WINSIZEX, WINSIZEY);
 	IMAGEMANAGER->addImage("splash_screen", "splash_screen.bmp", WINSIZEX, WINSIZEY);
 
+	_isStart = false;
+
 	return S_OK;
 }
 
@@ -17,9 +19,20 @@ void introScene::release(void)
 void introScene::update(void)
 {
 	//알파값이 0보다 크면 계속 줄여준다
-	if (_alpha > 0) { _alpha -= 5; }
-	//알파값이 0보다 작아진다면 로딩화면으로 넘어간다
-	else { SCENEMANAGER->changeScene("로딩화면"); }
+	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	{
+		if (!_isStart)
+		{
+			_isStart = true;
+		}
+	}
+
+	if (_isStart)
+	{
+		if (_alpha > 0) { _alpha -= 5; }
+		//알파값이 0보다 작아진다면 로딩화면으로 넘어간다
+		else { SCENEMANAGER->changeScene("로딩화면"); }
+	}
 }
 
 void introScene::render(void)

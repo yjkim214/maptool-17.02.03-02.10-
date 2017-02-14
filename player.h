@@ -53,7 +53,12 @@ private:
 	float _destPosX;
 	float _destPosY;
 
+	//죽었냐 안죽었냐
 	bool _isDead;
+
+	//현재 타일맵 슬롯
+	bool _isClear;
+	int _currentSlot;
 
 private:
 	tileMap* _tileMap;
@@ -65,13 +70,14 @@ private:
 	vector<armor*> _vArmorList;
 
 	weapon* _equipWeapon;
-	vector<weapon*> _vWeaponLiat;
+	vector<weapon*> _vWeaponList;
 
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
+	void equipRender(void);
 
 	//접근자
 	float getAtt() { return _att; }
@@ -92,6 +98,8 @@ public:
 	POINT getIndex() { return _index; }
 	PLAYERDIRECTION getDirect() { return _direct; }
 	bool getIsDead();
+	bool getIsClear() { return _isClear; }
+	int getCurrentSlot() { return _currentSlot; }
 	
 	//설정자
 	//초반 카메라 위치에 따라 인덱스를 바꾸어줌

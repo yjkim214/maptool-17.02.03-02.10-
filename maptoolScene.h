@@ -10,7 +10,7 @@ private:
 	tagCurrentTile _currentTile;	//현재타일
 
 									//버튼 5개(세이브, 로드, 지형, 오브젝트, 지우개)
-	RECT _rcSave, _rcLoad, _rcTerrain, _rcObject, _rcEraser;
+	RECT _rcSave, _rcLoad, _rcTerrain, _rcObject, _rcEraser, _rcMenu;
 
 	RECT _slot1, _slot2, _slot3;
 
@@ -25,6 +25,7 @@ private:
 
 
 	int slot;
+
 
 public:
 	HRESULT init(void);

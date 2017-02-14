@@ -43,8 +43,7 @@ public:
 	int getHp() { return _hp; }
 	POINT getIndex() { return _index; }
 	bool getIsEquip() { return _isEquip; }
-	RECT getRect() { return _rc; }
-
+	
 	armor() {}
 	~armor() {}
 };

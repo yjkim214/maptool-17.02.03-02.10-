@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "tileMap.h"
+#include"enemyManager.h"
 
 HRESULT tileMap::init(void)
 {
@@ -7,6 +8,8 @@ HRESULT tileMap::init(void)
 	slot = 1;
 
 	this->load();
+
+	turrainCount = 1;
 
 	setStartPos();
 
@@ -28,6 +31,42 @@ void tileMap::update(void)
 		_tiles[i].rc.top = _initRect[i].top - DRAWRECTMANAGER->getY();
 		_tiles[i].rc.bottom = _initRect[i].bottom - DRAWRECTMANAGER->getY();
 	}
+
+	if (_em->getEnemyList().empty())
+	{
+		_attribute[goalIndex] = ATTR_GOAL_OPEN;
+	}
+
+	if (turrainCount % 100 == 0)
+	{
+		if (turrainCount<200)
+		{
+			for (int i = 0; i < TILEX*TILEY; i++)
+			{
+				if (_tiles[i].terrain != TR_NONE && ((i / TILEX) + (i%TILEX)) % 2 == 1)
+				{
+					turrainOnoff[i] = true;
+				}
+			}
+
+		}
+		else
+		{
+			for (int i = 0; i < TILEX*TILEY; i++)
+			{
+				if (_tiles[i].terrain != TR_NONE)
+				{
+					turrainOnoff[i] = !turrainOnoff[i];
+				}
+
+			}
+			turrainCount = 201;
+		}
+
+	}
+
+	turrainCount++;
+
 }
 
 void tileMap::render(void)
@@ -35,18 +74,36 @@ void tileMap::render(void)
 	//전체화면 지형을 그린다
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
-		if (IntersectRect(&DRAWRECTMANAGER->getRect(), &_tiles[i].rc))
+		RECT col;
+		if (IntersectRect(&col, &DRAWRECTMANAGER->getRect(), &_tiles[i].rc))
 		{
 			if (_tiles[i].rc.right > DRAWRECTMANAGER->getRect().right)
 			{
-				image* temp = IMAGEMANAGER->findImage("tileMapBaseBig");
-				IMAGEMANAGER->render("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX*temp->getFrameWidth(), _tiles[i].terrainFrameY*temp->getFrameHeight(),
-					DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+				if (turrainOnoff[i])
+				{
+					image* temp = IMAGEMANAGER->findImage("colorTile");
+					IMAGEMANAGER->render("colorTile", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, (((i / TILEX) + (i%TILEX)) % 2)*temp->getFrameWidth(), 0,
+						DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+				}
+				else
+				{
+					image* temp = IMAGEMANAGER->findImage("tileMapBaseBig");
+					IMAGEMANAGER->render("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX*temp->getFrameWidth(), _tiles[i].terrainFrameY*temp->getFrameHeight(),
+						DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+				}
+
 			}
 
 			else
 			{
-				IMAGEMANAGER->frameRender("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+				if (turrainOnoff[i])
+				{
+					IMAGEMANAGER->frameRender("colorTile", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, ((i / TILEX) + (i%TILEX)) % 2, 0);
+				}
+				else
+				{
+					IMAGEMANAGER->frameRender("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+				}
 			}
 		}
 
@@ -87,16 +144,44 @@ void tileMap::objRender(void)
 		{
 			if (_tiles[i].rc.right > DRAWRECTMANAGER->getRect().right)
 			{
-				if (!(_tiles[i].obj == OBJECT_BLOCK || _tiles[i].obj == OBJECT_GOLDBLOCK || _tiles[i].obj == OBJECT_BOX)) continue;
-				image* temp = IMAGEMANAGER->findImage("tileMapBaseBig");
-				IMAGEMANAGER->render("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
-					DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+				if (!(_tiles[i].obj == OBJECT_BLOCK || _tiles[i].obj == OBJECT_GOLDBLOCK || _tiles[i].obj == OBJECT_BOX|| _tiles[i].obj == OBJECT_GOAL)) continue;
+				if (_attribute[i] == ATTR_GOAL_CLOSE)
+				{
+					image* temp = IMAGEMANAGER->findImage("stairs");
+					IMAGEMANAGER->render("stairs", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("stairs")->getFrameHeight() - TILESIZEGAME), 1*temp->getFrameWidth(), 0,
+						DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+				}
+				else if (_attribute[i] == ATTR_GOAL_OPEN)
+				{
+					image* temp = IMAGEMANAGER->findImage("stairs");
+					IMAGEMANAGER->render("stairs", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("stairs")->getFrameHeight() - TILESIZEGAME), 0, 0,
+						DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+				}
+				else
+				{
+					image* temp = IMAGEMANAGER->findImage("tileMapBaseBig");
+					IMAGEMANAGER->render("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
+						DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+				}
+				
 			}
 
 			else
 			{
-				if (!(_tiles[i].obj == OBJECT_BLOCK || _tiles[i].obj == OBJECT_GOLDBLOCK || _tiles[i].obj == OBJECT_BOX)) continue;
-				IMAGEMANAGER->frameRender("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX, _tiles[i].objFrameY);
+				if (!(_tiles[i].obj == OBJECT_BLOCK || _tiles[i].obj == OBJECT_GOLDBLOCK || _tiles[i].obj == OBJECT_BOX || _tiles[i].obj == OBJECT_GOAL)) continue;
+				if (_attribute[i] ==ATTR_GOAL_CLOSE)
+				{
+					IMAGEMANAGER->frameRender("stairs", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("stairs")->getFrameHeight() - TILESIZEGAME), 1,0);
+				}
+				else if (_attribute[i] == ATTR_GOAL_OPEN)
+				{
+					IMAGEMANAGER->frameRender("stairs", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("stairs")->getFrameHeight() - TILESIZEGAME),0,0);
+				}
+				else
+				{
+					IMAGEMANAGER->frameRender("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX, _tiles[i].objFrameY);
+				}
+				
 			}
 		}
 
@@ -145,7 +230,11 @@ void tileMap::load(void)
 		if (_tiles[i].terrain == TR_NONE) _attribute[i] |= ATTR_NONE;
 		if (_tiles[i].obj == OBJECT_BOSS) _attribute[i] |= ATTR_BOSS;
 		if (_tiles[i].obj == OBJECT_BOX) _attribute[i] |= ATTR_BOX;
-		if (_tiles[i].obj == OBJECT_GOAL) _attribute[i] |= ATTR_GOAL;
+		if (_tiles[i].obj == OBJECT_GOAL)
+		{
+			goalIndex = i;
+			_attribute[i] |= ATTR_GOAL_CLOSE;
+		}
 	}
 
 	//맵사이즈 수정
@@ -154,6 +243,12 @@ void tileMap::load(void)
 		_tiles[i].rc = RectMake((i % TILEX) * TILESIZEGAME, (i / TILEX) * TILESIZEGAME, TILESIZEGAME, TILESIZEGAME);
 		_initRect[i] = _tiles[i].rc;
 	}
+
+	for (int i = 0; i < TILEX*TILEY; i++)
+	{
+		turrainOnoff[i] = false;
+	}
+	turrainCount = 1;
 }
 
 void tileMap::setStartPos()

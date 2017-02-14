@@ -26,7 +26,6 @@ void weapon::update(void)
 {
 	if (_isEquip)
 	{
-		_index = { -1, -1 };
 		_x = 6;
 		_y = 12;
 		_rc = RectMake(_x, _y, 48, 48);
@@ -34,8 +33,8 @@ void weapon::update(void)
 
 	else
 	{
-		_x = (48 / 2) + _index.x * 48 - DRAWRECTMANAGER->getX();
-		_y = (48 / 2) + _index.y * 48 - DRAWRECTMANAGER->getY();
+		_x = _index.x * 48 - DRAWRECTMANAGER->getX();
+		_y = _index.y * 48 - DRAWRECTMANAGER->getY();
 		_rc = RectMake(_x, _y, 48, 48);
 	}
 }
@@ -58,8 +57,8 @@ void weapon::render(void)
 
 void weapon::setPos()
 {
-	_x = (48 / 2) + _index.x * 48 - DRAWRECTMANAGER->getX();
-	_y = (48 / 2) + _index.y * 48 - DRAWRECTMANAGER->getY();
+	_x = _index.x * 48 - DRAWRECTMANAGER->getX();
+	_y = _index.y * 48 - DRAWRECTMANAGER->getY();
 	_rc = RectMake(_x, _y, 48, 48);
 }
 
@@ -70,5 +69,6 @@ void weapon::setIndex(POINT index)
 
 void weapon::setIsEquip(bool isEquip)
 {
+	if (isEquip) { _index = { -1, -1 }; }
 	_isEquip = isEquip;
 }
