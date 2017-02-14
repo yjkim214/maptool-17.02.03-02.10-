@@ -63,19 +63,25 @@ void gameScene::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		_tileMap->changeSlot(1);
-		_player->setIndex();
+		_player->release();
+		_player->setIndex(); 
+		_enemymanager->setEnemy();
 	}
 	
 	if (KEYMANAGER->isOnceKeyDown(VK_F2))
 	{
 		_tileMap->changeSlot(2);
+		_player->release();
 		_player->setIndex();
+		_enemymanager->setEnemy();
 	}
 	
 	if (KEYMANAGER->isOnceKeyDown(VK_F3))
 	{
 		_tileMap->changeSlot(3);
+		_player->release();
 		_player->setIndex();
+		_enemymanager->setEnemy();
 	}
 
 	_player->update();

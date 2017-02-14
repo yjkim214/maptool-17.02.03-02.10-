@@ -215,14 +215,14 @@
     <ClInclude Include="weapon.h">
       <Filter>MainGame\게임화면\플레이어</Filter>
     </ClInclude>
-    <ClInclude Include="Skeleton.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Dragon.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="endScene.h">
       <Filter>MainGame\게임종료</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>MainGame\게임화면\에너미</Filter>
+    </ClInclude>
+    <ClInclude Include="Dragon.h">
+      <Filter>MainGame\게임화면\에너미</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -346,14 +346,14 @@
     <ClCompile Include="weapon.cpp">
       <Filter>MainGame\게임화면\플레이어</Filter>
     </ClCompile>
-    <ClCompile Include="Skeleton.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Dragon.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="endScene.cpp">
       <Filter>MainGame\게임종료</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>MainGame\게임화면\에너미</Filter>
+    </ClCompile>
+    <ClCompile Include="Dragon.cpp">
+      <Filter>MainGame\게임화면\에너미</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

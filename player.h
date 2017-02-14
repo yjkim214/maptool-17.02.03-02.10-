@@ -24,7 +24,6 @@ enum PLAYERDIRECTION
 class player : public gameNode
 {
 private:
-
 	vector<habar*> _hpbarlist;
 	//플레이어 공격력
 	float _att;
@@ -44,6 +43,7 @@ private:
 
 	//이동관련 변수
 	float _speed;
+	bool _isAttack;
 	bool _isLeft;
 	bool _isMove;
 

@@ -26,7 +26,7 @@ HRESULT player::init(void)
 
 	//플레이어 속도 초기화
 	_speed = 5.0f;
-
+	_isAttack = false;
 	//왼쪽이냐?
 	_isLeft = false;
 	//움직이지 않는 상태
@@ -62,15 +62,22 @@ HRESULT player::init(void)
 	//현재 슬롯 초기화
 	_isClear = false;
 	_currentSlot = 1;
+	
 	for (int i = 0; i < _maxHp / 2; i++)
 	{
 		addhpbar(WINSIZEX - i * 48 - 48, 0);
 	}
+
 	return S_OK;
 }
 
 void player::release(void)
 {
+	_vWeaponList.clear();
+	_vWeaponList.push_back(_equipWeapon);
+
+	_vArmorList.clear();
+	_vArmorList.push_back(_equipArmor);
 }
 
 void player::update(void)
@@ -94,17 +101,18 @@ void player::update(void)
 
 	for (int i = 0; tempHP >= 0; i++)
 	{
-
 		if (tempHP >= 2)
 		{
 			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(true);
 			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(false);
 		}
+
 		else if (tempHP == 1)
 		{
 			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(true);
 			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(false);
 		}
+		
 		else
 		{
 			if (i >= _hpbarlist.size())
@@ -115,17 +123,11 @@ void player::update(void)
 			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(false);
 		}
 		tempHP -= 2;
-
 	}
 }
 
 void player::render(void)
 {
-	for (int i = 0; i < _hpbarlist.size(); i++)
-	{
-		_hpbarlist[i]->render();
-	}
-
 	//플레이어 렉트를 그려줌
 	if (KEYMANAGER->isToggleKey(VK_F4))
 	{
@@ -165,12 +167,6 @@ void player::equipRender(void)
 
 void player::heartRender(void)
 {
-	/*
-	for (int i = 0; i < _maxHp / 2; i++)
-	{
-		IMAGEMANAGER->findImage("heart")->render(getMemDC(), WINSIZEX - i * 48 - 48, 0);
-	}
-	*/
 	for (int i = 0; i < _hpbarlist.size(); i++)
 	{
 		_hpbarlist[i]->render();
@@ -243,11 +239,19 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
+					}
+
+					else
+					{
+						_isAttack = false;
 					}
 					break;
 				case WEAPON_LONGSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+						|| (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -258,29 +262,7 @@ void player::move()
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
-
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 120, WINSIZEY / 2 - 24, "swipe_longsword_left");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
+							
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
@@ -302,11 +284,20 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
+					}
+
+					else
+					{
+						_isAttack = false;
 					}
 					break;
 				case WEAPON_BROADSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+						|| (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+						|| (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -317,56 +308,14 @@ void player::move()
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
 
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 72, WINSIZEY / 2 - 72, "swipe_broadsword_left");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
 
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 72, WINSIZEY / 2 - 72, "swipe_broadsword_left");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
@@ -388,12 +337,19 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
+					}
+
+					else
+					{
+						_isAttack = false;
 					}
 					break;
 				}
 
 				//움직일 수 있는 타일일 때
-				if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == 0)
+				if ((_index.x != 0) && (!_isAttack) && (_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == 0))
 				{
 					//플레이어를 움직이는 상태로
 					_isMove = true;
@@ -414,6 +370,7 @@ void player::move()
 							_equipWeapon->setPos();
 							_equipWeapon = _vWeaponList[i];
 							_equipWeapon->setIsEquip(true);
+							break;
 						}
 					}
 
@@ -426,6 +383,7 @@ void player::move()
 							_equipArmor->setPos();
 							_equipArmor = _vArmorList[i];
 							_equipArmor->setIsEquip(true);
+							break;
 						}
 					}
 
@@ -501,11 +459,19 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
+					}
+
+					else
+					{
+						_isAttack = false;
 					}
 					break;
 				case WEAPON_LONGSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -516,29 +482,7 @@ void player::move()
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
 
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 + 24, WINSIZEY / 2 - 24, "swipe_longsword_right");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
@@ -560,11 +504,20 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
+					}
+
+					else
+					{
+						_isAttack = false;
 					}
 					break;
 				case WEAPON_BROADSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -575,58 +528,14 @@ void player::move()
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
 
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 + 24, WINSIZEY / 2 - 72, "swipe_broadsword_right");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
 
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 + 24, WINSIZEY / 2 - 72, "swipe_broadsword_right");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
@@ -648,11 +557,18 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
+					}
+
+					else
+					{
+						_isAttack = false;
 					}
 					break;
 				}
 
-				if (_index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == 0)
+				if (_index.x != TILEX - 1 && !_isAttack && (_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == 0))
 				{
 					//플레이어를 움직이는 상태로
 					_isMove = true;
@@ -673,6 +589,7 @@ void player::move()
 							_equipWeapon->setPos();
 							_equipWeapon = _vWeaponList[i];
 							_equipWeapon->setIsEquip(true);
+							break;
 						}
 					}
 
@@ -685,6 +602,7 @@ void player::move()
 							_equipArmor->setPos();
 							_equipArmor = _vArmorList[i];
 							_equipArmor->setIsEquip(true);
+							break;
 						}
 					}
 
@@ -758,15 +676,30 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
+					}
+
+					else
+					{
+						_isAttack = false;
 					}
 					break;
 				case WEAPON_LONGSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
 						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
 							{
@@ -788,40 +721,20 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
 					}
 
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					else
 					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 24, WINSIZEY / 2 - 120, "swipe_longsword_up");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
+						_isAttack = false;
 					}
 					break;
 				case WEAPON_BROADSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -832,58 +745,14 @@ void player::move()
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
 
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 - 72, "swipe_broadsword_up");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
 
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 - 72, "swipe_broadsword_up");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
 							{
@@ -893,7 +762,7 @@ void player::move()
 						}
 
 						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 - 72, "swipe_broadsword_up");
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 72, WINSIZEY / 2 - 72, "swipe_broadsword_up");
 
 						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
 						{
@@ -905,11 +774,19 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
 					}
+
+					else
+					{
+						_isAttack = false;
+					}
+
 					break;
 				}
 
-				if (_index.y != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] == 0)
+				if (_index.y != 0 && !_isAttack && (_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] == 0))
 				{
 					//플레이어를 움직이는 상태로
 					_isMove = true;
@@ -930,6 +807,7 @@ void player::move()
 							_equipWeapon->setPos();
 							_equipWeapon = _vWeaponList[i];
 							_equipWeapon->setIsEquip(true);
+							break;
 						}
 					}
 
@@ -942,6 +820,7 @@ void player::move()
 							_equipArmor->setPos();
 							_equipArmor = _vArmorList[i];
 							_equipArmor->setIsEquip(true);
+							break;
 						}
 					}
 
@@ -1015,11 +894,19 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
+					}
+
+					else
+					{
+						_isAttack = false;
 					}
 					break;
 				case WEAPON_LONGSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -1030,29 +917,7 @@ void player::move()
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
 
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 24, WINSIZEY / 2 + 24, "swipe_longsword_down");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 2)
 							{
@@ -1074,11 +939,20 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
+					}
+
+					else
+					{
+						_isAttack = false;
 					}
 					break;
 				case WEAPON_BROADSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -1089,58 +963,14 @@ void player::move()
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
-
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 + 24, "swipe_broadsword_down");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
+							
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
 							}
-						}
 
-						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 + 24, "swipe_broadsword_down");
-
-						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
-						{
-							SOUNDMANAGER->stop("vo_ari_melee_1_01");
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-
-						else
-						{
-							SOUNDMANAGER->play("vo_ari_melee_1_01");
-						}
-					}
-
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
@@ -1150,7 +980,7 @@ void player::move()
 						}
 
 						DRAWRECTMANAGER->shakeWindow();
-						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 + 24, "swipe_broadsword_down");
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 72, WINSIZEY / 2 + 24, "swipe_broadsword_down");
 
 						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
 						{
@@ -1162,11 +992,19 @@ void player::move()
 						{
 							SOUNDMANAGER->play("vo_ari_melee_1_01");
 						}
+
+						_isAttack = true;
 					}
+
+					else
+					{
+						_isAttack = false;
+					}
+
 					break;
 				}
 
-				if (_index.y != TILEY - 1 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == 0)
+				if (_index.y != TILEY - 1 && !_isAttack && (_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == 0))
 				{
 					//플레이어를 움직이는 상태로
 					_isMove = true;
@@ -1187,6 +1025,7 @@ void player::move()
 							_equipWeapon->setPos();
 							_equipWeapon = _vWeaponList[i];
 							_equipWeapon->setIsEquip(true);
+							break;
 						}
 					}
 
@@ -1199,6 +1038,7 @@ void player::move()
 							_equipArmor->setPos();
 							_equipArmor = _vArmorList[i];
 							_equipArmor->setIsEquip(true);
+							break;
 						}
 					}
 

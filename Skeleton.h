@@ -3,7 +3,6 @@
 class Skeleton : public cEnemy
 {
 public:
-
 	virtual HRESULT init(void);
 	virtual HRESULT init(POINT index);
 	virtual void release(void);
