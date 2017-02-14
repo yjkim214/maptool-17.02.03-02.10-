@@ -458,13 +458,7 @@ void player::move()
 
 				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_GOAL_OPEN)) != 0))
 				{
-					if (_currentSlot < 3)
-					{
-						_currentSlot++;
-					}
-
-					_tileMap->changeSlot(_currentSlot);
-					setIndex();
+					_isClear = true;
 				}
 
 				//처음의 마커를 지워줌
@@ -723,13 +717,7 @@ void player::move()
 
 				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_GOAL_OPEN)) != 0))
 				{
-					if (_currentSlot < 3)
-					{
-						_currentSlot++;
-					}
-
-					_tileMap->changeSlot(_currentSlot);
-					setIndex();
+					_isClear = true;
 				}
 
 				//처음의 마커를 지워줌
@@ -986,13 +974,7 @@ void player::move()
 
 				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_GOAL_OPEN)) != 0))
 				{
-					if (_currentSlot < 3)
-					{
-						_currentSlot++;
-					}
-
-					_tileMap->changeSlot(_currentSlot);
-					setIndex();
+					_isClear = true;
 				}
 
 				//처음의 마커를 지워줌
@@ -1249,6 +1231,7 @@ void player::move()
 
 				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_GOAL_OPEN)) != 0))
 				{
+					/*
 					if (_currentSlot < 3)
 					{
 						_currentSlot++;
@@ -1256,6 +1239,8 @@ void player::move()
 
 					_tileMap->changeSlot(_currentSlot);
 					setIndex();
+					*/
+					_isClear = true;
 				}
 
 				//처음의 마커를 지워줌

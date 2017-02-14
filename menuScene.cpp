@@ -18,8 +18,17 @@ HRESULT menuScene::init(void)
 	_alphaMap = 255;
 	_alphaQuit = 255;
 
-	SOUNDMANAGER->play("main_menu");
+	if (SOUNDMANAGER->isPlaySound("main_menu"))
+	{
+		SOUNDMANAGER->stop("main_menu");
+		SOUNDMANAGER->play("main_menu");
+	}
 
+	else
+	{
+		SOUNDMANAGER->play("main_menu");
+	}
+	
 	return S_OK;
 }
 

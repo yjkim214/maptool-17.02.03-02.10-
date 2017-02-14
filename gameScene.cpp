@@ -8,6 +8,8 @@
 HRESULT gameScene::init(void)
 {
 	//타일맵 클래스 생성
+	DRAWRECTMANAGER->init();
+
 	_tileMap = new tileMap;
 	_tileMap->init();
 
@@ -80,10 +82,14 @@ void gameScene::update(void)
 	_heartbeat->update();
 	_enemymanager->update();
 
-	if (_player->getIsDead())
+	if (_player->getIsDead() || _player->getIsClear())
 	{
-		if (_alpha < 255) { _alpha += 255; }
-		else { SCENEMANAGER->changeScene("메인메뉴"); }
+		if (_alpha < 255) { _alpha += 5; }
+		else 
+		{ 
+			SOUNDMANAGER->stop("zone1_1");
+			SCENEMANAGER->changeScene("메뉴화면"); 
+		}
 	}
 }
 
@@ -100,7 +106,7 @@ void gameScene::render(void)
 	IMAGEMANAGER->findImage("hud_armor")->render(getMemDC(), 65, 0);
 	_player->equipRender();
 
-	if (_player->getIsDead())
+	if (_player->getIsDead() || _player->getIsClear())
 	{
 		IMAGEMANAGER->findImage("blackscreen")->alphaRender(getMemDC(), _alpha);
 	}
