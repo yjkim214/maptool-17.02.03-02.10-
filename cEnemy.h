@@ -57,7 +57,6 @@ protected:
 	image* _image;
 	image* _attack;
 
-
 	//잘하면되
 	//TEST
 	float _destX;
@@ -81,26 +80,20 @@ public:
 	virtual void addhpbar(float x, float y);
 
 	//
-	void setSpeed(float speed) {}
-	float getSpeed() { return 0.0f; }
-
 	void setHp(int hp) { _hp = hp; }
 	int getHp() { return _hp; }
 
 	int getMaxHp() { return _maxHp; }
 
-	void setDmg(int Dmg) {}
-	int getDmg() { return 0; }
+	int getDmg() { return _dmg; }
 
-	float getX() { return 0.0f; }
-	float getY() { return 0.0f; }
+	float getX() { return _x; }
+	float getY() { return _y; }
 
-	RECT getRC() { return _rc; }
+	POINT getIndex() { return _index; }
 
 	void setLinkTileMap(tileMap* tileMap) { _tileMap = tileMap; }
 	void setLinkPlayer(player* player) { _player = player; }
-
-
 
 	cEnemy() : _direct(MOVEDIRECTION_LEFT), _movespeed(4.8f), _movecount(0), _animcount(0),
 		_isLeft(false), _isMove(false)

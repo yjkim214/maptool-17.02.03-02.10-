@@ -17,14 +17,6 @@ HRESULT gameScene::init(void)
 	_heartbeat = new heartbeat;
 	_heartbeat->init();
 
-
-	_player->setLinkTileMap(_tileMap);
-	_player->setLinkHeartbeat(_heartbeat);
-
-	for (int i = 0; i < _player->getHp() / 2; i++)
-	{
-		_heartImg.push_back(IMAGEMANAGER->findImage("heart"));
-	}
 	_enemymanager = new enemyManager;
 	_enemymanager->init();
 
@@ -32,6 +24,10 @@ HRESULT gameScene::init(void)
 	_enemymanager->setLinkPlayer(_player);
 
 	_enemymanager->setEnemy();
+
+	_player->setLinkTileMap(_tileMap);
+	_player->setLinkHeartbeat(_heartbeat);
+	_player->setLinkEnemyManager(_enemymanager);
 
 	SOUNDMANAGER->stop("main_menu");
 	SOUNDMANAGER->play("zone1_1");
@@ -57,6 +53,25 @@ void gameScene::release(void)
 void gameScene::update(void)
 {
 	_tileMap->update();
+	
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
+	{
+		_tileMap->changeSlot(1);
+		_player->setIndex();
+	}
+	
+	if (KEYMANAGER->isOnceKeyDown(VK_F2))
+	{
+		_tileMap->changeSlot(2);
+		_player->setIndex();
+	}
+	
+	if (KEYMANAGER->isOnceKeyDown(VK_F3))
+	{
+		_tileMap->changeSlot(3);
+		_player->setIndex();
+	}
+
 	_player->update();
 	_heartbeat->update();
 	_enemymanager->update();
@@ -70,8 +85,6 @@ void gameScene::render(void)
 	_tileMap->objRender(); 
 	_heartbeat->render();
 
-	for (int i = 0; i < _heartImg.size(); i++)
-	{
-		_heartImg[i]->render(getMemDC(), WINSIZEX - i * 48 - 48, 0);
-	}
+	IMAGEMANAGER->findImage("hud_weapon")->render(getMemDC(), 0, 0);
+	IMAGEMANAGER->findImage("hud_armor")->render(getMemDC(), 65, 0);
 }

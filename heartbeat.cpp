@@ -53,22 +53,20 @@ void heartbeat::release(void)
 void heartbeat::update(void)
 {
 	//이미 3개를 만들었기 때문에 3번째부터 만들어준다
-	if ((_beatTimer > _vBeatTimer[_beatCount + 3] - _vBeatTimer[3] - 200) && (_beatCount < _vBeatTimer.size() - 4))
+	//총 비트의 크기의 - 1까지이나 3개를 이미 만들었기에 - 4를 해준다
+	if ((_beatTimer > _vBeatTimer[_beatCount + 3] - _vBeatTimer[3] - 200) && (_beatCount < _vBeatTimer.size() - 4) && _isMade)
 	{
-		if (_isMade)
-		{
-			BEAT_MARKER newBeatMark;
+		BEAT_MARKER newBeatMark;
 
-			newBeatMark.markerRc[0] = RectMakeCenter(0, WINSIZEY - 52, 12, 64);
-			newBeatMark.markerRc[1] = RectMakeCenter(WINSIZEX, WINSIZEY - 52, 12, 64);
+		newBeatMark.markerRc[0] = RectMakeCenter(0, WINSIZEY - 52, 12, 64);
+		newBeatMark.markerRc[1] = RectMakeCenter(WINSIZEX, WINSIZEY - 52, 12, 64);
 
-			newBeatMark.markerSpeed = 5.0f;
-			newBeatMark.markerImg = IMAGEMANAGER->findImage("TEMP_beat_marker_green");
+		newBeatMark.markerSpeed = 5.0f;
+		newBeatMark.markerImg = IMAGEMANAGER->findImage("TEMP_beat_marker_green");
 
-			_vBeatMarker.push_back(newBeatMark);
+		_vBeatMarker.push_back(newBeatMark);
 
-			_isMade = false;
-		}
+		_isMade = false;
 	}
 
 	//총 비트의 개수
@@ -128,6 +126,11 @@ void heartbeat::update(void)
 
 void heartbeat::render(void)
 {
+	if (KEYMANAGER->isToggleKey(VK_F3))
+	{
+		RectangleMake(getMemDC(), _beatRc);
+	}
+
 	for (int i = 0; i < _vBeatMarker.size(); i++)
 	{
 		for (int j = 0; j < 2; j++)

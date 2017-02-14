@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="armor.h" />
     <ClInclude Include="Blueslime.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="cEnemy.h" />
@@ -183,8 +184,10 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="armor.cpp" />
     <ClCompile Include="Blueslime.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="cEnemy.cpp" />
@@ -227,6 +230,7 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="util.cpp" />
+    <ClCompile Include="weapon.cpp" />
     <ClCompile Include="winMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

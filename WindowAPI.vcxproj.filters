@@ -206,6 +206,12 @@
     <ClInclude Include="effectManager.h">
       <Filter>GameFramework2D\매니져</Filter>
     </ClInclude>
+    <ClInclude Include="armor.h">
+      <Filter>MainGame\게임화면\플레이어</Filter>
+    </ClInclude>
+    <ClInclude Include="weapon.h">
+      <Filter>MainGame\게임화면\플레이어</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainGame.cpp">
@@ -321,6 +327,12 @@
     </ClCompile>
     <ClCompile Include="effectManager.cpp">
       <Filter>GameFramework2D\매니져</Filter>
+    </ClCompile>
+    <ClCompile Include="armor.cpp">
+      <Filter>MainGame\게임화면\플레이어</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon.cpp">
+      <Filter>MainGame\게임화면\플레이어</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

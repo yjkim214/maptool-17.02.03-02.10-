@@ -3,9 +3,12 @@
 
 class tileMap;
 class heartbeat;
+class enemyManager;
+class armor;
+class weapon;
 
 #define INIT_ATT		1
-#define INIT_MAXHP		3
+#define INIT_MAXHP		6
 #define PLAYER_SIZEX	48
 #define PLAYER_SIZEY	48
 
@@ -50,8 +53,19 @@ private:
 	float _destPosX;
 	float _destPosY;
 
+	bool _isDead;
+
+private:
 	tileMap* _tileMap;
 	heartbeat* _heartbeat;
+	enemyManager* _enemyMg;
+
+private:
+	armor* _equipArmor;
+	vector<armor*> _vArmorList;
+
+	weapon* _equipWeapon;
+	vector<weapon*> _vWeaponLiat;
 
 public:
 	HRESULT init(void);
@@ -61,12 +75,21 @@ public:
 
 	//접근자
 	float getAtt() { return _att; }
-	float getHp() { return _hp; }
+	float getHp() 
+	{
+		if (SOUNDMANAGER->isPlaySound("vo_ari_hurt_01"))
+		{
+			SOUNDMANAGER->play("vo_ari_hurt_01");
+		}
+		return _hp;
+	}
 	POINT getIndex() { return _index; }
 	PLAYERDIRECTION getDirect() { return _direct; }
-	bool isMove() { return _isMove; }
-
+	bool getIsDead();
+	
 	//설정자
+	//초반 카메라 위치에 따라 인덱스를 바꾸어줌
+	void setIndex();
 	void setHp(int hp) { _hp = hp; }
 	//플레이어 움직임
 	void move();
@@ -77,6 +100,7 @@ public:
 	//타일맵 상호참조
 	void setLinkTileMap(tileMap* tileMap) { _tileMap = tileMap; }
 	void setLinkHeartbeat(heartbeat* heartbeat) { _heartbeat = heartbeat; }
+	void setLinkEnemyManager(enemyManager* enemyMg) { _enemyMg = enemyMg; }
 
 	player() {}
 	~player() {}

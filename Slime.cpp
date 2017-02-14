@@ -18,12 +18,8 @@ HRESULT Slime::init(POINT index)
 	_x = (MON_SIZE / 2) + index.x * MON_SIZE - DRAWRECTMANAGER->getX();
 	_y = (MON_SIZE / 2) + index.y * MON_SIZE - DRAWRECTMANAGER->getY();
 
-
 	_initx = (MON_SIZE / 2) + index.x * MON_SIZE;
 	_inity = (MON_SIZE / 2) + index.y * MON_SIZE;
-
-	cout << "_init : " << _initx << endl;
-	cout << "_init : " << _inity << endl;
 
 	_dmg = 1;
 	_direct = MOVEDIRECTION_LEFT;
@@ -44,7 +40,6 @@ HRESULT Slime::init(POINT index)
 		addhpbar(_x - 12 * i, _y);
 	}
 
-	
 	return S_OK;
 }
 
@@ -68,26 +63,6 @@ void Slime::update(void)
 	for (int i = 0; i < _maxHp - _hp; i++)
 	{
 		_hpbarlist[i]->setcurrent(false);
-	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_F1))
-	{
-		/*cout << "_index : " << _index.x << endl;
-		cout << "_index : " << _index.y << endl;*/
-		for (int i = 0; i < _hpbarlist.size(); i++)
-		{
-			cout << " hp bar x : " << _hpbarlist[i]->getX() << endl;
-			cout << " hp bar y : " << _hpbarlist[i]->getY() << endl;
-			cout << " player X : " << _x << endl;
-			cout << " player Y : " << _y << endl;
-			cout << " player hp : " << _hp << endl;
-		}
-	}
-
-	//테스트용 
-	if (KEYMANAGER->isOnceKeyDown(VK_F2))
-	{
-		_hp--;
 	}
 
 	// hp 바를 위에 표시해준다 
@@ -126,21 +101,17 @@ void Slime::move()
 				{
 					if (_player->getIndex().x == _index.x - 1 && _player->getIndex().y == _index.y)
 					{
-						_x = _initx - DRAWRECTMANAGER->getX();
-						_y = _inity - DRAWRECTMANAGER->getY();
-						_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
-
-						_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
-						_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
-
 						_player->setHp(_player->getHp() - _dmg);
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
 					}
+
 					else {
 						_destX = _destX - MON_SIZE;
 						_isMove = true;
 						_tileMap->releaseEnemyAttribute(_index.x, _index.y);
 						_tileMap->setEnemyAttribute(_index.x - 1, _index.y, 1);
+
+						_index.x = _index.x - 1;
 					}
 				}
 				break;
@@ -149,15 +120,8 @@ void Slime::move()
 				{
 					if (_player->getIndex().x == _index.x + 1 && _player->getIndex().y == _index.y)
 					{
-						_x = _initx - DRAWRECTMANAGER->getX();
-						_y = _inity - DRAWRECTMANAGER->getY();
-						_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
-
-						_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
-						_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 						_player->setHp(_player->getHp() - _dmg);
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
-
 					}
 
 					else
@@ -166,8 +130,9 @@ void Slime::move()
 						_isMove = true;
 						_tileMap->releaseEnemyAttribute(_index.x, _index.y);
 						_tileMap->setEnemyAttribute(_index.x + 1, _index.y, 1);
-					}
 
+						_index.x = _index.x + 1;
+					}
 				}
 				break;
 			case MOVEDIRECTION_TOP:
@@ -175,38 +140,28 @@ void Slime::move()
 				{
 					if (_player->getIndex().x == _index.x && _player->getIndex().y == _index.y - 1)
 					{
-						_x = _initx - DRAWRECTMANAGER->getX();
-						_y = _inity - DRAWRECTMANAGER->getY();
-						_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
-
-						_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
-						_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 						_player->setHp(_player->getHp() - _dmg);
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
 					}
+
 					else {
 						_destY = _destY - MON_SIZE;
 						_isMove = true;
 						_tileMap->releaseEnemyAttribute(_index.x, _index.y);
 						_tileMap->setEnemyAttribute(_index.x, _index.y - 1, 1);
-					}
 
+						_index.y = _index.y - 1;
+					}
 				}
+
 				break;
 			case MOVEDIRECTION_BOTTOM:
 				if (_index.y != TILEY - 1 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == 0 || _index.y != TILEY - 1 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == ATTR_PLAYER)
 				{
 					if (_player->getIndex().x == _index.x && _player->getIndex().y == _index.y + 1)
 					{
-						_x = _initx - DRAWRECTMANAGER->getX();
-						_y = _inity - DRAWRECTMANAGER->getY();
-						_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
-
-						_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
-						_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
 						_player->setHp(_player->getHp() - _dmg);
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
-	
 					}
 
 					else
@@ -216,6 +171,8 @@ void Slime::move()
 
 						_tileMap->releaseEnemyAttribute(_index.x, _index.y);
 						_tileMap->setEnemyAttribute(_index.x, _index.y + 1, 1);
+
+						_index.y = _index.y + 1;
 					}
 				}
 				break;
@@ -251,8 +208,6 @@ void Slime::move()
 			//움직이지 않는 상태로 만든다
 			_isMove = false;
 		}
-
-
 	}
 
 	_x = _initx - DRAWRECTMANAGER->getX();
@@ -293,5 +248,4 @@ void Slime::addhpbar(float x, float y)
 	habar* newhpbar = new habar;
 	newhpbar->init("Mon_hart_front", "Mon_hart_back", x, y - 24, 12, 12);
 	_hpbarlist.push_back(newhpbar);
-	//it("Mon_hart_front", "Mon_hart_back", x, y - 24, 12, 12);
 }

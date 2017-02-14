@@ -4,7 +4,6 @@
 HRESULT tileMap::init(void)
 {
 	//맵 로드
-
 	slot = 1;
 
 	this->load();
@@ -29,38 +28,6 @@ void tileMap::update(void)
 		_tiles[i].rc.top = _initRect[i].top - DRAWRECTMANAGER->getY();
 		_tiles[i].rc.bottom = _initRect[i].bottom - DRAWRECTMANAGER->getY();
 	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_F1))
-	{
-		slot = 1;
-		load();
-		DRAWRECTMANAGER->init();
-
-		setStartPos();
-
-
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_F2))
-	{
-		slot = 2;
-		load();
-		DRAWRECTMANAGER->init();
-		setStartPos();
-
-
-
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_F3))
-	{
-		slot = 3;
-		load();
-		DRAWRECTMANAGER->init();
-
-		setStartPos();
-
-
-	}
-
 }
 
 void tileMap::render(void)
@@ -68,8 +35,7 @@ void tileMap::render(void)
 	//전체화면 지형을 그린다
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
-		RECT col;
-		if (IntersectRect(&col, &DRAWRECTMANAGER->getRect(), &_tiles[i].rc))
+		if (IntersectRect(&DRAWRECTMANAGER->getRect(), &_tiles[i].rc))
 		{
 			if (_tiles[i].rc.right > DRAWRECTMANAGER->getRect().right)
 			{
@@ -116,9 +82,8 @@ void tileMap::objRender(void)
 {
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
-		RECT col;
 		RECT object = RectMake(_tiles[i].rc.left, _tiles[i].rc.top - 32, 48, 80);
-		if (IntersectRect(&col, &DRAWRECTMANAGER->getRect(), &object))
+		if (IntersectRect(&DRAWRECTMANAGER->getRect(), &object))
 		{
 			if (_tiles[i].rc.right > DRAWRECTMANAGER->getRect().right)
 			{
@@ -152,11 +117,13 @@ void tileMap::load(void)
 		file = CreateFile("save1.map", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 		ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
 	}
+
 	else if (slot == 2)
 	{
 		file = CreateFile("save2.map", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 		ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
 	}
+	
 	else if (slot == 3)
 	{
 		file = CreateFile("save3.map", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -193,14 +160,16 @@ void tileMap::setStartPos()
 {
 	int indexX;
 	int indexY;
-	for (int i = 0; i < TILEX*TILEY; i++)
+
+	for (int i = 0; i < TILEX * TILEY; i++)
 	{
 		if (_tiles[i].obj == OBJECT_PLAYER)
 		{
-			indexX = i%TILEX;
+			indexX = i % TILEX;
 			indexY = i / TILEX;
 			break;
 		}
+
 		else
 		{
 			indexX = 0;
@@ -210,6 +179,7 @@ void tileMap::setStartPos()
 
 	DRAWRECTMANAGER->setX(TILESIZEGAME * indexX - DRAWRECTMANAGER->getX() + TILESIZEGAME / 2);
 	DRAWRECTMANAGER->setY(TILESIZEGAME * indexY - DRAWRECTMANAGER->getY() + TILESIZEGAME / 2);
+
 	for (int i = 0; i < TILEX * TILEY; i++)
 	{
 		_tiles[i].rc.left -= DRAWRECTMANAGER->getX();
@@ -217,4 +187,13 @@ void tileMap::setStartPos()
 		_tiles[i].rc.top -= DRAWRECTMANAGER->getY();
 		_tiles[i].rc.bottom -= DRAWRECTMANAGER->getY();
 	}
+}
+
+void tileMap::changeSlot(int index)
+{
+	slot = index;
+	load();
+	DRAWRECTMANAGER->init();
+
+	setStartPos();
 }

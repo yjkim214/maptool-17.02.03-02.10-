@@ -29,6 +29,7 @@ void enemyManager::update(void)
 	{
 		if (_vEnemy[i]->getHp() <= 0)
 		{
+			_tileMap->releaseObject(_vEnemy[i]->getIndex().x, _vEnemy[i]->getIndex().y);
 			_vEnemy.erase(_vEnemy.begin() + i);
 		}
 	}

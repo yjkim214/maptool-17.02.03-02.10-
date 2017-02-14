@@ -14,7 +14,6 @@ private:
 	heartbeat* _heartbeat;
 	enemyManager* _enemymanager;
 
-	vector<image*> _heartImg;
 public:
 	HRESULT init(void);
 	void release(void);

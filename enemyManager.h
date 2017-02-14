@@ -17,7 +17,6 @@ private:
 
 	int count;
 public:
-
 	HRESULT init(void);
 	void release(void);
 	void update(void);
@@ -30,6 +29,8 @@ public:
 	void collision();
 	void setLinkTileMap(tileMap* tileMap) { _tileMap = tileMap; }
 	void setLinkPlayer(player* player) { _player = player; }
+
+	vector<cEnemy*> getEnemyList() { return _vEnemy; }
 
 	enemyManager() {}
 	~enemyManager() {}
