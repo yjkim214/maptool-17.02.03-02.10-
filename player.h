@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "habar.h"
 
 class tileMap;
 class heartbeat;
@@ -23,6 +24,8 @@ enum PLAYERDIRECTION
 class player : public gameNode
 {
 private:
+
+	vector<habar*> _hpbarlist;
 	//플레이어 공격력
 	float _att;
 	//플레이어 HP
@@ -78,7 +81,7 @@ public:
 	void update(void);
 	void render(void);
 	void equipRender(void);
-
+	void heartRender(void);
 	//접근자
 	float getAtt() { return _att; }
 	float getHp() 
@@ -115,6 +118,7 @@ public:
 	void setLinkTileMap(tileMap* tileMap) { _tileMap = tileMap; }
 	void setLinkHeartbeat(heartbeat* heartbeat) { _heartbeat = heartbeat; }
 	void setLinkEnemyManager(enemyManager* enemyMg) { _enemyMg = enemyMg; }
+	void addhpbar(float x, float y);
 
 	player() {}
 	~player() {}

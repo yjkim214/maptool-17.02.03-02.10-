@@ -62,7 +62,10 @@ HRESULT player::init(void)
 	//현재 슬롯 초기화
 	_isClear = false;
 	_currentSlot = 1;
-
+	for (int i = 0; i < _maxHp / 2; i++)
+	{
+		addhpbar(WINSIZEX - i * 48 - 48, 0);
+	}
 	return S_OK;
 }
 
@@ -87,22 +90,46 @@ void player::update(void)
 	{
 		_vArmorList[i]->update();
 	}
+	int tempHP = _hp;
+
+	for (int i = 0; tempHP >= 0; i++)
+	{
+
+		if (tempHP >= 2)
+		{
+			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(true);
+			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(false);
+		}
+		else if (tempHP == 1)
+		{
+			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(true);
+			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(false);
+		}
+		else
+		{
+			if (i >= _hpbarlist.size())
+			{
+				break;
+			}
+			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(false);
+			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(false);
+		}
+		tempHP -= 2;
+
+	}
 }
 
 void player::render(void)
 {
+	for (int i = 0; i < _hpbarlist.size(); i++)
+	{
+		_hpbarlist[i]->render();
+	}
+
 	//플레이어 렉트를 그려줌
 	if (KEYMANAGER->isToggleKey(VK_F4))
 	{
 		RectangleMake(getMemDC(), _rc);
-	}
-
-	//플레이어 이미지를 그려줌
-	_playerImg->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX + 4 * static_cast<int>(_isLeft), static_cast<int>(_equipArmor->getKind()));
-
-	for (int i = 0; i < _maxHp / 2; i++)
-	{
-		IMAGEMANAGER->findImage("heart")->render(getMemDC(), WINSIZEX - i * 48 - 48, 0);
 	}
 
 	for (int i = 0; i < _vWeaponList.size(); i++)
@@ -116,6 +143,9 @@ void player::render(void)
 		if (_vArmorList[i]->getIsEquip()) { continue; }
 		_vArmorList[i]->render();
 	}
+
+	//플레이어 이미지를 그려줌
+	_playerImg->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX + 4 * static_cast<int>(_isLeft), static_cast<int>(_equipArmor->getKind()));
 }
 
 void player::equipRender(void)
@@ -130,6 +160,20 @@ void player::equipRender(void)
 	{
 		if (!_vArmorList[i]->getIsEquip()) { continue; }
 		_vArmorList[i]->render();
+	}
+}
+
+void player::heartRender(void)
+{
+	/*
+	for (int i = 0; i < _maxHp / 2; i++)
+	{
+		IMAGEMANAGER->findImage("heart")->render(getMemDC(), WINSIZEX - i * 48 - 48, 0);
+	}
+	*/
+	for (int i = 0; i < _hpbarlist.size(); i++)
+	{
+		_hpbarlist[i]->render();
 	}
 }
 
@@ -1294,4 +1338,12 @@ void player::animation()
 
 		_count = 0;
 	}
+}
+void player::addhpbar(float x, float y)
+{
+
+	habar* newhpbar = new habar;
+	newhpbar->init("heart", "heart_half", "heart_empty", x, y, 48, 44);
+	_hpbarlist.push_back(newhpbar);
+
 }

@@ -62,6 +62,14 @@ void Dragon::release(void)
 
 void Dragon::update(void)
 {
+	if (_player->getIndex().x > _index.x)
+	{
+		_image->setFrameY(1);
+	}
+	else if (_player->getIndex().x < _index.x)
+	{
+		_image->setFrameY(0);
+	}
 	if (_st == MOVE)
 	{
 		move();

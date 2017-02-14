@@ -94,6 +94,7 @@ void gameScene::render(void)
 	_player->render();
 	_tileMap->objRender(); 
 	_heartbeat->render();
+	_player->heartRender();
 
 	IMAGEMANAGER->findImage("hud_weapon")->render(getMemDC(), 0, 0);
 	IMAGEMANAGER->findImage("hud_armor")->render(getMemDC(), 65, 0);
