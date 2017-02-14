@@ -50,7 +50,7 @@ HRESULT player::init(void)
 	initArmor->setIsEquip(true);
 	_vArmorList.push_back(initArmor);
 	_equipArmor = initArmor;
-	
+
 	weapon* initWeapon = new weapon;
 	initWeapon->init(WEAPON_DAGGER);
 	initWeapon->setIndex(_index);
@@ -149,6 +149,185 @@ void player::move()
 				//왼쪽인지 아닌지 판별
 				_isLeft = true;
 
+				switch (_equipWeapon->getKind())
+				{
+				case WEAPON_DAGGER:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 72, WINSIZEY / 2 - 24, "swipe_dagger_left");
+						
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				case WEAPON_LONGSWORD:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 120, WINSIZEY / 2 - 24, "swipe_longsword_left");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 120, WINSIZEY / 2 - 24, "swipe_longsword_left");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				case WEAPON_BROADSWORD:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 72, WINSIZEY / 2 - 72, "swipe_broadsword_left");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 72, WINSIZEY / 2 - 72, "swipe_broadsword_left");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 72, WINSIZEY / 2 - 72, "swipe_broadsword_left");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				}
+
 				//움직일 수 있는 타일일 때
 				if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == 0)
 				{
@@ -218,368 +397,6 @@ void player::move()
 
 				}
 
-				switch (_equipWeapon->getKind())
-				{
-				case WEAPON_DAGGER:
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_ENEMY1)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_ENEMY1)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1] == ATTR_ENEMY2)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_ENEMY3)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_BOSS)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-					break;
-				case WEAPON_LONGSWORD:
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_ENEMY1)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 2] == ATTR_ENEMY1)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_ENEMY2)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 2] == ATTR_ENEMY2)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_ENEMY3)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 2] == ATTR_ENEMY3)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_BOSS)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 2] == ATTR_BOSS)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-					break;
-				case WEAPON_BROADSWORD:
-					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1] == ATTR_ENEMY1)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_ENEMY1)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1] == ATTR_ENEMY1)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1] == ATTR_ENEMY2)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_ENEMY2)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1] == ATTR_ENEMY2)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					//ENEMY3
-					if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1] == ATTR_ENEMY3)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_ENEMY3)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1] == ATTR_ENEMY3)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					//BOSS
-					if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1] == ATTR_BOSS)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_BOSS)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-
-					if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1] == ATTR_BOSS)
-					{
-						//모든 몬스터의 배열에서
-						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-						{
-							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
-							{
-								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-							}
-						}
-					}
-					break;
-				}
-
 				//처음의 마커를 지워줌
 				_heartbeat->removeMarker();
 			}
@@ -589,6 +406,187 @@ void player::move()
 				_direct = PLAYERDIRECTION_RIGHT;
 				//고개를 돌릴지 말지를 판별
 				_isLeft = false;
+
+				switch (_equipWeapon->getKind())
+				{
+				case WEAPON_DAGGER:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 + 24, WINSIZEY / 2 - 24, "swipe_dagger_right");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				case WEAPON_LONGSWORD:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 + 24, WINSIZEY / 2 - 24, "swipe_longsword_right");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 + 24, WINSIZEY / 2 - 24, "swipe_longsword_right");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				case WEAPON_BROADSWORD:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 + 24, WINSIZEY / 2 - 72, "swipe_broadsword_right");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 + 24, WINSIZEY / 2 - 72, "swipe_broadsword_right");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 + 24, WINSIZEY / 2 - 72, "swipe_broadsword_right");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				}
 
 				if (_index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == 0)
 				{
@@ -629,50 +627,6 @@ void player::move()
 					_index.x = _index.x + 1;
 				}
 
-				else if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == ATTR_ENEMY1)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == ATTR_ENEMY2)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == ATTR_ENEMY3)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == ATTR_BOSS)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
-				}
-
 				else if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] & ATTR_BOX != 0)
 				{
 					int randNum = RND->getInt(2);
@@ -710,6 +664,187 @@ void player::move()
 			{
 				_direct = PLAYERDIRECTION_UP;
 
+				switch (_equipWeapon->getKind())
+				{
+				case WEAPON_DAGGER:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 24, WINSIZEY / 2 - 72, "swipe_dagger_up");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				case WEAPON_LONGSWORD:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 24, WINSIZEY / 2 - 120, "swipe_longsword_up");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 24, WINSIZEY / 2 - 120, "swipe_longsword_up");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				case WEAPON_BROADSWORD:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 - 72, "swipe_broadsword_up");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 - 72, "swipe_broadsword_up");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 - 72, "swipe_broadsword_up");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				}
+
 				if (_index.y != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] == 0)
 				{
 					//플레이어를 움직이는 상태로
@@ -717,7 +852,7 @@ void player::move()
 
 					//TEST
 					_destPosY = _y - PLAYER_SIZEY;
-					
+
 					//인덱스 변경
 					_tileMap->releaseObject(_index.x, _index.y);
 					_tileMap->setPlayerAttribute(_index.x, _index.y - 1);
@@ -747,50 +882,6 @@ void player::move()
 					}
 
 					_index.y = _index.y - 1;
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] == ATTR_ENEMY1)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] == ATTR_ENEMY2)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] == ATTR_ENEMY3)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] == ATTR_BOSS)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
 				}
 
 				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] & ATTR_BOX != 0)
@@ -830,6 +921,187 @@ void player::move()
 			{
 				_direct = PLAYERDIRECTION_DOWN;
 
+				switch (_equipWeapon->getKind())
+				{
+				case WEAPON_DAGGER:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 24, WINSIZEY / 2 + 24, "swipe_dagger_down");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				case WEAPON_LONGSWORD:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 24, WINSIZEY / 2 + 24, "swipe_longsword_down");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 2)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 24, WINSIZEY / 2 + 24, "swipe_longsword_down");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				case WEAPON_BROADSWORD:
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 + 24, "swipe_broadsword_down");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 + 24, "swipe_broadsword_down");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+
+					//밟을려는 타일의 속성이 몬스터라면
+					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					{
+						//모든 몬스터의 배열에서
+						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
+						{
+							//같은 인덱스를 가진 몬스터를 찾아서
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
+							{
+								//그 인덱스의 몬스터에게 데미지를 준다
+								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+							}
+						}
+
+						DRAWRECTMANAGER->shakeWindow();
+						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 216, WINSIZEY / 2 + 24, "swipe_broadsword_down");
+
+						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
+						{
+							SOUNDMANAGER->stop("vo_ari_melee_1_01");
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+
+						else
+						{
+							SOUNDMANAGER->play("vo_ari_melee_1_01");
+						}
+					}
+					break;
+				}
+
 				if (_index.y != TILEY - 1 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == 0)
 				{
 					//플레이어를 움직이는 상태로
@@ -867,50 +1139,6 @@ void player::move()
 					}
 
 					_index.y = _index.y + 1;
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == ATTR_ENEMY1)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == (_index.y + 1))
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == ATTR_ENEMY2)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().x == (_index.y + 1))
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == ATTR_ENEMY3)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().x == (_index.y + 1))
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
-				}
-
-				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == ATTR_BOSS)
-				{
-					for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
-					{
-						if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().x == (_index.y + 1))
-						{
-							_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
-						}
-					}
 				}
 
 				else if (_index.x != 0 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] & ATTR_BOX != 0)

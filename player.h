@@ -79,6 +79,12 @@ public:
 	{
 		if (SOUNDMANAGER->isPlaySound("vo_ari_hurt_01"))
 		{
+			SOUNDMANAGER->stop("vo_ari_hurt_01");
+			SOUNDMANAGER->play("vo_ari_hurt_01");
+		}
+
+		else
+		{
 			SOUNDMANAGER->play("vo_ari_hurt_01");
 		}
 		return _hp;
