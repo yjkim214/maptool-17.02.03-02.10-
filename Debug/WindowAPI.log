@@ -1,2 +1,3 @@
-﻿  WindowAPI.vcxproj -> C:\Users\진호조\Desktop\tea\maptool-17.02.03-02.10-\Debug\WindowAPI.exe
-  WindowAPI.vcxproj -> C:\Users\진호조\Desktop\tea\maptool-17.02.03-02.10-\Debug\WindowAPI.pdb (Full PDB)
+﻿  gameScene.cpp
+c:\users\dydwo\desktop\maptool\player.h(110): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  WindowAPI.vcxproj -> C:\Users\dydwo\Desktop\maptool\Debug\WindowAPI.exe

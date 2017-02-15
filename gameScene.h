@@ -14,6 +14,12 @@ private:
 	heartbeat* _heartbeat;
 	enemyManager* _enemymanager;
 
+	image* _menuBtn;
+	image* _replayBtn;
+
+	RECT _menuRc;
+	RECT _replayRc;
+
 	int _alpha;
 public:
 	HRESULT init(void);

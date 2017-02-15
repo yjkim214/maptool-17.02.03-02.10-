@@ -38,6 +38,12 @@ HRESULT gameScene::init(void)
 
 	_alpha = 0;
 
+	_menuBtn = IMAGEMANAGER->findImage("menu_button");
+	_replayBtn = IMAGEMANAGER->findImage("replay_button");
+
+	_menuRc = RectMake(0, 0, 0, 0);
+	_replayRc = RectMake(0, 0, 0, 0);
+
 	return S_OK;
 }
 
@@ -112,17 +118,35 @@ void gameScene::update(void)
 		}
 	}
 
+	if (_player->getIsDead())
+	{
+		if (_alpha >= 255)
+		{
+			_menuRc = RectMake(92, 269, 160, 44);
+			_replayRc = RectMake(92, 343, 160, 44);
+		}
+	}
+
+	if (_player->getIsClear())
+	{
+		if (_alpha >= 255 && _player->getCurrentSlot() > 3)
+		{
+			_menuRc = RectMake(165, 233, 160, 44);
+			_replayRc = RectMake(165, 302, 160, 44);
+		}
+	}
+
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (PtInRect(&IMAGEMANAGER->findImage("replay_button")->boundingBox(), _ptMouse))
+		if (PtInRect(&_menuRc, _ptMouse))
+		{
+			SCENEMANAGER->changeScene("메뉴화면");
+		}
+
+		if (PtInRect(&_replayRc, _ptMouse))
 		{
 			release();
 			init();
-		}
-
-		if (PtInRect(&IMAGEMANAGER->findImage("menu_button")->boundingBox(), _ptMouse))
-		{
-			SCENEMANAGER->changeScene("메뉴화면");
 		}
 	}
 }
@@ -148,8 +172,8 @@ void gameScene::render(void)
 		if (_alpha >= 255)
 		{
 			IMAGEMANAGER->findImage("gameover")->render(getMemDC());
-			IMAGEMANAGER->findImage("menu_button")->render(getMemDC(), 92, 269);
-			IMAGEMANAGER->findImage("replay_button")->render(getMemDC(), 92, 343);
+			_menuBtn->render(getMemDC(), 92, 269);
+			_replayBtn->render(getMemDC(), 92, 343);
 		}
 	}
 
@@ -160,8 +184,8 @@ void gameScene::render(void)
 		if (_alpha >= 255 && _player->getCurrentSlot() > 3)
 		{
 			IMAGEMANAGER->findImage("gameclear")->render(getMemDC());
-			IMAGEMANAGER->findImage("menu_button")->render(getMemDC(), 165, 233);
-			IMAGEMANAGER->findImage("replay_button")->render(getMemDC(), 165, 302);
+			_menuBtn->render(getMemDC(), 165, 233);
+			_replayBtn->render(getMemDC(), 165, 302);
 		}
 	}
 }
