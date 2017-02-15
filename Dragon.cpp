@@ -89,7 +89,7 @@ void Dragon::update(void)
 		_fireimg->setFrameX(0);
 	}
 
-	if (_player->getIndex().y == _index.y && cultime == 0)
+	if (_player->getIndex().y == _index.y && cultime == 0 && _isMove == false)
 	{
 
 		attack();
@@ -354,7 +354,7 @@ void Dragon::move()
 
 void Dragon::draw()
 {
-	RectangleMake(getMemDC(), _rc);
+	
 	_image->frameRender(getMemDC(), _rc.left - 37, _rc.top - 54, _currentframe, _image->getFrameY());
 	if (_currentframe >= 5 && _fireimg->getFrameX() != _fireimg->getMaxFrameX() && _st == ATTCK)
 	{
@@ -398,7 +398,7 @@ void Dragon::animation()
 	else if (_st == ATTCK)
 	{
 		_animcount++;
-		if (_animcount % 15 == 0)
+		if (_animcount % 12  == 0)
 		{
 			if (_currentframe != _image->getMaxFrameX())
 			{
@@ -407,7 +407,7 @@ void Dragon::animation()
 			}
 			else if (_currentframe == _image->getMaxFrameX())
 			{
-				cultime = 1000;
+				cultime = 350;
 
 
 			}
@@ -1316,7 +1316,7 @@ void Dragon::attack()
 {
 
 	_st = ATTCK;
-	bresscount = 50;
+	bresscount = 80;
 
 	if (_currentframe == 6)
 	{

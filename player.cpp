@@ -705,7 +705,7 @@ void player::move()
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
-							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
+							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 2)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
 								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);

@@ -38,6 +38,7 @@ void mainGame::update(void)
 	SCENEMANAGER->update();
 	EFFECTMANAGER->update();
 	DRAWRECTMANAGER->update();
+	SOUNDMANAGER->update();
 }
 //=============================================================
 //	## render(void) ## ·»´õ
