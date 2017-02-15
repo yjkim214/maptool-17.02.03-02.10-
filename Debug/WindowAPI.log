@@ -1,0 +1,3 @@
+﻿  gameScene.cpp
+c:\users\dydwo\desktop\maptool\player.h(110): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  WindowAPI.vcxproj -> C:\Users\dydwo\Desktop\maptool\Debug\WindowAPI.exe

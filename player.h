@@ -108,6 +108,8 @@ public:
 	//초반 카메라 위치에 따라 인덱스를 바꾸어줌
 	void setIndex();
 	void setHp(int hp) { _hp = hp; }
+	void setIsClear(bool clear) { _isClear = clear; }
+
 	//플레이어 움직임
 	void move();
 

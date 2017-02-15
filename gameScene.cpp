@@ -60,6 +60,26 @@ void gameScene::update(void)
 {
 	_tileMap->update();
 	
+	if (_player->getIsClear())
+	{
+		_tileMap->changeSlot(_player->getCurrentSlot());
+		_player->release();
+		_player->setIndex();
+		_player->setIsClear(false);
+		_enemymanager->setEnemy();
+
+		if (SOUNDMANAGER->isPlaySound("zone1_1"))
+		{
+			SOUNDMANAGER->stop("zone1_1");
+			SOUNDMANAGER->play("zone1_1");
+		}
+
+		else
+		{
+			SOUNDMANAGER->play("zone1_1");
+		}
+	}
+
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		_tileMap->changeSlot(1);
