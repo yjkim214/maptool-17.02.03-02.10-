@@ -103,11 +103,10 @@ void loadingScene::loadingImage(void)
 	_loading->loadFrameImage("Slime", "Slime.bmp", 192, 96, 4, 2, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("Blueslime", "Blueslime.bmp", 384, 48, 8, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("Skeleton", "Skeleton.bmp", 384, 48, 8, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("Dragon", "dragon.bmp", 1344, 192, 7, 2, true, RGB(255, 0, 255));
-
+	_loading->loadFrameImage("Dragon", "dragon.bmp", 854, 204, 7, 2, true, RGB(255, 0, 255));
 	//몬스터 임펙트
 	_loading->loadFrameImage("enemy_swipe", "enemy_swipe.bmp", 135, 24, 5, 1, true, RGB(255, 0, 255));
-
+	_loading->loadFrameImage("fire", "fire.bmp", 336, 96, 7, 2, true, RGB(255, 0, 255));
 	//게임화면
 	_loading->loadFrameImage("player", "player.bmp", 384, 480, 8, 10, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("heartbeat", "heartbeat.bmp", 164, 104, 2, 1, true, RGB(255, 0, 255));

@@ -11,7 +11,7 @@ HRESULT Dragon::init(void)
 HRESULT Dragon::init(POINT index)
 {
 	_image = IMAGEMANAGER->findImage("Dragon");
-
+	_fireimg = IMAGEMANAGER->findImage("fire");
 	_index = index;
 
 	_currentframe = 0;
@@ -21,11 +21,13 @@ HRESULT Dragon::init(POINT index)
 
 	_initx = (MON_SIZE / 2) + index.x * MON_SIZE;
 	_inity = (MON_SIZE / 2) + index.y * MON_SIZE;
-
+	_fireimg->setFrameY(1);
 	cout << "_init : " << _initx << endl;
 	cout << "_init : " << _inity << endl;
 	_st = MOVE;
 	_dmg = 1;
+	cultime = 0;
+	bresscount = 0;
 	_direct = MOVEDIRECTION_LEFT;
 	// 디렉션 카운터 별로 들어감 위에 주석을 순서
 
@@ -34,7 +36,8 @@ HRESULT Dragon::init(POINT index)
 	_destX = _initx;
 	_destY = _inity;
 
-	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+	
+	_rc = RectMakeCenter(_x, _y, 48, 48);
 
 	_maxHp = 9;
 	_hp = _maxHp;
@@ -70,14 +73,58 @@ void Dragon::update(void)
 	{
 		_image->setFrameY(0);
 	}
-	if (_st == MOVE)
+	if (_currentframe >= 5)
 	{
-		move();
+		if (_fireimg->getFrameX() != _fireimg->getMaxFrameX())
+		{
+			_fireimg->setFrameX(_fireimg->getFrameX() + 1);
+		}
+
 	}
 
-	attack();
+	// move 관련 
+	if (_st == MOVE && bresscount == 0)
+	{
+		move();
+		_fireimg->setFrameX(0);
+	}
+
+	if (_player->getIndex().y == _index.y && cultime == 0)
+	{
+
+		attack();
 
 
+	}
+
+	if (bresscount != 0)
+	{
+		bresscount--;
+
+	}
+	else if (bresscount == 0)
+	{
+		_st = MOVE;
+
+
+	}
+
+	if (cultime != 0 && _st == MOVE)
+	{
+		cultime--;
+	}
+
+
+	if (_st == ATTCK)
+	{
+		_x = _initx - DRAWRECTMANAGER->getX();
+		_y = _inity - DRAWRECTMANAGER->getY();
+
+		_rc = RectMakeCenter(_x, _y, 48, 48);
+
+		_index.x = (_x + DRAWRECTMANAGER->getX()) / TILESIZEGAME;
+		_index.y = (_y + DRAWRECTMANAGER->getY()) / TILESIZEGAME;
+	}
 	animation();
 
 	//  현재 hp량 을 표시해준다 . 
@@ -300,24 +347,41 @@ void Dragon::move()
 	_x = _initx - DRAWRECTMANAGER->getX();
 	_y = _inity - DRAWRECTMANAGER->getY();
 
-	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+	_rc = RectMakeCenter(_x, _y, 48, 48);
 
 	
 }
 
 void Dragon::draw()
 {
-	_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentframe, _image->getFrameY());
+	RectangleMake(getMemDC(), _rc);
+	_image->frameRender(getMemDC(), _rc.left - 37, _rc.top - 54, _currentframe, _image->getFrameY());
+	if (_currentframe >= 5 && _fireimg->getFrameX() != _fireimg->getMaxFrameX() && _st == ATTCK)
+	{
+		if (_index.x > _player->getIndex().x) {
+			for (int i = 0; i < _index.x; i++)
+			{
+				_fireimg->frameRender(getMemDC(), _tileMap->getTiles()[i].rc.left, _rc.top, _fireimg->getFrameX(), _fireimg->getFrameY());
+			}
+		}
+		if (_index.x < _player->getIndex().x) {
+			for (int i = _index.x + 1; i < TILEX - 1; i++)
+			{
+				_fireimg->frameRender(getMemDC(), _tileMap->getTiles()[i].rc.left, _rc.top, _fireimg->getFrameX(), _fireimg->getFrameY());
+			}
+		}
+	}
 }
 
 void Dragon::animation()
 {
 	if (_st == MOVE)
 	{
+
 		_animcount++;
 		if (_animcount % 15 == 0)
 		{
-			if (_currentframe == 1)
+			if (_currentframe >= 1)
 			{
 				_currentframe = 0;
 			}
@@ -331,23 +395,24 @@ void Dragon::animation()
 		}
 	}
 
-	if (_st == ATTCK)
+	else if (_st == ATTCK)
 	{
 		_animcount++;
-		if (_animcount % 40 == 0)
+		if (_animcount % 15 == 0)
 		{
-			if (_currentframe == _image->getMaxFrameX())
-			{
-				_currentframe = 0;
-			}
-
-			else
+			if (_currentframe != _image->getMaxFrameX())
 			{
 				_currentframe++;
 				_image->setFrameX(_currentframe);
 			}
-			_animcount = 0;
-			_st = MOVE;
+			else if (_currentframe == _image->getMaxFrameX())
+			{
+				cultime = 1000;
+
+
+			}
+
+
 
 		}
 	}
@@ -360,10 +425,6 @@ void Dragon::addhpbar(float x, float y)
 	newhpbar->init("Mon_hart_front", "Mon_hart_back", x, y - 24, 12, 12);
 	_hpbarlist.push_back(newhpbar);
 	//it("Mon_hart_front", "Mon_hart_back", x, y - 24, 12, 12);
-}
-
-void Dragon::attack()
-{
 }
 
 void Dragon::initAstar()
@@ -1249,4 +1310,21 @@ int Dragon::findMinimum()
 	_openList.erase(_openList.begin() + listIndex);
 
 	return tileIndex;
+}
+
+void Dragon::attack()
+{
+
+	_st = ATTCK;
+	bresscount = 50;
+
+	if (_currentframe == 6)
+	{
+	
+		_player->setHp(_player->getHp()-_dmg);
+
+	}
+
+
+
 }

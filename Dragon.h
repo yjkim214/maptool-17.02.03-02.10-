@@ -41,6 +41,9 @@ class Dragon : public cEnemy
 	findState _routeState;
 
 private:
+	image* _fireimg;
+	int bresscount;
+	int cultime;
 	state _st;
 public:
 	virtual HRESULT init(void);
