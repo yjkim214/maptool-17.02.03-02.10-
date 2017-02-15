@@ -135,7 +135,7 @@ void Skeleton::move()
 			case MOVEDIRECTION_LEFT:
 				if (_index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == 0 || _index.x != 0 && _tileMap->getAttribute()[_index.y * TILEX + _index.x - 1] == ATTR_PLAYER)
 				{
-					if (_player->getIndex().x == _index.x - 1 && _player->getIndex().y == _index.y)
+					if (_player->getIndex().x == _index.x - 1 && _player->getIndex().y == _index.y && !_player->getIsDead())
 					{
 						_player->setHp(_player->getHp() - _dmg);
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
@@ -154,7 +154,7 @@ void Skeleton::move()
 			case MOVEDIRECTION_RIGHT:
 				if (_index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == 0 || _index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == ATTR_PLAYER)
 				{
-					if (_player->getIndex().x == _index.x + 1 && _player->getIndex().y == _index.y)
+					if (_player->getIndex().x == _index.x + 1 && _player->getIndex().y == _index.y && !_player->getIsDead())
 					{
 						_player->setHp(_player->getHp() - _dmg);
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
@@ -174,7 +174,7 @@ void Skeleton::move()
 			case MOVEDIRECTION_TOP:
 				if (_index.y != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] == 0 || _index.y != 0 && _tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] == ATTR_PLAYER)
 				{
-					if (_player->getIndex().x == _index.x && _player->getIndex().y == _index.y - 1)
+					if (_player->getIndex().x == _index.x && _player->getIndex().y == _index.y - 1 && !_player->getIsDead())
 					{
 						_player->setHp(_player->getHp() - _dmg);
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
@@ -194,7 +194,7 @@ void Skeleton::move()
 			case MOVEDIRECTION_BOTTOM:
 				if (_index.y != TILEY - 1 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == 0 || _index.y != TILEY - 1 && _tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == ATTR_PLAYER)
 				{
-					if (_player->getIndex().x == _index.x && _player->getIndex().y == _index.y + 1)
+					if (_player->getIndex().x == _index.x && _player->getIndex().y == _index.y + 1 && !_player->getIsDead())
 					{
 						_player->setHp(_player->getHp() - _dmg);
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");

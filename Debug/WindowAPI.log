@@ -1,3 +1,20 @@
 ﻿  gameScene.cpp
 c:\users\dydwo\desktop\maptool\player.h(110): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Blueslime.cpp
+c:\users\dydwo\desktop\maptool\player.h(110): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(22): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(23): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(37): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(53): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(71): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(81): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(98): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(106): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(117): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(140): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(159): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(179): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(199): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\blueslime.cpp(254): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
   WindowAPI.vcxproj -> C:\Users\dydwo\Desktop\maptool\Debug\WindowAPI.exe

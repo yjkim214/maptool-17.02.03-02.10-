@@ -416,10 +416,7 @@ void player::move()
 
 				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_GOAL_OPEN)) != 0))
 				{
-					if (_currentSlot < 3)
-					{
-						_currentSlot++;
-					}
+					_currentSlot++;
 
 					_isClear = true;
 				}
@@ -640,10 +637,7 @@ void player::move()
 
 				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_GOAL_OPEN)) != 0))
 				{
-					if (_currentSlot < 3)
-					{
-						_currentSlot++;
-					}
+					_currentSlot++;
 
 					_isClear = true;
 				}
@@ -863,10 +857,7 @@ void player::move()
 
 				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_GOAL_OPEN)) != 0))
 				{
-					if (_currentSlot < 3)
-					{
-						_currentSlot++;
-					}
+					_currentSlot++;
 
 					_isClear = true;
 				}
@@ -1086,10 +1077,7 @@ void player::move()
 
 				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_GOAL_OPEN)) != 0))
 				{
-					if (_currentSlot < 3)
-					{
-						_currentSlot++;
-					}
+					_currentSlot++;
 
 					_isClear = true;
 				}

@@ -141,6 +141,12 @@ void loadingScene::loadingImage(void)
 	_loading->loadFrameImage("swipe_broadsword_right", "swipe_broadsword_right.bmp", 144, 144, 3, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("swipe_broadsword_up", "swipe_broadsword_up.bmp", 432, 48, 3, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("swipe_broadsword_down", "swipe_broadsword_down.bmp", 432, 48, 3, 1, true, RGB(255, 0, 255));
+
+	//엔딩씬 화면
+	_loading->loadImage("gameover", "gameover.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	_loading->loadImage("gameclear", "gameclear.bmp", WINSIZEX, WINSIZEY, true, RGB(255, 0, 255));
+	_loading->loadImage("replay_button", "replay_button.bmp", 160, 44, true, RGB(255, 0, 255));
+	_loading->loadImage("menu_button", "menu_button.bmp", 160, 44, true, RGB(255, 0, 255));
 }
 //로딩사운드 함수(이곳에 사운드를 전부 넣어라)
 void loadingScene::loadingSound(void)
