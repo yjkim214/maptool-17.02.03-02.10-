@@ -84,7 +84,7 @@ public:
 	void heartRender(void);
 	//접근자
 	float getAtt() { return _att; }
-	float getHp() 
+	float getHp()
 	{
 		if (SOUNDMANAGER->isPlaySound("vo_ari_hurt_01"))
 		{
@@ -103,7 +103,7 @@ public:
 	bool getIsDead();
 	bool getIsClear() { return _isClear; }
 	int getCurrentSlot() { return _currentSlot; }
-	
+	RECT getRect() { return _rc; }
 	//설정자
 	//초반 카메라 위치에 따라 인덱스를 바꾸어줌
 	void setIndex();

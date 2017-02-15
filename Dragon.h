@@ -39,7 +39,7 @@ class Dragon : public cEnemy
 	vector<int> _finalList;
 	bool findRoute;
 	findState _routeState;
-
+	RECT shakwindow;
 private:
 	image* _fireimg;
 	int bresscount;

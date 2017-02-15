@@ -77,14 +77,14 @@ void Slime::update(void)
 		_hpbarlist[i]->setX(_x - (12 * (float)(((float)_hpbarlist.size() / 2) - i)));
 		_hpbarlist[i]->setY(_y - 24);
 	}
-	
+
 	if (_hp <= 0)
 	{
 		for (int i = 0; i < _hpbarlist.size(); i++)
 		{
 			_hpbarlist.clear();
 		}
-}
+	}
 }
 
 void Slime::render(void)
@@ -118,18 +118,11 @@ void Slime::move()
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
 					}
 
-					else {
-						_destX = _destX - MON_SIZE;
-						_isMove = true;
-						_tileMap->releaseEnemyAttribute(_index.x, _index.y);
-						_tileMap->setEnemyAttribute(_index.x - 1, _index.y, 1);
 
-						_index.x = _index.x - 1;
-					}
 				}
 				break;
 			case MOVEDIRECTION_RIGHT:
-				if (_index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == 0 || _index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]== ATTR_PLAYER)
+				if (_index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == 0 || _index.x != TILEX - 1 && _tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == ATTR_PLAYER)
 				{
 					if (_player->getIndex().x == _index.x + 1 && _player->getIndex().y == _index.y && !_player->getIsDead())
 					{
@@ -137,15 +130,7 @@ void Slime::move()
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
 					}
 
-					else
-					{
-						_destX = _destX + MON_SIZE;
-						_isMove = true;
-						_tileMap->releaseEnemyAttribute(_index.x, _index.y);
-						_tileMap->setEnemyAttribute(_index.x + 1, _index.y, 1);
 
-						_index.x = _index.x + 1;
-					}
 				}
 				break;
 			case MOVEDIRECTION_TOP:
@@ -157,14 +142,7 @@ void Slime::move()
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
 					}
 
-					else {
-						_destY = _destY - MON_SIZE;
-						_isMove = true;
-						_tileMap->releaseEnemyAttribute(_index.x, _index.y);
-						_tileMap->setEnemyAttribute(_index.x, _index.y - 1, 1);
 
-						_index.y = _index.y - 1;
-					}
 				}
 
 				break;
@@ -177,16 +155,7 @@ void Slime::move()
 						EFFECTMANAGER->addEffect(WINSIZEX / 2, WINSIZEY / 2, "enemy_swipe");
 					}
 
-					else
-					{
-						_destY = _destY + MON_SIZE;
-						_isMove = true;
 
-						_tileMap->releaseEnemyAttribute(_index.x, _index.y);
-						_tileMap->setEnemyAttribute(_index.x, _index.y + 1, 1);
-
-						_index.y = _index.y + 1;
-					}
 				}
 				break;
 			}

@@ -36,7 +36,7 @@ HRESULT Dragon::init(POINT index)
 	_destX = _initx;
 	_destY = _inity;
 
-	
+	shakwindow = RectMakeCenter(_x, _y, 300, 300);
 	_rc = RectMakeCenter(_x, _y, 48, 48);
 
 	_maxHp = 9;
@@ -65,6 +65,7 @@ void Dragon::release(void)
 
 void Dragon::update(void)
 {
+	shakwindow = RectMakeCenter(_x, _y, 400, 400);
 	if (_player->getIndex().x > _index.x)
 	{
 		_image->setFrameY(1);
@@ -190,9 +191,9 @@ void Dragon::move()
 {
 	if (_isMove == false)
 	{
-		
+
 		_movecount++;
-			if (_movecount % 100 == 96)
+		if (_movecount % 100 == 96)
 		{
 			while (true)
 			{
@@ -339,6 +340,9 @@ void Dragon::move()
 			//움직이지 않는 상태로 만든다
 			_isMove = false;
 			initAstar();
+			if (IntersectRect(&shakwindow, &_player->getRect())) {
+				DRAWRECTMANAGER->shakeWindow();
+			}
 		}
 
 
@@ -349,12 +353,12 @@ void Dragon::move()
 
 	_rc = RectMakeCenter(_x, _y, 48, 48);
 
-	
+
 }
 
 void Dragon::draw()
 {
-	
+
 	_image->frameRender(getMemDC(), _rc.left - 37, _rc.top - 54, _currentframe, _image->getFrameY());
 	if (_currentframe >= 5 && _fireimg->getFrameX() != _fireimg->getMaxFrameX() && _st == ATTCK)
 	{
@@ -398,7 +402,7 @@ void Dragon::animation()
 	else if (_st == ATTCK)
 	{
 		_animcount++;
-		if (_animcount % 12  == 0)
+		if (_animcount % 12 == 0)
 		{
 			if (_currentframe != _image->getMaxFrameX())
 			{
@@ -1320,8 +1324,8 @@ void Dragon::attack()
 
 	if (_currentframe == 6)
 	{
-	
-		_player->setHp(_player->getHp()-_dmg);
+
+		_player->setHp(_player->getHp() - _dmg);
 
 	}
 
