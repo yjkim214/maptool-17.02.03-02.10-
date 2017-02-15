@@ -79,7 +79,8 @@ struct tagTile
 	RECT rc;
 
 
-
+	int mapType;
+	int mapType_T;
 	int terrainFrameX;
 	int terrainFrameY;
 	int objFrameX;

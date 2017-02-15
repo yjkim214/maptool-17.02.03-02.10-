@@ -21,6 +21,7 @@ HRESULT maptoolScene::init(void)
 	goalX = -1;
 	goalY = -1;
 
+	maptype = 1;
 
 	SOUNDMANAGER->play("tileMapBGM", 0.7f);
 
@@ -79,6 +80,23 @@ void maptoolScene::update(void)
 		{
 			SOUNDMANAGER->stop("tileMapBGM");
 			SCENEMANAGER->changeScene("메뉴화면");
+		}
+
+		if (PtInRect(&_left, _ptMouse))
+		{
+			if (maptype == 2)
+			{
+				maptype--;
+			}
+
+		}
+
+		if (PtInRect(&_right, _ptMouse))
+		{
+			if (maptype == 1)
+			{
+				maptype++;
+			}
 		}
 
 	}
@@ -154,13 +172,31 @@ void maptoolScene::render(void)
 		{
 			if (_tiles[i].rc.right > mapscreen.right)
 			{
-				image* temp = IMAGEMANAGER->findImage("tileMapBase");
-				IMAGEMANAGER->render("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX*temp->getFrameWidth(), _tiles[i].terrainFrameY*temp->getFrameHeight(),
-					mapscreen.right - _tiles[i].rc.left, temp->getFrameHeight());
+				if (_tiles[i].mapType_T == 1)
+				{
+					image* temp = IMAGEMANAGER->findImage("tileMapBase");
+					IMAGEMANAGER->render("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX*temp->getFrameWidth(), _tiles[i].terrainFrameY*temp->getFrameHeight(),
+						mapscreen.right - _tiles[i].rc.left, temp->getFrameHeight());
+				}
+				else if (_tiles[i].mapType_T == 2)
+				{
+					image* temp = IMAGEMANAGER->findImage("tileMapBase2");
+					IMAGEMANAGER->render("tileMapBase2", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX*temp->getFrameWidth(), _tiles[i].terrainFrameY*temp->getFrameHeight(),
+						mapscreen.right - _tiles[i].rc.left, temp->getFrameHeight());
+				}
+
 			}
 			else
 			{
-				IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+				if (_tiles[i].mapType_T == 1)
+				{
+					IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+				}
+				else if (_tiles[i].mapType_T == 2)
+				{
+					IMAGEMANAGER->frameRender("tileMapBase2", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+				}
+
 			}
 
 		}
@@ -182,9 +218,18 @@ void maptoolScene::render(void)
 				}
 				else
 				{
-					image* temp = IMAGEMANAGER->findImage("tileMapBase");
-					IMAGEMANAGER->render("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
-						mapscreen.right - _tiles[i].rc.left, temp->getFrameHeight());
+					if (_tiles[i].mapType == 1)
+					{
+						image* temp = IMAGEMANAGER->findImage("tileMapBase");
+						IMAGEMANAGER->render("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
+							mapscreen.right - _tiles[i].rc.left, temp->getFrameHeight());
+					}
+					else if (_tiles[i].mapType == 2)
+					{
+						image* temp = IMAGEMANAGER->findImage("tileMapBase2");
+						IMAGEMANAGER->render("tileMapBase2", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
+							mapscreen.right - _tiles[i].rc.left, temp->getFrameHeight());
+					}
 				}
 
 			}
@@ -198,7 +243,15 @@ void maptoolScene::render(void)
 				}
 				else
 				{
-					IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX, _tiles[i].objFrameY);
+					if (_tiles[i].mapType == 1)
+					{
+						IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX, _tiles[i].objFrameY);
+					}
+					else if (_tiles[i].mapType == 2)
+					{
+						IMAGEMANAGER->frameRender("tileMapBase2", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBase")->getFrameHeight() - TILESIZE), _tiles[i].objFrameX, _tiles[i].objFrameY);
+					}
+
 				}
 
 			}
@@ -246,8 +299,17 @@ void maptoolScene::render(void)
 
 	IMAGEMANAGER->render("maptoolframe", getMemDC(), SAMPLESTARTX - 6, SAMPLESTARTY - 4);
 
-	IMAGEMANAGER->render("tileMapBase", getMemDC(), SAMPLESTARTX, SAMPLESTARTY);
+	if (maptype == 1)
+	{
+		IMAGEMANAGER->render("tileMapBase", getMemDC(), SAMPLESTARTX, SAMPLESTARTY);
+	}
+	else if (maptype == 2)
+	{
+		IMAGEMANAGER->render("tileMapBase2", getMemDC(), SAMPLESTARTX, SAMPLESTARTY);
+	}
 
+	IMAGEMANAGER->render("left", getMemDC(), _left.left, _left.top);
+	IMAGEMANAGER->render("right", getMemDC(), _right.left, _right.top);
 
 	IMAGEMANAGER->render("save", getMemDC(), _rcSave.left, _rcSave.top);
 	IMAGEMANAGER->render("load", getMemDC(), _rcLoad.left, _rcLoad.top);
@@ -261,36 +323,73 @@ void maptoolScene::render(void)
 
 
 	IMAGEMANAGER->render("select", getMemDC(), SAMPLESTARTX, 200);
-	if (_currentTile.y == 2)
+	if (maptype == 1)
 	{
-		IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 212, _currentTile.x, _currentTile.y);
-	}
-	else if (_currentTile.y == 3)
-	{
-		if (_currentTile.x == 6 && _currentTile.y == 3)
+		if (_currentTile.y == 2)
 		{
-			IMAGEMANAGER->render("dragon_green", getMemDC(), SAMPLESTARTX + 85, 207);
+			IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 212, _currentTile.x, _currentTile.y);
+		}
+		else if (_currentTile.y == 3)
+		{
+			if (_currentTile.x == 6 && _currentTile.y == 3)
+			{
+				IMAGEMANAGER->render("dragon_green", getMemDC(), SAMPLESTARTX + 85, 207);
+			}
+			else
+			{
+				IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+			}
+
+		}
+		else if (_currentTile.x == 5 && _currentTile.y == 1)
+		{
+			IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+
+		}
+		else if (_currentTile.x == 6 && _currentTile.y == 1)
+		{
+			IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+
 		}
 		else
 		{
-			IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+			IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 205, _currentTile.x, _currentTile.y);
 		}
-
 	}
-	else if (_currentTile.x == 5 && _currentTile.y == 1)
+	else if (maptype == 2)
 	{
-		IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+		if (_currentTile.y == 2)
+		{
+			IMAGEMANAGER->frameRender("tileMapBase2", getMemDC(), SAMPLESTARTX + 85, 212, _currentTile.x, _currentTile.y);
+		}
+		else if (_currentTile.y == 3)
+		{
+			if (_currentTile.x == 6 && _currentTile.y == 3)
+			{
+				IMAGEMANAGER->render("dragon_green", getMemDC(), SAMPLESTARTX + 85, 207);
+			}
+			else
+			{
+				IMAGEMANAGER->frameRender("tileMapBase2", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+			}
 
-	}
-	else if (_currentTile.x == 6 && _currentTile.y == 1)
-	{
-		IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+		}
+		else if (_currentTile.x == 5 && _currentTile.y == 1)
+		{
+			IMAGEMANAGER->frameRender("tileMapBase2", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
 
+		}
+		else if (_currentTile.x == 6 && _currentTile.y == 1)
+		{
+			IMAGEMANAGER->frameRender("tileMapBase2", getMemDC(), SAMPLESTARTX + 85, 197, _currentTile.x, _currentTile.y);
+
+		}
+		else
+		{
+			IMAGEMANAGER->frameRender("tileMapBase2", getMemDC(), SAMPLESTARTX + 85, 205, _currentTile.x, _currentTile.y);
+		}
 	}
-	else
-	{
-		IMAGEMANAGER->frameRender("tileMapBase", getMemDC(), SAMPLESTARTX + 85, 205, _currentTile.x, _currentTile.y);
-	}
+
 
 }
 
@@ -299,6 +398,10 @@ void maptoolScene::maptoolSetup(void)
 	//렉트위치 초기화
 	_rcSave = RectMake(SAMPLESTARTX, 270, IMAGEMANAGER->findImage("save")->getWidth(), IMAGEMANAGER->findImage("save")->getHeight());
 	_rcLoad = RectMake(SAMPLESTARTX + 120, 270, IMAGEMANAGER->findImage("load")->getWidth(), IMAGEMANAGER->findImage("load")->getHeight());
+
+	_left = RectMake(SAMPLESTARTX + 140, 220, IMAGEMANAGER->findImage("left")->getWidth(), IMAGEMANAGER->findImage("left")->getHeight());
+
+	_right = RectMake(SAMPLESTARTX + 190, 220, IMAGEMANAGER->findImage("right")->getWidth(), IMAGEMANAGER->findImage("right")->getHeight());
 
 	_rcEraser = RectMake(SAMPLESTARTX, 270 + 50, IMAGEMANAGER->findImage("eraser")->getFrameWidth(), IMAGEMANAGER->findImage("eraser")->getFrameHeight());
 
@@ -341,6 +444,8 @@ void maptoolScene::maptoolSetup(void)
 		_tiles[i].objFrameY = 0;
 		_tiles[i].terrain = terrainSelect(_tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
 		_tiles[i].obj = OBJECT_NONE;
+		_tiles[i].mapType = 1;
+		_tiles[i].mapType_T = 1;
 	}
 
 	_currentTile.x = _sampleTiles[SAMPLETILEX * 2 + 4].terrainFrameX;
@@ -406,6 +511,7 @@ void maptoolScene::setMap(void)
 					_tiles[i].terrainFrameX = _currentTile.x;
 					_tiles[i].terrainFrameY = _currentTile.y;
 					_tiles[i].terrain = terrainSelect(_currentTile.x, _currentTile.y);
+					_tiles[i].mapType_T = maptype;
 				}
 				//현재버튼이 오브젝트냐?
 				if (_ctrlSelect == CTRL_OBJDRAW)
@@ -424,6 +530,7 @@ void maptoolScene::setMap(void)
 							_tiles[i].objFrameX = _currentTile.x;
 							_tiles[i].objFrameY = _currentTile.y;
 							_tiles[i].obj = objectSelect(_currentTile.x, _currentTile.y);
+							_tiles[i].mapType = maptype;
 							playerX = i%TILEX;
 							playerY = i / TILEX;
 
@@ -441,6 +548,7 @@ void maptoolScene::setMap(void)
 							_tiles[i].objFrameX = _currentTile.x;
 							_tiles[i].objFrameY = _currentTile.y;
 							_tiles[i].obj = objectSelect(_currentTile.x, _currentTile.y);
+							_tiles[i].mapType = maptype;
 							goalX = i%TILEX;
 							goalY = i / TILEX;
 						}
@@ -450,6 +558,7 @@ void maptoolScene::setMap(void)
 							_tiles[i].objFrameX = _currentTile.x;
 							_tiles[i].objFrameY = _currentTile.y;
 							_tiles[i].obj = objectSelect(_currentTile.x, _currentTile.y);
+							_tiles[i].mapType = maptype;
 						}
 
 
@@ -464,6 +573,7 @@ void maptoolScene::setMap(void)
 					_tiles[i].objFrameX = 0;
 					_tiles[i].objFrameY = 0;
 					_tiles[i].obj = OBJECT_NONE;
+					_tiles[i].mapType = 1;
 				}
 			}
 		}
@@ -564,37 +674,77 @@ TERRAIN maptoolScene::terrainSelect(int frameX, int frameY)
 
 OBJECT maptoolScene::objectSelect(int frameX, int frameY)
 {
-	if (frameX == 4 && frameY == 1)
+	if (maptype == 1)
 	{
-		return OBJECT_GOLDBLOCK;
+		if (frameX == 4 && frameY == 1)
+		{
+			return OBJECT_GOLDBLOCK;
+		}
+		if (frameX == 5 && frameY == 1)
+		{
+			return OBJECT_GOAL;
+		}
+		if (frameX == 6 && frameY == 1)
+		{
+			return OBJECT_BOX;
+		}
+		if (frameX == 0 && frameY == 3)
+		{
+			return OBJECT_ENEMY1;
+		}
+		if (frameX == 1 && frameY == 3)
+		{
+			return OBJECT_ENEMY2;
+		}
+		if (frameX == 2 && frameY == 3)
+		{
+			return OBJECT_ENEMY3;
+		}
+		if (frameX == 3 && frameY == 3)
+		{
+			return OBJECT_PLAYER;
+		}
+		if (frameX == 6 && frameY == 3)
+		{
+			return OBJECT_BOSS;
+		}
+		return OBJECT_BLOCK;
 	}
-	if (frameX == 5 && frameY == 1)
+
+	if (maptype == 2)
 	{
-		return OBJECT_GOAL;
+		if (frameX == 4 && frameY == 1)
+		{
+			return OBJECT_GOLDBLOCK;
+		}
+		if (frameX == 5 && frameY == 1)
+		{
+			return OBJECT_GOAL;
+		}
+		if (frameX == 6 && frameY == 1)
+		{
+			return OBJECT_BOX;
+		}
+		if (frameX == 0 && frameY == 3)
+		{
+			return OBJECT_ENEMY1;
+		}
+		if (frameX == 1 && frameY == 3)
+		{
+			return OBJECT_ENEMY2;
+		}
+		if (frameX == 2 && frameY == 3)
+		{
+			return OBJECT_ENEMY3;
+		}
+		if (frameX == 3 && frameY == 3)
+		{
+			return OBJECT_PLAYER;
+		}
+		if (frameX == 6 && frameY == 3)
+		{
+			return OBJECT_BOSS;
+		}
+		return OBJECT_BLOCK;
 	}
-	if (frameX == 6 && frameY == 1)
-	{
-		return OBJECT_BOX;
-	}
-	if (frameX == 0 && frameY == 3)
-	{
-		return OBJECT_ENEMY1;
-	}
-	if (frameX == 1 && frameY == 3)
-	{
-		return OBJECT_ENEMY2;
-	}
-	if (frameX == 2 && frameY == 3)
-	{
-		return OBJECT_ENEMY3;
-	}
-	if (frameX == 3 && frameY == 3)
-	{
-		return OBJECT_PLAYER;
-	}
-	if (frameX == 6 && frameY == 3)
-	{
-		return OBJECT_BOSS;
-	}
-	return OBJECT_BLOCK;
 }

@@ -81,15 +81,37 @@ void tileMap::render(void)
 			{
 				if (turrainOnoff[i])
 				{
-					image* temp = IMAGEMANAGER->findImage("colorTile");
-					IMAGEMANAGER->render("colorTile", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, (((i / TILEX) + (i%TILEX)) % 2)*temp->getFrameWidth(), 0,
-						DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+
+					if (_tiles[i].mapType_T == 1)
+					{
+						image* temp = IMAGEMANAGER->findImage("colorTile");
+						IMAGEMANAGER->render("colorTile", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, (((i / TILEX) + (i%TILEX)) % 2)*temp->getFrameWidth(), 0,
+							DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+					}
+					else if (_tiles[i].mapType_T == 2)
+					{
+						image* temp = IMAGEMANAGER->findImage("colorTile2");
+						IMAGEMANAGER->render("colorTile2", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, (((i / TILEX) + (i%TILEX)) % 2)*temp->getFrameWidth(), 0,
+							DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+					}
+
+
 				}
 				else
 				{
-					image* temp = IMAGEMANAGER->findImage("tileMapBaseBig");
-					IMAGEMANAGER->render("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX*temp->getFrameWidth(), _tiles[i].terrainFrameY*temp->getFrameHeight(),
-						DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+					if (_tiles[i].mapType_T == 1)
+					{
+						image* temp = IMAGEMANAGER->findImage("tileMapBaseBig");
+						IMAGEMANAGER->render("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX*temp->getFrameWidth(), _tiles[i].terrainFrameY*temp->getFrameHeight(),
+							DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+					}
+					else if (_tiles[i].mapType_T == 2)
+					{
+						image* temp = IMAGEMANAGER->findImage("tileMapBaseBig2");
+						IMAGEMANAGER->render("tileMapBaseBig2", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX*temp->getFrameWidth(), _tiles[i].terrainFrameY*temp->getFrameHeight(),
+							DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+					}
+
 				}
 
 			}
@@ -98,11 +120,27 @@ void tileMap::render(void)
 			{
 				if (turrainOnoff[i])
 				{
-					IMAGEMANAGER->frameRender("colorTile", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, ((i / TILEX) + (i%TILEX)) % 2, 0);
+					if (_tiles[i].mapType_T == 1)
+					{
+						IMAGEMANAGER->frameRender("colorTile", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, ((i / TILEX) + (i%TILEX)) % 2, 0);
+					}
+					else if (_tiles[i].mapType_T == 2)
+					{
+						IMAGEMANAGER->frameRender("colorTile2", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, ((i / TILEX) + (i%TILEX)) % 2, 0);
+					}
+
 				}
 				else
 				{
-					IMAGEMANAGER->frameRender("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+					if (_tiles[i].mapType_T == 1)
+					{
+						IMAGEMANAGER->frameRender("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+					}
+					else if (_tiles[i].mapType_T == 2)
+					{
+						IMAGEMANAGER->frameRender("tileMapBaseBig2", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top, _tiles[i].terrainFrameX, _tiles[i].terrainFrameY);
+					}
+
 				}
 			}
 		}
@@ -144,11 +182,11 @@ void tileMap::objRender(void)
 		{
 			if (_tiles[i].rc.right > DRAWRECTMANAGER->getRect().right)
 			{
-				if (!(_tiles[i].obj == OBJECT_BLOCK || _tiles[i].obj == OBJECT_GOLDBLOCK || _tiles[i].obj == OBJECT_BOX|| _tiles[i].obj == OBJECT_GOAL)) continue;
+				if (!(_tiles[i].obj == OBJECT_BLOCK || _tiles[i].obj == OBJECT_GOLDBLOCK || _tiles[i].obj == OBJECT_BOX || _tiles[i].obj == OBJECT_GOAL)) continue;
 				if (_attribute[i] == ATTR_GOAL_CLOSE)
 				{
 					image* temp = IMAGEMANAGER->findImage("stairs");
-					IMAGEMANAGER->render("stairs", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("stairs")->getFrameHeight() - TILESIZEGAME), 1*temp->getFrameWidth(), 0,
+					IMAGEMANAGER->render("stairs", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("stairs")->getFrameHeight() - TILESIZEGAME), 1 * temp->getFrameWidth(), 0,
 						DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
 				}
 				else if (_attribute[i] == ATTR_GOAL_OPEN)
@@ -159,29 +197,47 @@ void tileMap::objRender(void)
 				}
 				else
 				{
-					image* temp = IMAGEMANAGER->findImage("tileMapBaseBig");
-					IMAGEMANAGER->render("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
-						DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+					if (_tiles[i].mapType == 1)
+					{
+						image* temp = IMAGEMANAGER->findImage("tileMapBaseBig");
+						IMAGEMANAGER->render("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
+							DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+					}
+					else if (_tiles[i].mapType == 2)
+					{
+						image* temp = IMAGEMANAGER->findImage("tileMapBaseBig2");
+						IMAGEMANAGER->render("tileMapBaseBig2", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX*temp->getFrameWidth(), _tiles[i].objFrameY*temp->getFrameHeight(),
+							DRAWRECTMANAGER->getRect().right - _tiles[i].rc.left, temp->getFrameHeight());
+					}
+
 				}
-				
+
 			}
 
 			else
 			{
 				if (!(_tiles[i].obj == OBJECT_BLOCK || _tiles[i].obj == OBJECT_GOLDBLOCK || _tiles[i].obj == OBJECT_BOX || _tiles[i].obj == OBJECT_GOAL)) continue;
-				if (_attribute[i] ==ATTR_GOAL_CLOSE)
+				if (_attribute[i] == ATTR_GOAL_CLOSE)
 				{
-					IMAGEMANAGER->frameRender("stairs", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("stairs")->getFrameHeight() - TILESIZEGAME), 1,0);
+					IMAGEMANAGER->frameRender("stairs", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("stairs")->getFrameHeight() - TILESIZEGAME), 1, 0);
 				}
 				else if (_attribute[i] == ATTR_GOAL_OPEN)
 				{
-					IMAGEMANAGER->frameRender("stairs", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("stairs")->getFrameHeight() - TILESIZEGAME),0,0);
+					IMAGEMANAGER->frameRender("stairs", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("stairs")->getFrameHeight() - TILESIZEGAME), 0, 0);
 				}
 				else
 				{
-					IMAGEMANAGER->frameRender("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX, _tiles[i].objFrameY);
+					if (_tiles[i].mapType == 1)
+					{
+						IMAGEMANAGER->frameRender("tileMapBaseBig", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX, _tiles[i].objFrameY);
+					}
+					else if (_tiles[i].mapType == 2)
+					{
+						IMAGEMANAGER->frameRender("tileMapBaseBig2", getMemDC(), _tiles[i].rc.left, _tiles[i].rc.top - (IMAGEMANAGER->findImage("tileMapBaseBig")->getFrameHeight() - TILESIZEGAME), _tiles[i].objFrameX, _tiles[i].objFrameY);
+					}
+
 				}
-				
+
 			}
 		}
 
@@ -208,7 +264,7 @@ void tileMap::load(void)
 		file = CreateFile("save2.map", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 		ReadFile(file, _tiles, sizeof(tagTile) * TILEX * TILEY, &read, NULL);
 	}
-	
+
 	else if (slot == 3)
 	{
 		file = CreateFile("save3.map", GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);

@@ -78,9 +78,14 @@ void loadingScene::loadingImage(void)
 	//¸ÊÅøÈ­¸é
 	_loading->loadFrameImage("tileMapBase", "tileMapBase.bmp", 192, 160, 8, 4, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("tileMapBaseBig", "tileMapBaseBig.bmp", 336, 320, 7, 4, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("tileMapBase2", "tileMapBase2.bmp", 192, 160, 8, 4, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("tileMapBaseBig2", "tileMapBaseBig2.bmp", 336, 320, 7, 4, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("stairs", "stairs.bmp", 96, 48, 2, 1);
 	_loading->loadFrameImage("colorTile", "colorTile.bmp", 96, 48, 2, 1);
+	_loading->loadFrameImage("colorTile2", "colorTile2.bmp", 96, 48, 2, 1);
 
+	_loading->loadImage("left", "left.bmp", 48, 30, true, RGB(255, 0, 255));
+	_loading->loadImage("right", "right.bmp", 48, 30, true, RGB(255, 0, 255));
 	_loading->loadImage("dragon_green", "dragon_green.bmp", 27, 26, true, RGB(255, 0, 255));
 	_loading->loadImage("dragon_green_big", "dragon_green_big.bmp", 54, 51, true, RGB(1, 0, 0));
 	_loading->loadImage("maptoolCase", "maptoolCase.bmp", 380, 450, true, RGB(255, 0, 255));

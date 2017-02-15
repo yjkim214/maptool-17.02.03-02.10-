@@ -14,6 +14,8 @@ private:
 
 	RECT _slot1, _slot2, _slot3;
 
+	RECT _left, _right;
+
 	CTRL _ctrlSelect;
 
 	RECT mapscreen;
@@ -23,6 +25,7 @@ private:
 	int goalX;
 	int goalY;
 
+	int maptype;
 
 	int slot;
 
