@@ -363,8 +363,24 @@ void Dragon::move()
 
 void Dragon::draw()
 {
+	if (KEYMANAGER->isToggleKey('O'))
+	{
+		HBRUSH myBrush, oldBrush;
+		myBrush = CreateSolidBrush(RGB(0, 0, 255));
+		oldBrush = (HBRUSH)SelectObject(getMemDC(), myBrush);
+
+		for (int i = 0; i < _finalList.size(); i++)
+		{
+			int index = _finalList[i];
+			RectangleMake(getMemDC(), _tileMap->getTiles()[index].rc);
+		}
+
+		SelectObject(getMemDC(), oldBrush);
+		DeleteObject(myBrush);
+	}
 
 	_image->frameRender(getMemDC(), _rc.left - 37, _rc.top - 54, _currentframe, _image->getFrameY());
+	
 	if (_currentframe >= 5 && _fireimg->getFrameX() != _fireimg->getMaxFrameX() && _st == ATTCK)
 	{
 		if (_index.x > _player->getIndex().x) {

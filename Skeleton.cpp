@@ -128,7 +128,6 @@ void Skeleton::move()
 {
 	if (_isMove == false)
 	{
-
 		_movecount++;
 		if (_movecount % 100 == 96)
 		{
@@ -291,6 +290,22 @@ void Skeleton::move()
 
 void Skeleton::draw()
 {
+	if (KEYMANAGER->isToggleKey('O'))
+	{
+		HBRUSH myBrush, oldBrush;
+		myBrush = CreateSolidBrush(RGB(0, 0, 255));
+		oldBrush = (HBRUSH)SelectObject(getMemDC(), myBrush);
+
+		for (int i = 0; i < _finalList.size(); i++)
+		{
+			int index = _finalList[i];
+			RectangleMake(getMemDC(), _tileMap->getTiles()[index].rc);
+		}
+
+		SelectObject(getMemDC(), oldBrush);
+		DeleteObject(myBrush);
+	}
+
 	_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentframe, _image->getFrameY());
 }
 

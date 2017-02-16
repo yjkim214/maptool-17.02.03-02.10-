@@ -1,45 +1,23 @@
-﻿  player.cpp
+﻿  Skeleton.cpp
 c:\users\dydwo\desktop\maptool\player.h(117): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(77): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(100): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(105): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(110): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(161): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(167): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(173): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(185): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(191): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(197): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(206): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(229): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(230): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(255): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(293): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(339): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(400): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(413): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(426): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(504): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(542): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(588): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(648): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(661): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(674): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(750): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(788): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(834): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(895): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(908): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(921): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(997): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(1035): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(1081): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(1142): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(1155): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(1168): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(1318): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(1335): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(1349): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(1361): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\dydwo\desktop\maptool\player.cpp(1365): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(23): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(24): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(38): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(54): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(74): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(85): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(102): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(110): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(121): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(172): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(191): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(211): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(231): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(288): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(303): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(326): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(1173): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(1239): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(1227): warning C4715: 'Skeleton::findAttribute': 모든 제어 경로에서 값을 반환하지는 않습니다.
+c:\users\dydwo\desktop\maptool\skeleton.cpp(1212): warning C4715: 'Skeleton::settingMove': 모든 제어 경로에서 값을 반환하지는 않습니다.
   WindowAPI.vcxproj -> C:\Users\dydwo\Desktop\maptool\Debug\WindowAPI.exe
