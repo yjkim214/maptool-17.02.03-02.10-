@@ -286,8 +286,8 @@ void player::move()
 					break;
 				case WEAPON_LONGSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if ((_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-						|| (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) || 
+						(_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -331,9 +331,9 @@ void player::move()
 					break;
 				case WEAPON_BROADSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-						|| (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
-						|| (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) || 
+						(_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) || 
+						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -498,7 +498,7 @@ void player::move()
 				{
 				case WEAPON_DAGGER:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if (_index.x != TILEX - 1 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -535,8 +535,8 @@ void player::move()
 					break;
 				case WEAPON_LONGSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if ((_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
-						(_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
+					if ((_index.x != TILEX - 1 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != TILEX - 1 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -580,9 +580,9 @@ void player::move()
 					break;
 				case WEAPON_BROADSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
-						(_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
-						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
+					if ((_index.x != TILEX - 1 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != TILEX - 1 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != TILEX - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -692,7 +692,7 @@ void player::move()
 					_index.x = _index.x + 1;
 				}
 
-				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_BOX)) != 0))
+				else if (_index.x != TILEX - 1 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_BOX)) != 0))
 				{
 					int randNum = RND->getInt(2);
 					if (randNum == 0)
@@ -725,7 +725,7 @@ void player::move()
 					_tileMap->releaseObject(_index.x + 1, _index.y);
 				}
 
-				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_GOAL_OPEN)) != 0))
+				else if (_index.x != TILEX - 1 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_GOAL_OPEN)) != 0))
 				{
 					_currentSlot++;
 
@@ -744,7 +744,7 @@ void player::move()
 				{
 				case WEAPON_DAGGER:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if (_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -781,8 +781,8 @@ void player::move()
 					break;
 				case WEAPON_LONGSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
-						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
+					if ((_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -826,9 +826,9 @@ void player::move()
 					break;
 				case WEAPON_BROADSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
-						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
-						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
+					if ((_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -939,7 +939,7 @@ void player::move()
 					_index.y = _index.y - 1;
 				}
 
-				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_BOX)) != 0))
+				else if (_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_BOX)) != 0))
 				{
 					int randNum = RND->getInt(2);
 					if (randNum == 0)
@@ -972,7 +972,7 @@ void player::move()
 					_tileMap->releaseObject(_index.x, _index.y - 1);
 				}
 
-				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_GOAL_OPEN)) != 0))
+				else if (_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_GOAL_OPEN)) != 0))
 				{
 					_currentSlot++;
 
@@ -991,7 +991,7 @@ void player::move()
 				{
 				case WEAPON_DAGGER:
 					//밟을려는 타일의 속성이 몬스터라면
-					if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
+					if (_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -1028,8 +1028,8 @@ void player::move()
 					break;
 				case WEAPON_LONGSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
-						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
+					if ((_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -1073,9 +1073,9 @@ void player::move()
 					break;
 				case WEAPON_BROADSWORD:
 					//밟을려는 타일의 속성이 몬스터라면
-					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
-						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
-						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
+					if ((_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
 						for (int i = 0; i < _enemyMg->getEnemyList().size(); i++)
@@ -1186,7 +1186,7 @@ void player::move()
 					_index.y = _index.y + 1;
 				}
 
-				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_BOX)) != 0))
+				else if (_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_BOX)) != 0))
 				{
 					//랜덤 변수를 만들어줌
 					int randNum = RND->getInt(2);
@@ -1225,7 +1225,7 @@ void player::move()
 					_tileMap->releaseObject(_index.x, _index.y + 1);
 				}
 
-				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_GOAL_OPEN)) != 0))
+				else if (_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_GOAL_OPEN)) != 0))
 				{
 					_currentSlot++;
 
