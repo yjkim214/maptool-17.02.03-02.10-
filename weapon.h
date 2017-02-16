@@ -28,6 +28,7 @@ public:
 	void update(void);
 	void render(void);
 
+	void setKind(WEAPON_KIND kind) { _kind = kind; }
 	void setPos();
 	void setIndex(POINT index);
 	void setIsEquip(bool isEquip);
@@ -35,7 +36,7 @@ public:
 	WEAPON_KIND getKind() { return _kind; }
 	int getAtt() { return _att; }
 	POINT getIndex() { return _index; }
-	bool getisEquip() { return _isEquip; }
+	bool getIsEquip() { return _isEquip; }
 
 	weapon() {}
 	~weapon() {}

@@ -66,12 +66,15 @@ void Skeleton::update(void)
 	animation();
 
 	//  현재 hp량 을 표시해준다 . 
-	for (int i = 0; i < _maxHp - _hp; i++)
+	if (_hp != 0)
 	{
-		_hpbarlist[i]->setcurrent(false);
-		if (i >= _hpbarlist.size())
+		for (int i = 0; i < _maxHp - _hp; i++)
 		{
-			continue;
+			_hpbarlist[i]->setcurrent(false);
+			if (i >= _hpbarlist.size())
+			{
+				continue;
+			}
 		}
 	}
 

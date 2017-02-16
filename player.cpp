@@ -5,6 +5,7 @@
 #include "enemyManager.h"
 #include "armor.h"
 #include "weapon.h"
+#include "potion.h"
 
 HRESULT player::init(void)
 {
@@ -59,6 +60,14 @@ HRESULT player::init(void)
 	_vWeaponList.push_back(initWeapon);
 	_equipWeapon = initWeapon;
 
+	potion* initPotion = new potion;
+	initPotion->init();
+	initPotion->setIndex(_index);
+	initPotion->setPos();
+	initPotion->setIsEquip(true);
+	_vPotionList.push_back(initPotion);
+	_equipPotion = initPotion;
+
 	//현재 슬롯 초기화
 	_isClear = false;
 	_currentSlot = 1;
@@ -97,46 +106,61 @@ void player::update(void)
 	{
 		_vArmorList[i]->update();
 	}
-	int tempHP = _hp;
-
-	for (int i = 0; tempHP >= 0; i++)
+	
+	for (int i = 0; i < _vPotionList.size(); i++)
 	{
-		if (tempHP >= 2)
-		{
-			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(true);
-			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(false);
-		}
+		_vPotionList[i]->update();
+	}
 
-		else if (tempHP == 1)
+	setHpbar();
+
+	if (KEYMANAGER->isOnceKeyDown('U'))
+	{
+		useItem();
+	}
+
+	//치트키
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		_equipWeapon->setKind(WEAPON_DAGGER);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_equipWeapon->setKind(WEAPON_LONGSWORD);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_equipWeapon->setKind(WEAPON_BROADSWORD);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('4'))
+	{
+		if (!_equipPotion)
 		{
-			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(true);
-			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(false);
+			potion* cheatPotion = new potion;
+			cheatPotion->init();
+			cheatPotion->setIndex(_index);
+			cheatPotion->setPos();
+			cheatPotion->setIsEquip(true);
+			_vPotionList.push_back(cheatPotion);
+			_equipPotion = cheatPotion;
 		}
-		
-		else
-		{
-			if (i >= _hpbarlist.size())
-			{
-				break;
-			}
-			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(false);
-			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(false);
-		}
-		tempHP -= 2;
 	}
 }
 
 void player::render(void)
 {
 	//플레이어 렉트를 그려줌
-	if (KEYMANAGER->isToggleKey(VK_F4))
+	if (KEYMANAGER->isToggleKey(VK_F3))
 	{
 		RectangleMake(getMemDC(), _rc);
 	}
 
 	for (int i = 0; i < _vWeaponList.size(); i++)
 	{
-		if (_vWeaponList[i]->getisEquip()) { continue; }
+		if (_vWeaponList[i]->getIsEquip()) { continue; }
 		_vWeaponList[i]->render();
 	}
 
@@ -146,15 +170,21 @@ void player::render(void)
 		_vArmorList[i]->render();
 	}
 
+	for (int i = 0; i < _vPotionList.size(); i++)
+	{
+		if (_vPotionList[i]->getIsEquip()) { continue; }
+		_vPotionList[i]->render();
+	}
+
 	//플레이어 이미지를 그려줌
 	_playerImg->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX + 4 * static_cast<int>(_isLeft), static_cast<int>(_equipArmor->getKind()));
 }
 
-void player::equipRender(void)
+void player::equipItemRender(void)
 {
 	for (int i = 0; i < _vWeaponList.size(); i++)
 	{
-		if (!_vWeaponList[i]->getisEquip()) { continue; }
+		if (!_vWeaponList[i]->getIsEquip()) { continue; }
 		_vWeaponList[i]->render();
 	}
 
@@ -162,6 +192,12 @@ void player::equipRender(void)
 	{
 		if (!_vArmorList[i]->getIsEquip()) { continue; }
 		_vArmorList[i]->render();
+	}
+
+	for (int i = 0; i < _vPotionList.size(); i++)
+	{
+		if (!_vPotionList[i]->getIsEquip()) { continue; }
+		_vPotionList[i]->render();
 	}
 }
 
@@ -222,7 +258,7 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -260,14 +296,14 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 							
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -306,21 +342,21 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -387,12 +423,30 @@ void player::move()
 						}
 					}
 
+					for (int i = 0; i < _vPotionList.size(); i++)
+					{
+						if (_index.x - 1 == _vPotionList[i]->getIndex().x && _index.y == _vPotionList[i]->getIndex().y)
+						{
+							if (_equipPotion)
+							{
+								_equipPotion->setIsEquip(false);
+								_equipPotion->setIndex({ _index.x - 1, _index.y });
+								_equipPotion->setPos();
+							}
+							
+							_equipPotion = _vPotionList[i];
+							_equipPotion->setIsEquip(true);
+
+							break;
+						}
+					}
+
 					_index.x = _index.x - 1;
 				}
 
 				else if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_BOX)) != 0))
 				{
-					int randNum = RND->getInt(2);
+					int randNum = RND->getInt(3);
 					if (randNum == 0)
 					{
 						armor* newArmor = new armor;
@@ -409,6 +463,15 @@ void player::move()
 						newWeapon->setIndex({ _index.x - 1, _index.y });
 						newWeapon->setPos();
 						_vWeaponList.push_back(newWeapon);
+					}
+
+					else if (randNum == 2)
+					{
+						potion* newPotion = new potion;
+						newPotion->init();
+						newPotion->setIndex({ _index.x - 1, _index.y });
+						newPotion->setPos();
+						_vPotionList.push_back(newPotion);
 					}
 
 					_tileMap->releaseObject(_index.x - 1, _index.y);
@@ -444,7 +507,7 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -482,14 +545,14 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -528,21 +591,21 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -608,6 +671,24 @@ void player::move()
 						}
 					}
 
+					for (int i = 0; i < _vPotionList.size(); i++)
+					{
+						if (_index.x + 1 == _vPotionList[i]->getIndex().x && _index.y == _vPotionList[i]->getIndex().y)
+						{
+							if (_equipPotion)
+							{
+								_equipPotion->setIsEquip(false);
+								_equipPotion->setIndex({ _index.x + 1, _index.y });
+								_equipPotion->setPos();
+							}
+
+							_equipPotion = _vPotionList[i];
+							_equipPotion->setIsEquip(true);
+
+							break;
+						}
+					}
+
 					_index.x = _index.x + 1;
 				}
 
@@ -630,6 +711,15 @@ void player::move()
 						newWeapon->setIndex({ _index.x + 1, _index.y });
 						newWeapon->setPos();
 						_vWeaponList.push_back(newWeapon);
+					}
+
+					else if (randNum == 2)
+					{
+						potion* newPotion = new potion;
+						newPotion->init();
+						newPotion->setIndex({ _index.x + 1, _index.y });
+						newPotion->setPos();
+						_vPotionList.push_back(newPotion);
 					}
 
 					_tileMap->releaseObject(_index.x + 1, _index.y);
@@ -663,7 +753,7 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -701,14 +791,14 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 2)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -747,21 +837,21 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y - 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -828,6 +918,24 @@ void player::move()
 						}
 					}
 
+					for (int i = 0; i < _vPotionList.size(); i++)
+					{
+						if (_index.x == _vPotionList[i]->getIndex().x && _index.y - 1 == _vPotionList[i]->getIndex().y)
+						{
+							if (_equipPotion)
+							{
+								_equipPotion->setIsEquip(false);
+								_equipPotion->setIndex({ _index.x, _index.y - 1 });
+								_equipPotion->setPos();
+							}
+
+							_equipPotion = _vPotionList[i];
+							_equipPotion->setIsEquip(true);
+
+							break;
+						}
+					}
+
 					_index.y = _index.y - 1;
 				}
 
@@ -850,6 +958,15 @@ void player::move()
 						newWeapon->setIndex({ _index.x, _index.y - 1 });
 						newWeapon->setPos();
 						_vWeaponList.push_back(newWeapon);
+					}
+
+					else if (randNum == 2)
+					{
+						potion* newPotion = new potion;
+						newPotion->init();
+						newPotion->setIndex({ _index.x, _index.y - 1 });
+						newPotion->setPos();
+						_vPotionList.push_back(newPotion);
 					}
 
 					_tileMap->releaseObject(_index.x, _index.y - 1);
@@ -883,7 +1000,7 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -921,14 +1038,14 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 2)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -967,21 +1084,21 @@ void player::move()
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 							
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x + 1 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
 								//그 인덱스의 몬스터에게 데미지를 준다
-								_enemyMg->getEnemyList()[i]->setHp(_enemyMg->getEnemyList()[i]->getHp() - _att);
+								attack(i);
 							}
 						}
 
@@ -1047,29 +1164,62 @@ void player::move()
 							break;
 						}
 					}
+					
+					for (int i = 0; i < _vPotionList.size(); i++)
+					{
+						if (_index.x == _vPotionList[i]->getIndex().x && _index.y + 1 == _vPotionList[i]->getIndex().y)
+						{
+							if (_equipPotion)
+							{
+								_equipPotion->setIsEquip(false);
+								_equipPotion->setIndex({ _index.x, _index.y + 1 });
+								_equipPotion->setPos();
+							}
+
+							_equipPotion = _vPotionList[i];
+							_equipPotion->setIsEquip(true);
+
+							break;
+						}
+					}
 
 					_index.y = _index.y + 1;
 				}
 
 				else if (_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_BOX)) != 0))
 				{
+					//랜덤 변수를 만들어줌
 					int randNum = RND->getInt(2);
+					
 					if (randNum == 0)
 					{
+						//아머 랜덤 생성
 						armor* newArmor = new armor;
 						newArmor->init(static_cast<ARMOR_KIND>(RND->getInt(10)));
 						newArmor->setIndex({ _index.x, _index.y + 1 });
 						newArmor->setPos();
+						//상자의 위치에 아머를 만들어주고 벡터에 담아준다
 						_vArmorList.push_back(newArmor);
 					}
 
 					else if (randNum == 1)
 					{
+						//웨펀 랜덤 생성
 						weapon* newWeapon = new weapon;
 						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(3)));
 						newWeapon->setIndex({ _index.x, _index.y + 1 });
 						newWeapon->setPos();
+						//상자의 위치에 웨펀을 만들어주고 벡터에 담아준다
 						_vWeaponList.push_back(newWeapon);
+					}
+
+					else if (randNum == 2)
+					{
+						potion* newPotion = new potion;
+						newPotion->init();
+						newPotion->setIndex({ _index.x, _index.y + 1 });
+						newPotion->setPos();
+						_vPotionList.push_back(newPotion);
 					}
 
 					_tileMap->releaseObject(_index.x, _index.y + 1);
@@ -1163,11 +1313,66 @@ void player::animation()
 		_count = 0;
 	}
 }
+void player::setHpbar()
+{
+	int tempHP = _hp;
+	for (int i = 0; tempHP >= 0; i++)
+	{
+		if (tempHP >= 2)
+		{
+			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(true);
+			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(false);
+		}
+
+		else if (tempHP == 1)
+		{
+			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(true);
+			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(false);
+		}
+
+		else
+		{
+			if (i >= _hpbarlist.size())
+			{
+				break;
+			}
+
+			_hpbarlist[_hpbarlist.size() - i - 1]->sethalf(false);
+			_hpbarlist[_hpbarlist.size() - i - 1]->setcurrent(false);
+		}
+		tempHP -= 2;
+	}
+}
+
+void player::attack(int index)
+{
+	_enemyMg->getEnemyList()[index]->setHp(_enemyMg->getEnemyList()[index]->getHp() - (_att + _equipWeapon->getAtt()));
+}
+
+void player::useItem()
+{
+	if (!_equipPotion)
+	{
+		return;
+	}
+
+	else if (_equipPotion)
+	{
+		for (int i = 0; i < _vPotionList.size(); i++)
+		{
+			if (_vPotionList[i]->getIsEquip())
+			{
+				setHp(_hp + _equipPotion->getHealPt());
+				_vPotionList.erase(_vPotionList.begin() + i);
+				SAFE_DELETE(_equipPotion);
+			}
+		}
+	}
+}
+
 void player::addhpbar(float x, float y)
 {
-
 	habar* newhpbar = new habar;
 	newhpbar->init("heart", "heart_half", "heart_empty", x, y, 48, 44);
 	_hpbarlist.push_back(newhpbar);
-
 }

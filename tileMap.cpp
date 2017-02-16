@@ -151,7 +151,7 @@ void tileMap::render(void)
 		}
 	}
 
-	if (KEYMANAGER->isToggleKey(VK_F4))
+	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
 		//이미지타일 렉트 렌더
 		RECT col;

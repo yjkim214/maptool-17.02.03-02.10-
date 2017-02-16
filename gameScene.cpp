@@ -162,8 +162,9 @@ void gameScene::render(void)
 
 	IMAGEMANAGER->findImage("hud_weapon")->render(getMemDC(), 0, 0);
 	IMAGEMANAGER->findImage("hud_armor")->render(getMemDC(), 65, 0);
+	IMAGEMANAGER->findImage("hud_item")->render(getMemDC(), 130, 0);
 
-	_player->equipRender();
+	_player->equipItemRender();
 
 	if (_player->getIsDead())
 	{

@@ -20,7 +20,7 @@ HRESULT heartbeat::init(void)
 	_isMade = false;
 	_isBeat = false;
 
-	_beatRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY - 52, 100, 104);
+	_beatRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY - 52, 122, 104);
 
 	//심장 위치 초기화
 	_heartRc = RectMakeCenter(WINSIZEX / 2, WINSIZEY - 52, 82, 104);
@@ -70,7 +70,7 @@ void heartbeat::update(void)
 	}
 
 	//총 비트의 개수
-	if (_beatCount < _vBeatTimer.size())
+	if (_beatCount < _vBeatTimer.size() - 1)
 	{
 		_beatTimer += TIMEMANAGER->getElapedTime() * 1000;
 
@@ -126,9 +126,17 @@ void heartbeat::update(void)
 
 void heartbeat::render(void)
 {
-	if (KEYMANAGER->isToggleKey(VK_F3))
+	if (KEYMANAGER->isToggleKey(VK_F4))
 	{
 		RectangleMake(getMemDC(), _beatRc);
+
+		for (int i = 0; i < _vBeatMarker.size(); i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				RectangleMake(getMemDC(), _vBeatMarker[i].markerRc[j]);
+			}
+		}
 	}
 
 	for (int i = 0; i < _vBeatMarker.size(); i++)

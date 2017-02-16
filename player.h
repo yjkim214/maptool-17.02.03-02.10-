@@ -7,8 +7,9 @@ class heartbeat;
 class enemyManager;
 class armor;
 class weapon;
+class potion;
 
-#define INIT_ATT		1
+#define INIT_ATT		0
 #define INIT_MAXHP		6
 #define PLAYER_SIZEX	48
 #define PLAYER_SIZEY	48
@@ -75,13 +76,17 @@ private:
 	weapon* _equipWeapon;
 	vector<weapon*> _vWeaponList;
 
+	potion* _equipPotion;
+	vector<potion*> _vPotionList;
+
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
-	void equipRender(void);
+	void equipItemRender(void);
 	void heartRender(void);
+
 	//접근자
 	float getAtt() { return _att; }
 	float getHp()
@@ -107,7 +112,14 @@ public:
 	//설정자
 	//초반 카메라 위치에 따라 인덱스를 바꾸어줌
 	void setIndex();
-	void setHp(int hp) { _hp = hp; }
+	void setHp(int hp) 
+	{ 
+		_hp = hp;
+		if (_hp > _maxHp)
+		{
+			_hp = _maxHp;
+		}
+	}
 	void setIsClear(bool clear) { _isClear = clear; }
 
 	//플레이어 움직임
@@ -115,6 +127,15 @@ public:
 
 	//플레이어 애니메이션
 	void animation();
+
+	//
+	void setHpbar();
+
+	//플레이어 공격
+	void attack(int index);
+
+	//
+	void useItem();
 
 	//타일맵 상호참조
 	void setLinkTileMap(tileMap* tileMap) { _tileMap = tileMap; }

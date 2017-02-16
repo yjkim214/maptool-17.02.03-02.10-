@@ -172,6 +172,7 @@
     <ClInclude Include="pixelCollision.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerData.h" />
+    <ClInclude Include="potion.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="sceneManager.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="pixelCollision.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerData.cpp" />
+    <ClCompile Include="potion.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="sceneTest.cpp" />

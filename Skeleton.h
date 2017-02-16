@@ -19,6 +19,7 @@ class Skeleton : public cEnemy
 		FIND,
 		BEST
 	};
+
 	struct tileState
 	{
 		int F;

@@ -1,341 +1,45 @@
-﻿  stdafx.cpp
-  winMain.cpp
-  weapon.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\weapon.cpp(12): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\weapon.cpp(31): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\weapon.cpp(38): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\weapon.cpp(62): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  util.cpp
-  txtData.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\txtdata.cpp(21): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(119): note: 'strcpy' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\txtdata.cpp(35): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\txtdata.cpp(38): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\txtdata.cpp(37): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\txtdata.cpp(40): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\txtdata.cpp(70): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(453): note: 'strtok' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\txtdata.cpp(73): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(453): note: 'strtok' 선언을 참조하십시오.
-  timeManager.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\timemanager.cpp(105): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\timemanager.cpp(108): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\timemanager.cpp(111): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-  tileMap.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\tilemap.cpp(29): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\tilemap.cpp(30): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\tilemap.cpp(31): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\tilemap.cpp(32): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\tilemap.cpp(336): warning C4244: '-=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\tilemap.cpp(337): warning C4244: '-=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\tilemap.cpp(338): warning C4244: '-=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\tilemap.cpp(339): warning C4244: '-=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  soundTestScene.cpp
-  soundManager.cpp
-  Slime.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.h(110): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(22): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(23): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(34): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(49): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(66): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(74): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(83): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(94): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(117): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(129): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(141): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(154): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\slime.cpp(198): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Skeleton.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.h(110): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(23): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(24): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(38): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(54): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(72): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(82): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(99): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(107): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(118): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(170): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(189): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(209): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(229): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(286): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(1125): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(1191): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  sceneTest.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\scenetest.cpp(25): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-  sceneManager.cpp
-  progressBar.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\progressbar.cpp(11): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\progressbar.cpp(12): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\progressbar.cpp(28): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\progressbar.cpp(29): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\progressbar.cpp(24): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\progressbar.cpp(25): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\progressbar.cpp(49): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  playerData.cpp
-  player.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.h(110): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(68): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(91): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(96): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(100): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(118): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(137): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(143): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(155): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(161): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(170): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(193): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(194): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(219): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(225): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(257): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(263): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(270): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(303): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(309): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(316): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(323): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(364): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(377): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(441): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(447): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(479): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(485): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(492): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(525): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(531): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(538): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(545): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(585): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(598): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(660): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(666): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(698): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(704): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(711): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(744): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(750): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(757): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(764): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(805): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(818): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(880): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(886): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(918): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(924): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(931): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(964): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(970): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(977): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(984): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(1025): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.cpp(1038): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  pixelCollision.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\pixelcollision.cpp(16): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\pixelcollision.cpp(19): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\pixelcollision.cpp(41): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\pixelcollision.cpp(43): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\pixelcollision.cpp(49): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\pixelcollision.cpp(56): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\pixelcollision.cpp(83): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  menuScene.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(7): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(8): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(9): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(45): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(56): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(63): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(79): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(84): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(91): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(109): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(110): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\menuscene.cpp(111): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  maptoolScene.cpp
-  mainGame.cpp
-  loadingScene.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loadingscene.cpp(51): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  코드를 생성하고 있습니다...
-c:\users\a\documents\github\maptool-17.02.03-02.10-\maptoolscene.cpp(750): warning C4715: 'maptoolScene::objectSelect': 모든 제어 경로에서 값을 반환하지는 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(1179): warning C4715: 'Skeleton::findAttribute': 모든 제어 경로에서 값을 반환하지는 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\skeleton.cpp(1164): warning C4715: 'Skeleton::settingMove': 모든 제어 경로에서 값을 반환하지는 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\txtdata.cpp(44): warning C4172: 지역 변수 또는 임시: str의 주소를 반환하고 있습니다.
-  컴파일하고 있습니다...
-  loading.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(27): warning C4800: 'BOOL': 'true' 또는 'false'로 bool 값을 강제하고 있습니다(성능 경고).
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(40): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(41): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(44): warning C4800: 'BOOL': 'true' 또는 'false'로 bool 값을 강제하고 있습니다(성능 경고).
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(61): warning C4800: 'BOOL': 'true' 또는 'false'로 bool 값을 강제하고 있습니다(성능 경고).
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(74): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(75): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(80): warning C4800: 'BOOL': 'true' 또는 'false'로 bool 값을 강제하고 있습니다(성능 경고).
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(151): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(199): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(225): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(239): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(255): warning C4244: '인수': 'unsigned int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\loading.cpp(255): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  keyManager.cpp
-  isometricScene.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\isometricscene.cpp(81): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\isometricscene.cpp(110): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\isometricscene.cpp(175): warning C4244: '+=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\isometricscene.cpp(189): warning C4244: '+=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\isometricscene.cpp(200): warning C4244: '+=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\isometricscene.cpp(202): warning C4244: '+=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  isometric.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\isometric.cpp(102): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\isometric.cpp(107): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-  introScene.cpp
-  iniTestScene.cpp
-  iniData.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\inidata.cpp(36): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\inidata.cpp(32): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\inidata.cpp(34): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\inidata.cpp(48): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\inidata.cpp(50): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\inidata.cpp(65): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\inidata.cpp(67): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' 선언을 참조하십시오.
-  imageManager.cpp
-  image.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\image.cpp(351): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  heartbeat.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(10): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(57): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(73): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(75): warning C4244: '+=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(86): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(88): warning C4244: '+=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(89): warning C4244: '+=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(90): warning C4244: '-=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(91): warning C4244: '-=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(118): warning C4244: '+=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\heartbeat.cpp(134): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  habar.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(13): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(28): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(29): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(24): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(25): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(43): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(62): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(63): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(64): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(57): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(58): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(59): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' 선언을 참조하십시오.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(76): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(81): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(88): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(92): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\habar.cpp(101): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  gameScene.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.h(110): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  gameNode.cpp
-  enemyManager.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\enemymanager.cpp(14): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\enemymanager.cpp(23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\enemymanager.cpp(28): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\enemymanager.cpp(46): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  endScene.cpp
-  effectManager.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\effectmanager.cpp(13): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\effectmanager.cpp(14): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\effectmanager.cpp(15): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\effectmanager.cpp(24): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\effectmanager.cpp(52): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\effectmanager.cpp(54): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  drawRectManager.cpp
-  Dragon.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.h(110): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(22): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(23): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(39): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(40): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(57): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(68): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(124): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(126): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(127): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(134): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(145): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(165): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(173): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(184): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(236): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(255): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(275): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(295): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(354): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(1239): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(1305): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(1328): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  cEnemy.cpp
-  bullet.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\bullet.cpp(38): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\bullet.cpp(51): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\bullet.cpp(67): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\bullet.cpp(119): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\bullet.cpp(165): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\bullet.cpp(180): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\bullet.cpp(237): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\bullet.cpp(250): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\bullet.cpp(264): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  코드를 생성하고 있습니다...
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(1278): warning C4715: 'Dragon::settingMove': 모든 제어 경로에서 값을 반환하지는 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\dragon.cpp(1293): warning C4715: 'Dragon::findAttribute': 모든 제어 경로에서 값을 반환하지는 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\inidata.cpp(55): warning C4172: 지역 변수 또는 임시: data의 주소를 반환하고 있습니다.
-  컴파일하고 있습니다...
-  Blueslime.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\player.h(110): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(22): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(23): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(37): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(53): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(71): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(81): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(98): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(106): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(117): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(140): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(159): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(179): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(199): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\blueslime.cpp(254): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  armor.cpp
-c:\users\a\documents\github\maptool-17.02.03-02.10-\armor.cpp(12): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\armor.cpp(31): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\armor.cpp(38): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\a\documents\github\maptool-17.02.03-02.10-\armor.cpp(83): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  코드를 생성하고 있습니다...
-  WindowAPI.vcxproj -> C:\Users\A\Documents\GitHub\maptool-17.02.03-02.10-\Debug\WindowAPI.exe
-  WindowAPI.vcxproj -> C:\Users\A\Documents\GitHub\maptool-17.02.03-02.10-\Debug\WindowAPI.pdb (Full PDB)
+﻿  player.cpp
+c:\users\dydwo\desktop\maptool\player.h(117): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(77): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(100): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(105): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(110): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(161): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(167): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(173): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(185): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(191): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(197): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(206): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(229): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(230): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(255): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(293): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(339): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(400): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(413): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(426): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(504): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(542): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(588): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(648): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(661): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(674): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(750): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(788): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(834): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(895): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(908): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(921): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(997): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(1035): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(1081): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(1142): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(1155): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(1168): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(1318): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(1335): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(1349): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(1361): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\dydwo\desktop\maptool\player.cpp(1365): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  WindowAPI.vcxproj -> C:\Users\dydwo\Desktop\maptool\Debug\WindowAPI.exe

@@ -224,6 +224,9 @@
     <ClInclude Include="Dragon.h">
       <Filter>MainGame\게임화면\에너미</Filter>
     </ClInclude>
+    <ClInclude Include="potion.h">
+      <Filter>MainGame\게임화면\플레이어</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainGame.cpp">
@@ -354,6 +357,9 @@
     </ClCompile>
     <ClCompile Include="Dragon.cpp">
       <Filter>MainGame\게임화면\에너미</Filter>
+    </ClCompile>
+    <ClCompile Include="potion.cpp">
+      <Filter>MainGame\게임화면\플레이어</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

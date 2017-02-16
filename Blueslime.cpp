@@ -36,7 +36,7 @@ HRESULT Blueslime::init(POINT index)
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
-	_maxHp = 2;
+	_maxHp = 4;
 	_hp = _maxHp;
 
 	for (int i = 0; i < _maxHp; i++)
@@ -65,12 +65,15 @@ void Blueslime::update(void)
 	animation();
 
 	//  현재 hp량 을 표시해준다 . 
-	for (int i = 0; i < _maxHp - _hp; i++)
+	if (_hp != 0)
 	{
-		_hpbarlist[i]->setcurrent(false);
-		if (i >= _hpbarlist.size())
+		for (int i = 0; i < _maxHp - _hp; i++)
 		{
-			continue;
+			_hpbarlist[i]->setcurrent(false);
+			if (i >= _hpbarlist.size())
+			{
+				continue;
+			}
 		}
 	}
 

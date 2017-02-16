@@ -110,12 +110,17 @@ void loadingScene::loadingImage(void)
 	//게임화면
 	_loading->loadFrameImage("player", "player.bmp", 384, 480, 8, 10, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("heartbeat", "heartbeat.bmp", 164, 104, 2, 1, true, RGB(255, 0, 255));
+
 	_loading->loadImage("heart", "heart.bmp", 48, 44, true, RGB(255, 0, 255));
 	_loading->loadImage("heart_half", "heart_half.bmp", 48, 44, true, RGB(255, 0, 255));
 	_loading->loadImage("heart_empty", "heart_empty.bmp", 48, 44, true, RGB(255, 0, 255));
+
 	_loading->loadImage("TEMP_beat_marker_green", "TEMP_beat_marker_green.bmp", 12, 64, true, RGB(255, 0, 255));
+
 	_loading->loadImage("hud_weapon", "hud_weapon.bmp", 60, 66, true, RGB(255, 0, 255));
 	_loading->loadImage("hud_armor", "hud_armor.bmp", 60, 66, true, RGB(255, 0, 255));
+	_loading->loadImage("hud_item", "hud_item.bmp", 60, 84, true, RGB(255, 0, 255));
+
 	_loading->loadImage("weapon_dagger", "weapon_dagger.bmp", 48, 48, true, RGB(255, 0, 255));
 	_loading->loadImage("weapon_longsword", "weapon_longsword.bmp", 48, 48, true, RGB(255, 0, 255));
 	_loading->loadImage("weapon_broadsword", "weapon_broadsword.bmp", 48, 48, true, RGB(255, 0, 255));
@@ -130,6 +135,8 @@ void loadingScene::loadingImage(void)
 	_loading->loadImage("armor_obsidian02", "armor_obsidian02.bmp", 52, 52, true, RGB(255, 0, 255));
 	_loading->loadImage("armor_obsidian03", "armor_obsidian03.bmp", 52, 52, true, RGB(255, 0, 255));
 	_loading->loadImage("armor_glass", "armor_glass.bmp", 48, 48, true, RGB(255, 0, 255));
+
+	_loading->loadImage("potion", "potion.bmp", 48, 48, true, RGB(255, 0, 255));
 
 	_loading->loadFrameImage("swipe_dagger_left", "swipe_dagger_left.bmp", 144, 48, 3, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("swipe_dagger_right", "swipe_dagger_right.bmp", 144, 48, 3, 1, true, RGB(255, 0, 255));

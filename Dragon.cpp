@@ -129,13 +129,16 @@ void Dragon::update(void)
 	animation();
 
 	//  현재 hp량 을 표시해준다 . 
-	for (int i = 0; i < _maxHp - _hp; i++)
+	if (_hp != 0)
 	{
-		if (i >= _hpbarlist.size())
+		for (int i = 0; i < _maxHp - _hp; i++)
 		{
-			continue;
+			_hpbarlist[i]->setcurrent(false);
+			if (i >= _hpbarlist.size())
+			{
+				continue;
+			}
 		}
-		_hpbarlist[i]->setcurrent(false);
 	}
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
@@ -161,6 +164,7 @@ void Dragon::update(void)
 	{
 		searchRoute();
 	}
+	
 	// hp 바를 위에 표시해준다 
 	for (int i = 0; i < _hpbarlist.size(); i++)
 	{
@@ -168,6 +172,7 @@ void Dragon::update(void)
 		_hpbarlist[i]->setX(_x - (12 * (float)(((float)_hpbarlist.size() / 2) - i)));
 		_hpbarlist[i]->setY(_y - 24);
 	}
+
 	if (_hp <= 0)
 	{
 		for (int i = 0; i < _hpbarlist.size(); i++)
