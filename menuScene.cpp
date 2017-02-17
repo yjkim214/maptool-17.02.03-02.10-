@@ -46,7 +46,11 @@ void menuScene::update(void)
 		//버튼 안에 마우스가 있고 클릭을 한다면 알파값을 변경
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON)) { _alphaPlay = 150; }
 		//버튼 안에 마우스가 있고 마우스를 눌렀다 뗏다면 씬을 변경해준다
-		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON)) { SCENEMANAGER->changeScene("게임화면"); }
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON)) 
+		{ 
+			IMAGEMANAGER->findImage("menu_playbutton")->setX(_initPlayX);
+			SCENEMANAGER->changeScene("게임화면"); 
+		}
 	}
 
 	//플레이 버튼 안에 마우스가 없다면
@@ -66,10 +70,13 @@ void menuScene::update(void)
 		{
 			_alphaMap = 150;
 			SOUNDMANAGER->stop("main_menu");
-			SCENEMANAGER->changeScene("맵툴화면");
 		}
 		//버튼안에 마우스가 있고 마우스 왼쪽 클릭을 뗀다면 씬 전환
-		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON)) {}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON)) 
+		{
+			IMAGEMANAGER->findImage("menu_mapbutton")->setX(_initMapX);
+			SCENEMANAGER->changeScene("맵툴화면");
+		}
 	}
 
 	//맵 버튼 안에 마우스가 없다면
