@@ -5,7 +5,27 @@ HRESULT weapon::init(WEAPON_KIND kind)
 {
 	_kind = kind;
 
-	_att = 1;
+	switch (_kind)
+	{
+	case WEAPON_DAGGER:
+		_att = 1;
+		break;
+	case WEAPON_LONGSWORD:
+		_att = 1;
+		break;
+	case WEAPON_BROADSWORD:
+		_att = 1;
+		break;
+	case WEAPON_DAGGER_TITANIUM:
+		_att = 2;
+		break;
+	case WEAPON_LONGSWORD_TITANIUM:
+		_att = 2;
+		break;
+	case WEAPON_BROADSWORD_TITANIUM:
+		_att = 2;
+		break;
+	}
 
 	_x = 0.0f;
 	_y = 0.0f;
@@ -51,6 +71,15 @@ void weapon::render(void)
 		break;
 	case WEAPON_BROADSWORD:
 		IMAGEMANAGER->findImage("weapon_broadsword")->render(getMemDC(), _rc.left, _rc.top);
+		break;
+	case WEAPON_DAGGER_TITANIUM:
+		IMAGEMANAGER->findImage("weapon_dagger_titanium")->render(getMemDC(), _rc.left, _rc.top);
+		break;
+	case WEAPON_LONGSWORD_TITANIUM:
+		IMAGEMANAGER->findImage("weapon_longsword_titanium")->render(getMemDC(), _rc.left, _rc.top);
+		break;
+	case WEAPON_BROADSWORD_TITANIUM:
+		IMAGEMANAGER->findImage("weapon_broadsword_titanium")->render(getMemDC(), _rc.left, _rc.top);
 		break;
 	}
 }

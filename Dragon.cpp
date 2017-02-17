@@ -129,7 +129,7 @@ void Dragon::update(void)
 	animation();
 
 	//  현재 hp량 을 표시해준다 . 
-	if (_hp != 0)
+	if (_hp > 0)
 	{
 		for (int i = 0; i < _maxHp - _hp; i++)
 		{

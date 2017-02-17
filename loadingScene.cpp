@@ -124,6 +124,9 @@ void loadingScene::loadingImage(void)
 	_loading->loadImage("weapon_dagger", "weapon_dagger.bmp", 48, 48, true, RGB(255, 0, 255));
 	_loading->loadImage("weapon_longsword", "weapon_longsword.bmp", 48, 48, true, RGB(255, 0, 255));
 	_loading->loadImage("weapon_broadsword", "weapon_broadsword.bmp", 48, 48, true, RGB(255, 0, 255));
+	_loading->loadImage("weapon_dagger_titanium", "weapon_dagger_titanium.bmp", 48, 48, true, RGB(255, 0, 255));
+	_loading->loadImage("weapon_longsword_titanium", "weapon_longsword_titanium.bmp", 48, 48, true, RGB(255, 0, 255));
+	_loading->loadImage("weapon_broadsword_titanium", "weapon_broadsword_titanium.bmp", 48, 48, true, RGB(255, 0, 255));
 
 	_loading->loadImage("armor_tunic", "armor_tunic.bmp", 48, 48, true, RGB(255, 0, 255));
 	_loading->loadImage("armor_leather", "armor_leather.bmp", 48, 48, true, RGB(255, 0, 255));

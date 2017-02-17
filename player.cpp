@@ -123,19 +123,40 @@ void player::update(void)
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
 		_equipWeapon->setKind(WEAPON_DAGGER);
+		_equipWeapon->setAtt(1);
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('2'))
 	{
 		_equipWeapon->setKind(WEAPON_LONGSWORD);
+		_equipWeapon->setAtt(1);
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('3'))
 	{
 		_equipWeapon->setKind(WEAPON_BROADSWORD);
+		_equipWeapon->setAtt(1);
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('4'))
+	{
+		_equipWeapon->setKind(WEAPON_DAGGER_TITANIUM);
+		_equipWeapon->setAtt(2);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('5'))
+	{
+		_equipWeapon->setKind(WEAPON_LONGSWORD_TITANIUM);
+		_equipWeapon->setAtt(2);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('6'))
+	{
+		_equipWeapon->setKind(WEAPON_BROADSWORD_TITANIUM);
+		_equipWeapon->setAtt(2);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('7'))
 	{
 		if (!_equipPotion)
 		{
@@ -245,9 +266,8 @@ void player::move()
 				//왼쪽인지 아닌지 판별
 				_isLeft = true;
 
-				switch (_equipWeapon->getKind())
+				if (_equipWeapon->getKind() == WEAPON_DAGGER || _equipWeapon->getKind() == WEAPON_DAGGER_TITANIUM)
 				{
-				case WEAPON_DAGGER:
 					//밟을려는 타일의 속성이 몬스터라면
 					if (_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
 					{
@@ -264,7 +284,7 @@ void player::move()
 
 						DRAWRECTMANAGER->shakeWindow();
 						EFFECTMANAGER->addEffect(WINSIZEX / 2 - 72, WINSIZEY / 2 - 24, "swipe_dagger_left");
-						
+
 						if (SOUNDMANAGER->isPlaySound("vo_ari_melee_1_01"))
 						{
 							SOUNDMANAGER->stop("vo_ari_melee_1_01");
@@ -283,10 +303,12 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-					break;
-				case WEAPON_LONGSWORD:
+				}
+
+				else if (_equipWeapon->getKind() == WEAPON_LONGSWORD || _equipWeapon->getKind() == WEAPON_LONGSWORD_TITANIUM)
+				{
 					//밟을려는 타일의 속성이 몬스터라면
-					if ((_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) || 
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
 						(_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
@@ -298,7 +320,7 @@ void player::move()
 								//그 인덱스의 몬스터에게 데미지를 준다
 								attack(i);
 							}
-							
+
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x - 2 && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y)
 							{
@@ -328,11 +350,13 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-					break;
-				case WEAPON_BROADSWORD:
+				}
+
+				else if (_equipWeapon->getKind() == WEAPON_BROADSWORD || _equipWeapon->getKind() == WEAPON_BROADSWORD_TITANIUM)
+				{
 					//밟을려는 타일의 속성이 몬스터라면
-					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) || 
-						(_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) || 
+					if ((_index.x != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
+						(_index.x != 0 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
 						(_index.x != 0 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
 					{
 						//모든 몬스터의 배열에서
@@ -381,7 +405,6 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-					break;
 				}
 
 				//움직일 수 있는 타일일 때
@@ -459,7 +482,7 @@ void player::move()
 					else if (randNum == 1)
 					{
 						weapon* newWeapon = new weapon;
-						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(3)));
+						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(6)));
 						newWeapon->setIndex({ _index.x - 1, _index.y });
 						newWeapon->setPos();
 						_vWeaponList.push_back(newWeapon);
@@ -494,9 +517,8 @@ void player::move()
 				//고개를 돌릴지 말지를 판별
 				_isLeft = false;
 
-				switch (_equipWeapon->getKind())
+				if (_equipWeapon->getKind() == WEAPON_DAGGER || _equipWeapon->getKind() == WEAPON_DAGGER_TITANIUM)
 				{
-				case WEAPON_DAGGER:
 					//밟을려는 타일의 속성이 몬스터라면
 					if (_index.x != TILEX - 1 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
 					{
@@ -532,8 +554,10 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-					break;
-				case WEAPON_LONGSWORD:
+				}
+
+				else if (_equipWeapon->getKind() == WEAPON_LONGSWORD || _equipWeapon->getKind() == WEAPON_LONGSWORD_TITANIUM)
+				{
 					//밟을려는 타일의 속성이 몬스터라면
 					if ((_index.x != TILEX - 1 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
 						(_index.x != TILEX - 1 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 2]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
@@ -577,8 +601,10 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-					break;
-				case WEAPON_BROADSWORD:
+				}
+
+				else if (_equipWeapon->getKind() == WEAPON_BROADSWORD || _equipWeapon->getKind() == WEAPON_BROADSWORD_TITANIUM)
+				{
 					//밟을려는 타일의 속성이 몬스터라면
 					if ((_index.x != TILEX - 1 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
 						(_index.x != TILEX - 1 && (((_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
@@ -630,7 +656,6 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-					break;
 				}
 
 				if (_index.x != TILEX - 1 && !_isAttack && (_tileMap->getAttribute()[_index.y * TILEX + _index.x + 1] == 0))
@@ -707,7 +732,7 @@ void player::move()
 					else if (randNum == 1)
 					{
 						weapon* newWeapon = new weapon;
-						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(3)));
+						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(6)));
 						newWeapon->setIndex({ _index.x + 1, _index.y });
 						newWeapon->setPos();
 						_vWeaponList.push_back(newWeapon);
@@ -740,9 +765,8 @@ void player::move()
 			{
 				_direct = PLAYERDIRECTION_UP;
 
-				switch (_equipWeapon->getKind())
+				if (_equipWeapon->getKind() == WEAPON_DAGGER || _equipWeapon->getKind() == WEAPON_DAGGER_TITANIUM)
 				{
-				case WEAPON_DAGGER:
 					//밟을려는 타일의 속성이 몬스터라면
 					if (_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
 					{
@@ -778,8 +802,10 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-					break;
-				case WEAPON_LONGSWORD:
+				}
+
+				else if (_equipWeapon->getKind() == WEAPON_LONGSWORD || _equipWeapon->getKind() == WEAPON_LONGSWORD_TITANIUM)
+				{
 					//밟을려는 타일의 속성이 몬스터라면
 					if ((_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
 						(_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
@@ -823,8 +849,10 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-					break;
-				case WEAPON_BROADSWORD:
+				}
+
+				else if (_equipWeapon->getKind() == WEAPON_BROADSWORD || _equipWeapon->getKind() == WEAPON_BROADSWORD_TITANIUM)
+				{
 					//밟을려는 타일의 속성이 몬스터라면
 					if ((_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x + 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
 						(_index.y != 0 && (((_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
@@ -876,8 +904,6 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-
-					break;
 				}
 
 				if (_index.y != 0 && !_isAttack && (_tileMap->getAttribute()[(_index.y - 1) * TILEX + _index.x] == 0))
@@ -954,7 +980,7 @@ void player::move()
 					else if (randNum == 1)
 					{
 						weapon* newWeapon = new weapon;
-						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(3)));
+						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(6)));
 						newWeapon->setIndex({ _index.x, _index.y - 1 });
 						newWeapon->setPos();
 						_vWeaponList.push_back(newWeapon);
@@ -987,9 +1013,8 @@ void player::move()
 			{
 				_direct = PLAYERDIRECTION_DOWN;
 
-				switch (_equipWeapon->getKind())
+				if (_equipWeapon->getKind() == WEAPON_DAGGER || _equipWeapon->getKind() == WEAPON_DAGGER_TITANIUM)
 				{
-				case WEAPON_DAGGER:
 					//밟을려는 타일의 속성이 몬스터라면
 					if (_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0))
 					{
@@ -1025,8 +1050,10 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-					break;
-				case WEAPON_LONGSWORD:
+				}
+
+				else if (_equipWeapon->getKind() == WEAPON_LONGSWORD || _equipWeapon->getKind() == WEAPON_LONGSWORD_TITANIUM)
+				{
 					//밟을려는 타일의 속성이 몬스터라면
 					if ((_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
 						(_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 2) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)))
@@ -1070,8 +1097,10 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-					break;
-				case WEAPON_BROADSWORD:
+				}
+
+				else if (_equipWeapon->getKind() == WEAPON_BROADSWORD || _equipWeapon->getKind() == WEAPON_BROADSWORD_TITANIUM)
+				{
 					//밟을려는 타일의 속성이 몬스터라면
 					if ((_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x - 1]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
 						(_index.y != TILEY - 1 && (((_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x]) & (ATTR_ENEMY1 | ATTR_ENEMY2 | ATTR_ENEMY3 | ATTR_BOSS)) != 0)) ||
@@ -1086,7 +1115,7 @@ void player::move()
 								//그 인덱스의 몬스터에게 데미지를 준다
 								attack(i);
 							}
-							
+
 							//같은 인덱스를 가진 몬스터를 찾아서
 							if (_enemyMg->getEnemyList()[i]->getIndex().x == _index.x && _enemyMg->getEnemyList()[i]->getIndex().y == _index.y + 1)
 							{
@@ -1123,8 +1152,6 @@ void player::move()
 					{
 						_isAttack = false;
 					}
-
-					break;
 				}
 
 				if (_index.y != TILEY - 1 && !_isAttack && (_tileMap->getAttribute()[(_index.y + 1) * TILEX + _index.x] == 0))
@@ -1206,7 +1233,7 @@ void player::move()
 					{
 						//웨펀 랜덤 생성
 						weapon* newWeapon = new weapon;
-						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(3)));
+						newWeapon->init(static_cast<WEAPON_KIND>(RND->getInt(6)));
 						newWeapon->setIndex({ _index.x, _index.y + 1 });
 						newWeapon->setPos();
 						//상자의 위치에 웨펀을 만들어주고 벡터에 담아준다

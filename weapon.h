@@ -3,9 +3,12 @@
 
 enum WEAPON_KIND
 {
-	WEAPON_DAGGER, 
-	WEAPON_LONGSWORD, 
-	WEAPON_BROADSWORD, 
+	WEAPON_DAGGER,
+	WEAPON_LONGSWORD,
+	WEAPON_BROADSWORD,
+	WEAPON_DAGGER_TITANIUM,
+	WEAPON_LONGSWORD_TITANIUM,
+	WEAPON_BROADSWORD_TITANIUM,
 };
 
 class weapon : public gameNode
@@ -32,6 +35,7 @@ public:
 	void setPos();
 	void setIndex(POINT index);
 	void setIsEquip(bool isEquip);
+	void setAtt(float att) { _att = att; }
 
 	WEAPON_KIND getKind() { return _kind; }
 	int getAtt() { return _att; }
