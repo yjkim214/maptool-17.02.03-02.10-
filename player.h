@@ -119,6 +119,20 @@ public:
 		{
 			_hp = _maxHp;
 		}
+
+		if (_hp <= 0)
+		{
+			if (SOUNDMANAGER->isPlaySound("vo_ari_death_01"))
+			{
+				SOUNDMANAGER->stop("vo_ari_death_01");
+				SOUNDMANAGER->play("vo_ari_death_01");
+			}
+
+			else
+			{
+				SOUNDMANAGER->play("vo_ari_death_01");
+			}
+		}
 	}
 	void setIsClear(bool clear) { _isClear = clear; }
 
