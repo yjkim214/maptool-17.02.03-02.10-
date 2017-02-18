@@ -36,14 +36,13 @@ HRESULT Blueslime::init(POINT index)
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
-	_maxHp = 4;
+	_maxHp = 3;
 	_hp = _maxHp;
 
 	for (int i = 0; i < _maxHp; i++)
 	{
 		addhpbar(_x - 12 * i, _y);
 	}
-
 
 	return S_OK;
 }

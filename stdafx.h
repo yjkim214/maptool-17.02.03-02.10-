@@ -12,7 +12,7 @@
 #include <windows.h>
 #include <windows.h>
 //디버깅용 (주석치면 콘솔창이 사라진다)
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 
 // C 런타임 헤더 파일입니다.
 #include <stdlib.h>

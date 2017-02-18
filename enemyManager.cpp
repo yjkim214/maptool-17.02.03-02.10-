@@ -33,12 +33,6 @@ void enemyManager::update(void)
 			_vEnemy.erase(_vEnemy.begin() + i);
 		}
 	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_F3))
-	{
-		_vEnemy[0]->setHp(_vEnemy[0]->getHp() - 1);
-		cout << "Ã¼·Â" << _vEnemy[0]->getHp() << endl;
-	}
 }
 
 void enemyManager::render(void)

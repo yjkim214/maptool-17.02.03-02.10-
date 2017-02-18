@@ -22,10 +22,9 @@ HRESULT Dragon::init(POINT index)
 	_initx = (MON_SIZE / 2) + index.x * MON_SIZE;
 	_inity = (MON_SIZE / 2) + index.y * MON_SIZE;
 	_fireimg->setFrameY(1);
-	cout << "_init : " << _initx << endl;
-	cout << "_init : " << _inity << endl;
+	
 	_st = MOVE;
-	_dmg = 1;
+	_dmg = 2;
 	cultime = 0;
 	bresscount = 0;
 	_direct = MOVEDIRECTION_LEFT;
